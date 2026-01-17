@@ -1,13 +1,13 @@
-﻿using REPL.system.environments;
-using REPL.system.users;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static REPL.system.settings.PromptSettings;
+using static REPL.systemfiles.settings.PromptSettings;
 using REPL.utils;
-using REPL.system.settings;
+using REPL.systemfiles.environments;
+using REPL.systemfiles.users;
+using REPL.systemfiles.settings;
 
 namespace REPL.ui
 {

@@ -1,6 +1,6 @@
 ﻿namespace REPL.language.ast
 {
-    public enum SyntaxKind
+    public enum SyntaxKind 
     {
         // Tokens
         BadToken,
@@ -14,6 +14,14 @@
         OpenParenthesisToken,
         CloseParenthesisToken,
         IdentifierToken,
+
+        //Commands              
+        DispatchToken,
+        DispatchExpression,
+        CommandToken,
+        CommandExpression,
+        BadCommandToken,
+        //ArgumentExpression,
 
 
         // Operators
@@ -35,6 +43,5 @@
         BinaryExpression,
         ParenthesisedExpression,
         AssignmentExpression,
-
     }
 }

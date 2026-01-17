@@ -1,38 +1,42 @@
-﻿namespace REPL.language
+﻿using REPL.language.ast;
+using REPL.language.Syntax;
+using REPL.systemfiles.diagnostics;
+using System.Collections.Immutable;
+
+namespace REPL.language
 {
     public sealed class SyntaxTree
     {
-    //    public ImmutableArray<Diagnostic> Diagnostics { get; }
-    //    public SyntaxNode Root { get; }
-    //    public SyntaxToken EndOfFileToken { get; }
+        public ImmutableArray<Diagnostic> Diagnostics { get; }
+        public SyntaxNode Root { get; }
+        public SyntaxToken EndOfFileToken { get; }
 
-    //    public SyntaxTree(ImmutableArray<Diagnostic> diagnostics, SyntaxNode root, SyntaxToken endOfFileToken)
-    //    {
-    //        Diagnostics = new();
-    //        Root = root;
-    //        EndOfFileToken = endOfFileToken;
-    //    }
+        public SyntaxTree(ImmutableArray<Diagnostic> diagnostics, SyntaxNode root, SyntaxToken endOfFileToken)
+        {
+            Diagnostics = diagnostics;
+            Root = root;
+            EndOfFileToken = endOfFileToken;
+        }
 
 
+        public static SyntaxTree Parse(string text)
+        {
+            var parser = new Parser(text);
+            return parser.Parse();
+        }
 
-    //    public static SyntaxTree Parse(string text)
-    //    {
-    //        var parser = new Parser(text);
-    //        return parser.Parse();
-    //    }
+        public static IEnumerable<SyntaxToken> ParseTokens(string text)
+        {
+            var lexer = new Lexer(text);
+            while (true)
+            {
+                var token = lexer.Lex();
+                if (token.Kind == SyntaxKind.EndOfFileToken)
+                    break;
 
-    //    public static IEnumerable<SyntaxToken> ParseTokens(string text)
-    //    {
-    //        var lexer = new Lexer();
-    //        while (true)
-    //        {
-    //            var token = lexer.Lex();
-    //            if (token.Kind == SyntaxKind.EndOfFileToken)
-    //                break;
-
-    //            yield return token;
-    //        }
-    //    }
+                yield return token;
+            }
+        }
     }
 }
     

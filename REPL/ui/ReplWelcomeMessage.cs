@@ -1,4 +1,4 @@
-﻿using static REPL.system.settings.AppSettings;
+﻿using static REPL.settings.AppSettings;
 
 namespace REPL.ui
 {

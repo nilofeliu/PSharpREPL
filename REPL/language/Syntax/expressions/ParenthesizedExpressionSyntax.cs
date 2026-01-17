@@ -1,0 +1,23 @@
+﻿using REPL.language.ast;
+
+namespace REPL.language.Syntax.expressions;
+
+public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
+{
+    public override SyntaxKind Kind => SyntaxKind.ParenthesisedExpression;
+    public SyntaxToken OpenParenthesisToken { get; }
+    public ExpressionSyntax Expression { get; }
+    public SyntaxToken CloseParenthesisToken { get; }
+    public ParenthesizedExpressionSyntax(SyntaxToken openParenthesisToken, ExpressionSyntax expression, SyntaxToken closeParenthesisToken)
+    {
+        OpenParenthesisToken = openParenthesisToken;
+        Expression = expression;
+        CloseParenthesisToken = closeParenthesisToken;
+    }
+    public override IEnumerable<SyntaxNode> GetChildren()
+    {
+        yield return OpenParenthesisToken;
+        yield return Expression;
+        yield return CloseParenthesisToken;
+    }
+}

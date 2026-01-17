@@ -1,4 +1,4 @@
-﻿using REPL;
+﻿using REPL.core;
 
 namespace TerminalUI
 {

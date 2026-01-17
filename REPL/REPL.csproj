@@ -7,15 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="systemfiles\commands\help\help\**" />
+    <Compile Remove="user\**" />
+    <EmbeddedResource Remove="systemfiles\commands\help\help\**" />
+    <EmbeddedResource Remove="user\**" />
+    <None Remove="systemfiles\commands\help\help\**" />
+    <None Remove="user\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="docs\" />
-    <Folder Include="settings\" />
     <Folder Include="language\tokens\" />
-    <Folder Include="system\config\" />
-    <Folder Include="system\commands\" />
-    <Folder Include="system\paths\" />
-    <Folder Include="tests\" />
+    <Folder Include="systemfiles\commands\help\" />
+    <Folder Include="systemfiles\commands\ls\" />
+    <Folder Include="systemfiles\config\" />
+    <Folder Include="systemfiles\paths\" />
     <Folder Include="main\" />
-    <Folder Include="core\" />
+    <Folder Include="tests\" />
+    <Folder Include="users\commands\" />
   </ItemGroup>
 
 </Project>
