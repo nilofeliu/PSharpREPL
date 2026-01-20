@@ -1,5 +1,6 @@
 ﻿using REPL.language.ast;
 using REPL.language.Syntax.expressions;
+using REPL.language.text;
 using System.Collections.Immutable;
 
 namespace REPL.language.Syntax
@@ -7,11 +8,11 @@ namespace REPL.language.Syntax
     internal sealed class Parser
     {
         private DiagnosticBag _diagnostic = new();
+        private readonly SourceText _text;
         private readonly ImmutableArray<SyntaxToken> _tokens;
-
         private int _position;
 
-        public Parser(string text)
+        public Parser(SourceText text)
         {
             List<SyntaxToken> tokens = new List<SyntaxToken>();
 
@@ -29,9 +30,9 @@ namespace REPL.language.Syntax
 
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
+            _text = text;
             _tokens = tokens.ToImmutableArray();
             _diagnostic.AddRange(lexer.Diagnostics);
-
         }
 
 
@@ -59,14 +60,22 @@ namespace REPL.language.Syntax
             if (Current.Kind == kind)
                 return NextToken();
 
+            string text = null;
+
+            // My Own Code. Not in the tutorial
+            //if (Current.Kind == SyntaxKind.EndOfFileToken)
+            //    text = "";
+            // End code
+
             _diagnostic.ReportUnexpectedToken(Current.Span, Current.Kind, kind);
-            return new SyntaxToken(kind, Current.Position, null, null);
+            return new SyntaxToken(kind, Current.Position, text, null);
         }
 
         public SyntaxTree Parse()
         {
             var expression = ParseExpression();
-            return new SyntaxTree(_diagnostic.ToImmutableArray(), expression, null);
+            var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
+            return new SyntaxTree(_text, _diagnostic.ToImmutableArray(), expression, endOfFileToken);
         }
 
         private ExpressionSyntax ParseExpression()
@@ -87,15 +96,6 @@ namespace REPL.language.Syntax
                 return new AssignmentExpressionSyntax(identifierToken, operatorToken, right);
             }
 
-            //else if (Current.Kind == SyntaxKind.DispatchToken)
-            //{
-            //    Console.WriteLine(Current.Text.ToString());
-            //    return ParseDispatchExpression();
-            //}
-            //else if (Current.Kind == SyntaxKind.DispatchExpression)
-            //{
-            //    return ParseCommandExpression();
-            //}
 
             else
             {

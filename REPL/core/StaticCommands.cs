@@ -8,11 +8,22 @@ internal static class StaticCommands
 {
     internal static SysInfo SystemCommands = new();
 
-    internal static void Run(string line)
+    private static string ReturnCommandLine(string input)
     {
+        if (input[0] == '.')
+            return input.Substring(1); // Remove the leading '.'
+        else
+            return input;
+    }
+
+    internal static int Run(string line)
+    {
+        int output = 0;
+
         if (line.StartsWith(".", StringComparison.OrdinalIgnoreCase))
         {
             string commandLine = ReturnCommandLine(line);
+            
 
             switch (commandLine.ToLower())
             {
@@ -20,20 +31,22 @@ internal static class StaticCommands
                 case "quit":
                     Console.WriteLine("Exiting...");
                     ReplExitMessage.PrintExitMessage();
-                    return;
+                    output = 1;
+                    break;
                 case "cls":
                     Console.Clear();
-                    return;
+                    break; ;
                 case "help":
                     PrintCommands();
-                    return;
+                    break;
                 case "sys":
                     SystemCommands.ShowSysData();
-                    return;
+                    break;
                 default:
                     PrintCommandAnalysis(commandLine);
-                    return;
+                    break;
             }
         }
+        return output;
     }
 }

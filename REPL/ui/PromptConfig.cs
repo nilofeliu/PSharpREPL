@@ -20,8 +20,9 @@ namespace REPL.ui
         private static string promptsuffix = ">";
 
         private SysSettings SystemSettings = SysSettings.Instance;
+        private readonly StringBuilder _builder;
 
-        public PromptStream(UserData userData, VirtualEnv virtualEnv)
+        public PromptStream(StringBuilder builder, UserData userData, VirtualEnv virtualEnv)
         {
             if (userData == null)
                 _userData = new UserData(SystemSettings.HostUser);
@@ -33,6 +34,7 @@ namespace REPL.ui
                 _virtualEnv = new VirtualEnv(SystemSettings.HostDomain);
             else
                 _virtualEnv = virtualEnv;
+            _builder = builder;
         }
 
         public PromptStream(UserData userData)
@@ -43,26 +45,30 @@ namespace REPL.ui
 
         internal void Write()
         {
-
-            if (HasDate)
+            if (_builder.Length == 0)
             {
-                ConsoleColored.Write(DateTime.Now.ToString($"<{DateTimeFormat}>"));
+                if (HasDate)
+                {
+                    ConsoleColored.Write(DateTime.Now.ToString($"<{DateTimeFormat}>"));
+                }
+                if (HasTime)
+                {
+                    ConsoleColored.Write(DateTime.Now.ToString($" {DateTimeFormat}"));
+                }
+                if (HasUserName)
+                {
+                    ConsoleColored.Write($"{_userData.Username.ToLower()}", UserNameColor);
+                }
+                if (HasEnvironment)
+                {
+                    ConsoleColored.Write($"<@{_virtualEnv.EnvName.ToLower()}>", EnvColor);
+                }
+                ConsoleColored.Write($" {promptPreffix}");
+                ConsoleColored.Write(promptsuffix);
+                ConsoleColored.Write(" ");
             }
-            if (HasTime)
-            {
-                ConsoleColored.Write(DateTime.Now.ToString($" {DateTimeFormat}"));
-            }
-            if (HasUserName)
-            {
-                ConsoleColored.Write($"{_userData.Username.ToLower()}", UserNameColor);
-            }
-            if (HasEnvironment)
-            {
-                ConsoleColored.Write($"<@{_virtualEnv.EnvName.ToLower()}>", EnvColor);
-            }
-            ConsoleColored.Write($" {promptPreffix}");
-            ConsoleColored.Write(promptsuffix);
-            ConsoleColored.Write(" ");
+            else
+                Console.Write("|> ");
         }
 
 

@@ -1,20 +1,15 @@
-﻿using REPL.language.ast;
+﻿using REPL.language;
+using REPL.language.ast;
 using REPL.systemfiles.commands;
 using REPL.systemfiles.diagnostics;
 using REPL.utils;
+using System;
 using System.Collections.Immutable;
 
 namespace REPL.core;
 
 internal static class Utils
 {
-    internal static string ReturnCommandLine(string input)
-    {
-        if (input[0] == '.')
-            return input.Substring(1); // Remove the leading '.'
-        else
-            return input;
-    }
 
     // To be removed later when adding the error to Diagnostics.
     internal static void PrintCommandAnalysis(string command)
@@ -53,44 +48,54 @@ internal static class Utils
         Console.WriteLine("Type any expression to evaluate it.");
     }
 
-    internal static void PrintTree(SyntaxNode node, string indent = "", bool isLast = true)
+
+    internal static void PrintSyntaxTree(SyntaxTree syntaxTree, EvaluationResult result)
     {
-        // |__
-        // |--
-        // |
 
-        try
+        //PrintDiagnostics(result.Diagnostics, line);
+        Console.WriteLine();
+
+
+        foreach (var diagnostic in result.Diagnostics)
         {
-            var marker = isLast ? "└──" : "├──";
-            Console.ForegroundColor = ConsoleColor.DarkGray;
+            var lineIndex = syntaxTree.Text.GetLineIndex(diagnostic.Span.Start);
+            var line = syntaxTree.Text.Lines[lineIndex];
+            var lineNumber = lineIndex + 1;
+            var character = diagnostic.Span.Start - line.Start + 1;
 
-            Console.Write($"{indent}{marker}{node.Kind}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"({lineNumber}, {character}): ");
+            Console.WriteLine(diagnostic);
+            Console.ResetColor();
 
-            if (node is SyntaxToken t && t.Value != null)
+            try
             {
-                Console.Write($" ");
-                Console.Write(t.Value);
+
+                var prefixSpan = TextSpan.FromBounds(line.Start, diagnostic.Span.Start);
+                var suffixSpan = TextSpan.FromBounds(diagnostic.Span.End, line.End);
+
+                var prefix = syntaxTree.Text.ToString(prefixSpan);
+                var error = syntaxTree.Text.ToString(diagnostic.Span);
+                var suffix = syntaxTree.Text.ToString(suffixSpan);
+
+                Console.Write("    ");
+                Console.Write(prefix);
+
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write(error);
+                Console.ResetColor();
+
+                Console.WriteLine(suffix);
+
+                Console.WriteLine();
+
             }
-
-            Console.WriteLine();
-
-            indent += isLast ? "   " : "│  ";
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        //throw;
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
-
-        var lastChild = node.GetChildren().LastOrDefault();
-
-        foreach (var child in node.GetChildren())
-        {
-            PrintTree(child, indent, child == lastChild);
-        }
-
-        Console.ResetColor();
     }
 
     internal static void PrintDiagnostics(ImmutableArray<Diagnostic> diagnostics, string input)

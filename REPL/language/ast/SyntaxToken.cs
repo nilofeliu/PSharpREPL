@@ -16,20 +16,9 @@ namespace REPL.language.ast
             Position = position;
             Text = text;
             Value = value;
-            Span = new TextSpan(Position, Text.Length);
-
-            if (Span.Length < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(position),
-                    "Position and length must define a valid span.");
-            }
-
+            Span = new TextSpan(Position, Text?.Length ?? 0);
 
         }
 
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            return Enumerable.Empty<SyntaxNode>();
-        }
     }
 }

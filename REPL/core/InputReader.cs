@@ -3,6 +3,8 @@ using REPL.systemfiles.environments;
 using REPL.systemfiles.settings;
 using REPL.systemfiles.users;
 using REPL.ui;
+using System;
+using System.Text;
 using static REPL.core.Utils;
 
 namespace REPL.core;
@@ -10,20 +12,24 @@ namespace REPL.core;
 public class InputReader
 {
 
+    List<Exception> exceptions = new();
+
     private SysSettings SystemSettings = SysSettings.Instance;
     private PromptStream _promptStream;
-        internal PromptStream Prompt => _promptStream;
+    internal PromptStream Prompt => _promptStream;
 
     private Dictionary<VariableSymbol, object> variables = new();
 
     private bool showTree = true;
     private bool commandMode = false;
 
+    StringBuilder textBuilder = new StringBuilder();
+
     public InputReader()
     {
         VirtualEnv mainEnv = new VirtualEnv();
         UserData userData = new UserData();
-        _promptStream = new PromptStream(userData, mainEnv);
+        _promptStream = new PromptStream(textBuilder, userData, mainEnv);
     }
 
     public void Start()
@@ -39,35 +45,71 @@ public class InputReader
         while (true)
         {
             Prompt.Write();
-            string? line = Console.ReadLine();
+
+            string input = Console.ReadLine();
+            var isBlank = string.IsNullOrWhiteSpace(input);
 
 
-            if (string.IsNullOrEmpty(line))
+            if (textBuilder.Length == 0)
             {
-                    continue;
+                if (isBlank)
+                {
+                    ReplExitMessage.PrintExitMessage();
+                    break;
+                }
+                if (StaticCommands.Run(input) == 1)
+                {
+                    return;
+                }
             }
 
-            var syntaxTree = SyntaxTree.Parse(line);
-            //Utils.PrintTree(syntaxTree.Root);
+            textBuilder.AppendLine(input);
+            var text = textBuilder.ToString();
+
+            var syntaxTree = SyntaxTree.Parse(text);
+
+            if (!isBlank && syntaxTree.Diagnostics.Any())
+            {
+                continue;
+            }
+
+
             var interpreter = new Interpreter(syntaxTree);
             var result = interpreter.Evaluate(variables);
 
 
-            if (!result.Diagnostics.Any())
-            {
-                Console.WriteLine($"{result.Value}");
-            }
-            else
-            {
-                PrintDiagnostics(result.Diagnostics, line);
-            }
-
             if (showTree)
             {
-                Utils.PrintTree(syntaxTree.Root);
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                syntaxTree.Root.WriteTo(Console.Out);
+                Console.ResetColor();
             }
 
 
+            try
+            {
+                if (!result.Diagnostics.Any())
+                {
+                    Console.WriteLine($"{result.Value}");
+                }
+                else
+                {
+                    Utils.PrintSyntaxTree(syntaxTree, result);
+                }
+                textBuilder.Clear();
+            }
+            catch (Exception e)
+            {
+                exceptions.Add(e);
+            }
+
+            if (exceptions.Any())
+            {
+                PrintExceptions(exceptions);
+            }
+            
         }
     }
+
+    
 }
