@@ -39,7 +39,6 @@ namespace CodeGenerator
         {
             string inputDir = args.Length > 0 ? args[0] : "Source";
             string outputDir = args.Length > 1 ? args[1] : "Generated";
-
             if (!Directory.Exists(outputDir))
                 Directory.CreateDirectory(outputDir);
 
@@ -61,7 +60,6 @@ namespace CodeGenerator
                         GenerateGreenClass(node, outputDir);
                         GenerateRedClass(node, outputDir);
                     }
-
                     allNodes.AddRange(nodes);
                 }
                 catch (Exception ex)
@@ -71,50 +69,42 @@ namespace CodeGenerator
             }
 
             GenerateRedFactory(allNodes, outputDir);
-
             Console.WriteLine("Generation complete.");
         }
 
         private static void GenerateRedFactory(List<SyntaxNode> allNodes, string outputDir)
         {
-            string filePath = Path.Combine(outputDir, "SyntaxFactory.cs");
-
+            string filePath = Path.Combine(outputDir, "RedNodeFactory.cs");
             using var writer = new StreamWriter(filePath);
-            writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Kind;");
-            writer.WriteLine("using Minsk.CodeAnalysis.Syntax.InternalSyntax;");
-            writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Nodes.Expressions;");
-            writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Nodes.Statements;");
-            writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Nodes.Declarations;");
-
-            // Add green using directives per category
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green.Expressions;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green.Statements;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Statements;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;");
             foreach (var category in allNodes.Select(n => n.Category).Distinct())
-            {
-                writer.WriteLine($"using Minsk.CodeAnalysis.Syntax.Green.{category}s;");
-            }
-
+                writer.WriteLine($"using PSharp.CodeAnalysis.Syntax.Green.{category}s;");
             writer.WriteLine("using System;");
             writer.WriteLine();
-            writer.WriteLine("namespace Minsk.CodeAnalysis.Syntax");
+            writer.WriteLine("namespace PSharp.CodeAnalysis.Syntax");
             writer.WriteLine("{");
-            writer.WriteLine("    internal static class SyntaxFactory");
+            writer.WriteLine("    public partial class RedNodeFactory");
             writer.WriteLine("    {");
             writer.WriteLine("        public static SyntaxNode CreateRed(GreenNode green, SyntaxNode? parent, int position)");
             writer.WriteLine("        {");
             writer.WriteLine("            return green.Kind switch");
             writer.WriteLine("            {");
-
             foreach (var node in allNodes)
             {
                 string greenClassName = "Green" + StripSyntax(node.Name);
                 writer.WriteLine($"                SyntaxKind.{node.Kind} => new {node.Name}(({greenClassName})green, parent, position),");
             }
-
             writer.WriteLine("                _ => throw new InvalidOperationException($\"Unknown SyntaxKind: {green.Kind}\")");
             writer.WriteLine("            };");
             writer.WriteLine("        }");
             writer.WriteLine("    }");
             writer.WriteLine("}");
-
             Console.WriteLine($"Generated: {filePath}");
         }
 
@@ -152,7 +142,7 @@ namespace CodeGenerator
         {
             string className = "Green" + StripSyntax(node.Name);
             string baseClass = "Green" + node.Base;
-            string ns = $"Minsk.CodeAnalysis.Syntax.Green.{node.Category}s";
+            string ns = $"PSharp.CodeAnalysis.Syntax.Green.{node.Category}s";
             string subDir = Path.Combine(outputDir, "Green", node.Category + "s");
             Directory.CreateDirectory(subDir);
             string filePath = Path.Combine(subDir, className + ".cs");
@@ -161,24 +151,28 @@ namespace CodeGenerator
                 : "";
 
             using var writer = new StreamWriter(filePath);
-            writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Kind;");
-            writer.WriteLine("using Minsk.CodeAnalysis.Syntax.InternalSyntax;");
+            writer.WriteLine("using PSharp.CodeAnalysis;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Diagnostics;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             writer.WriteLine();
             writer.WriteLine($"namespace {ns}");
             writer.WriteLine("{");
             writer.WriteLine($"    internal sealed class {className} : {baseClass}{interfaceClause}");
             writer.WriteLine("    {");
-
+            // Properties
             foreach (var prop in node.Properties)
             {
                 string type = MapToGreenType(prop.Type) + (prop.IsNullable ? "?" : "");
                 writer.WriteLine($"        public {type} {prop.Name} {{ get; }}");
             }
             writer.WriteLine();
-
+            // SlotCount
             writer.WriteLine($"        public override int SlotCount => {node.Properties.Count};");
             writer.WriteLine();
-
+            // GetSlot
             writer.WriteLine("        public override GreenNode? GetSlot(int index) => index switch");
             writer.WriteLine("        {");
             for (int i = 0; i < node.Properties.Count; i++)
@@ -186,8 +180,9 @@ namespace CodeGenerator
             writer.WriteLine("            _ => null");
             writer.WriteLine("        };");
             writer.WriteLine();
-
+            // Constructor
             writer.WriteLine($"        public {className}(");
+            writer.WriteLine($"            SyntaxKind kind,");
             for (int i = 0; i < node.Properties.Count; i++)
             {
                 string type = MapToGreenType(node.Properties[i].Type) + (node.Properties[i].IsNullable ? "?" : "");
@@ -195,25 +190,40 @@ namespace CodeGenerator
                 writer.WriteLine($"            {type} {LowerFirst(node.Properties[i].Name)}{comma}");
             }
             writer.WriteLine("        )");
+            writer.WriteLine("            : base(kind)");
             writer.WriteLine("        {");
             foreach (var prop in node.Properties)
                 writer.WriteLine($"            {prop.Name} = {LowerFirst(prop.Name)};");
             writer.WriteLine("        }");
             writer.WriteLine();
-
+            // Kind override
             writer.WriteLine($"        public override SyntaxKind Kind => SyntaxKind.{node.Kind};");
             writer.WriteLine();
-
+            // Computed properties
             foreach (var computed in node.ComputedProperties)
             {
                 writer.WriteLine($"        public {computed.Type} {computed.Name}");
                 writer.WriteLine($"            => {computed.Expression};");
                 writer.WriteLine();
             }
-
+            // CreateWithDiagnostics
+            writer.WriteLine($"        protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)");
+            writer.WriteLine("        {");
+            writer.WriteLine($"            var node = new {className}(Kind, {string.Join(", ", node.Properties.Select(p => p.Name))});");
+            writer.WriteLine("            node.Diagnostics = diagnostics;");
+            writer.WriteLine("            return node;");
+            writer.WriteLine("        }");
+            writer.WriteLine();
+            // ToFullString
+            writer.WriteLine("        public override string ToFullString()");
+            writer.WriteLine("        {");
+            writer.WriteLine("            var sb = new System.Text.StringBuilder();");
+            writer.WriteLine("            foreach (var child in GetChildren())");
+            writer.WriteLine("                sb.Append(child.ToFullString());");
+            writer.WriteLine("            return sb.ToString();");
+            writer.WriteLine("        }");
             writer.WriteLine("    }");
             writer.WriteLine("}");
-
             Console.WriteLine($"Generated: {filePath}");
         }
 
@@ -221,7 +231,7 @@ namespace CodeGenerator
         {
             string className = node.Name;
             string baseClass = node.Base + "Syntax";
-            string ns = $"Minsk.CodeAnalysis.Syntax.Nodes.{node.Category}s";
+            string ns = $"PSharp.CodeAnalysis.Syntax.Nodes.{node.Category}s";
             string greenClassName = "Green" + StripSyntax(node.Name);
             string subDir = Path.Combine(outputDir, "Syntax", node.Category + "s");
             Directory.CreateDirectory(subDir);
@@ -231,17 +241,21 @@ namespace CodeGenerator
                 : "";
 
             using var writer = new StreamWriter(filePath);
-            writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Kind;");
+            writer.WriteLine("using PSharp.CodeAnalysis;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Diagnostics;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes;");
+            writer.WriteLine($"using PSharp.CodeAnalysis.Syntax.Green.{node.Category}s;");
             writer.WriteLine("using System.Collections.Immutable;");
-            writer.WriteLine($"using Minsk.CodeAnalysis.Syntax.Green.{node.Category}s;");
             writer.WriteLine();
             writer.WriteLine($"namespace {ns}");
             writer.WriteLine("{");
-            writer.WriteLine($"    public sealed class {className} : {baseClass}{interfaceClause}");
+            writer.WriteLine($"    public sealed class {className} : {baseClass}");
             writer.WriteLine("    {");
             writer.WriteLine($"        private readonly {greenClassName} _green;");
             writer.WriteLine();
-
+            // Lazy backing fields
             foreach (var prop in node.Properties)
             {
                 if (!IsToken(prop.Type) && !prop.IsList)
@@ -252,21 +266,20 @@ namespace CodeGenerator
             }
             if (node.Properties.Any(p => !IsToken(p.Type) && !p.IsList))
                 writer.WriteLine();
-
+            // Constructor
             writer.WriteLine($"        internal {className}({greenClassName} green, SyntaxNode? parent, int position)");
             writer.WriteLine($"            : base(parent, green, position)");
             writer.WriteLine("        {");
             writer.WriteLine("            _green = green;");
             writer.WriteLine("        }");
             writer.WriteLine();
-
+            // Kind override
             writer.WriteLine($"        public override SyntaxKind Kind => SyntaxKind.{node.Kind};");
             writer.WriteLine();
-
+            // Properties
             for (int i = 0; i < node.Properties.Count; i++)
             {
                 var prop = node.Properties[i];
-
                 if (IsToken(prop.Type))
                 {
                     string tokenType = "SyntaxToken" + (prop.IsNullable ? "?" : "");
@@ -276,18 +289,18 @@ namespace CodeGenerator
                 else if (prop.IsList)
                 {
                     string elementType = GetListElementRedType(prop.Type);
-                    writer.WriteLine($"        public ImmutableArray<{elementType}> {prop.Name}");
+                    writer.WriteLine($"        public List<{elementType}> {prop.Name}");
                     writer.WriteLine("        {");
                     writer.WriteLine("            get");
                     writer.WriteLine("            {");
-                    writer.WriteLine($"                var builder = ImmutableArray.CreateBuilder<{elementType}>();");
+                    writer.WriteLine($"                var list = new List<{elementType}>();");
                     writer.WriteLine($"                int pos = GetChildPosition({i});");
                     writer.WriteLine($"                foreach (var child in _green.{prop.Name})");
                     writer.WriteLine("                {");
-                    writer.WriteLine($"                    builder.Add(({elementType})child.CreateRed(this, pos));");
+                    writer.WriteLine($"                    list.Add(({elementType})RedNodeFactory.CreateRed(child, this, pos));");
                     writer.WriteLine("                    pos += child.FullWidth;");
                     writer.WriteLine("                }");
-                    writer.WriteLine("                return builder.ToImmutable();");
+                    writer.WriteLine("                return list;");
                     writer.WriteLine("            }");
                     writer.WriteLine("        }");
                 }
@@ -300,17 +313,15 @@ namespace CodeGenerator
                     writer.WriteLine("            get");
                     writer.WriteLine("            {");
                     writer.WriteLine($"                if ({fieldName} == null)");
-                    writer.WriteLine($"                    {fieldName} = ({MapToRedType(prop.Type)})SyntaxFactory.CreateRed(_green.{prop.Name}, this, GetChildPosition({i}));");
+                    writer.WriteLine($"                    {fieldName} = ({MapToRedType(prop.Type)})RedNodeFactory.CreateRed(_green.{prop.Name}, this, GetChildPosition({i}));");
                     writer.WriteLine($"                return {fieldName};");
                     writer.WriteLine("            }");
                     writer.WriteLine("        }");
                 }
                 writer.WriteLine();
             }
-
             writer.WriteLine("    }");
             writer.WriteLine("}");
-
             Console.WriteLine($"Generated: {filePath}");
         }
 
@@ -327,14 +338,14 @@ namespace CodeGenerator
             "VariableDeclarator" => "GreenVariableDeclarator",
             "ParameterList" => "GreenParameterList",
             "AccessorList" => "GreenAccessorList",
-            "StatementList" => "GreenNodeList<GreenStatement>",
-            "ExpressionList" => "GreenNodeList<GreenExpression>",
-            "TokenList" => "GreenNodeList<GreenToken>",
-            "SwitchLabelList" => "GreenNodeList<GreenSwitchLabel>",
-            "VariableDeclaratorList" => "GreenNodeList<GreenVariableDeclarator>",
-            "MemberDeclarationList" => "GreenNodeList<GreenMemberDeclaration>",
-            "EnumMemberDeclarationList" => "GreenNodeList<GreenEnumMemberDeclaration>",
-            "ParameterListItems" => "GreenNodeList<GreenParameter>",
+            "StatementList" => "List<GreenStatement>",
+            "ExpressionList" => "List<GreenExpression>",
+            "TokenList" => "List<GreenToken>",
+            "SwitchLabelList" => "List<GreenSwitchLabel>",
+            "VariableDeclaratorList" => "List<GreenVariableDeclarator>",
+            "MemberDeclarationList" => "List<GreenMemberDeclaration>",
+            "EnumMemberDeclarationList" => "List<GreenEnumMemberDeclaration>",
+            "ParameterListItems" => "List<GreenParameter>",
             _ => "Green" + type
         };
 
@@ -351,14 +362,14 @@ namespace CodeGenerator
             "VariableDeclarator" => "VariableDeclaratorSyntax",
             "ParameterList" => "ParameterListSyntax",
             "AccessorList" => "AccessorListSyntax",
-            "StatementList" => "ImmutableArray<StatementSyntax>",
-            "ExpressionList" => "ImmutableArray<ExpressionSyntax>",
-            "TokenList" => "ImmutableArray<SyntaxToken>",
-            "SwitchLabelList" => "ImmutableArray<SwitchLabelSyntax>",
-            "VariableDeclaratorList" => "ImmutableArray<VariableDeclaratorSyntax>",
-            "MemberDeclarationList" => "ImmutableArray<MemberDeclarationSyntax>",
-            "EnumMemberDeclarationList" => "ImmutableArray<EnumMemberDeclarationSyntax>",
-            "ParameterListItems" => "ImmutableArray<ParameterSyntax>",
+            "StatementList" => "List<StatementSyntax>",
+            "ExpressionList" => "List<ExpressionSyntax>",
+            "TokenList" => "List<SyntaxToken>",
+            "SwitchLabelList" => "List<SwitchLabelSyntax>",
+            "VariableDeclaratorList" => "List<VariableDeclaratorSyntax>",
+            "MemberDeclarationList" => "List<MemberDeclarationSyntax>",
+            "EnumMemberDeclarationList" => "List<EnumMemberDeclarationSyntax>",
+            "ParameterListItems" => "List<ParameterSyntax>",
             _ => type + "Syntax"
         };
 

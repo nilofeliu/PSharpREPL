@@ -44,146 +44,106 @@ public class ExpressionFactoryGenerator
         var literalNodes = GetNodesByInterface(nodes, "ILiteralExpression");
 
         using var writer = new StreamWriter(outputFile);
-        writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Green.Expressions;");
-        writer.WriteLine("using Minsk.CodeAnalysis.Syntax.InternalSyntax;");
-        writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Kind;");
-        writer.WriteLine("using System;");
+writer.WriteLine("using PSharp.CodeAnalysis;");
+writer.WriteLine("using PSharp.CodeAnalysis.Diagnostics;");
+writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
+writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
+writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes;");
+writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
         writer.WriteLine();
-        writer.WriteLine("namespace Minsk.CodeAnalysis.Syntax.Parser");
+        writer.WriteLine("namespace PSharp.CodeAnalysis.Syntax.Parser");
         writer.WriteLine("{");
         writer.WriteLine("    internal static partial class ExpressionFactory");
         writer.WriteLine("    {");
 
         // Binary
-        if (binaryNodes.Any())
-        {
-            writer.WriteLine("        public static GreenExpression CreateBinary(GreenExpression left, GreenToken operatorToken, GreenExpression right)");
-            writer.WriteLine("        {");
-            writer.WriteLine("            return operatorToken.Kind switch");
-            writer.WriteLine("            {");
-            foreach (var node in binaryNodes)
-            {
-                string greenName = "Green" + StripSyntax(node.Name);
-                writer.WriteLine($"                SyntaxKind.{node.OperatorKind} => new {greenName}(left, operatorToken, right),");
-            }
-            writer.WriteLine("                _ => throw new InvalidOperationException($\"Unexpected binary operator: {operatorToken.Kind}\")");
-            writer.WriteLine("            };");
-            writer.WriteLine("        }");
-            writer.WriteLine();
-        }
+        EmitFactory(writer, "CreateBinary",
+            "GreenExpression left, GreenToken operatorToken, GreenExpression right",
+            "Unexpected binary operator",
+            binaryNodes,
+            n => $"new Green{StripSyntax(n.Name)}(left, operatorToken, right)",
+            n => n.OperatorKind);
 
         // Comparison
-        if (comparisonNodes.Any())
-        {
-            writer.WriteLine("        public static GreenExpression CreateComparison(GreenExpression left, GreenToken operatorToken, GreenExpression right)");
-            writer.WriteLine("        {");
-            writer.WriteLine("            return operatorToken.Kind switch");
-            writer.WriteLine("            {");
-            foreach (var node in comparisonNodes)
-            {
-                string greenName = "Green" + StripSyntax(node.Name);
-                writer.WriteLine($"                SyntaxKind.{node.OperatorKind} => new {greenName}(left, operatorToken, right),");
-            }
-            writer.WriteLine("                _ => throw new InvalidOperationException($\"Unexpected comparison operator: {operatorToken.Kind}\")");
-            writer.WriteLine("            };");
-            writer.WriteLine("        }");
-            writer.WriteLine();
-        }
+        EmitFactory(writer, "CreateComparison",
+            "GreenExpression left, GreenToken operatorToken, GreenExpression right",
+            "Unexpected comparison operator",
+            comparisonNodes,
+            n => $"new Green{StripSyntax(n.Name)}(left, operatorToken, right)",
+            n => n.OperatorKind);
 
         // Logical
-        if (logicalNodes.Any())
-        {
-            writer.WriteLine("        public static GreenExpression CreateLogical(GreenExpression left, GreenToken operatorToken, GreenExpression right)");
-            writer.WriteLine("        {");
-            writer.WriteLine("            return operatorToken.Kind switch");
-            writer.WriteLine("            {");
-            foreach (var node in logicalNodes)
-            {
-                string greenName = "Green" + StripSyntax(node.Name);
-                writer.WriteLine($"                SyntaxKind.{node.OperatorKind} => new {greenName}(left, operatorToken, right),");
-            }
-            writer.WriteLine("                _ => throw new InvalidOperationException($\"Unexpected logical operator: {operatorToken.Kind}\")");
-            writer.WriteLine("            };");
-            writer.WriteLine("        }");
-            writer.WriteLine();
-        }
+        EmitFactory(writer, "CreateLogical",
+            "GreenExpression left, GreenToken operatorToken, GreenExpression right",
+            "Unexpected logical operator",
+            logicalNodes,
+            n => $"new Green{StripSyntax(n.Name)}(left, operatorToken, right)",
+            n => n.OperatorKind);
 
-        // Unary — Pre and Post need separate handling
-        if (unaryNodes.Any())
-        {
-            var preNodes = unaryNodes.Where(n => !n.Name.StartsWith("Post")).ToList();
-            var postNodes = unaryNodes.Where(n => n.Name.StartsWith("Post")).ToList();
+        // Prefix Unary
+        var preNodes = unaryNodes.Where(n => !n.Name.StartsWith("Post")).ToList();
+        var postNodes = unaryNodes.Where(n => n.Name.StartsWith("Post")).ToList();
 
-            writer.WriteLine("        public static GreenExpression CreatePrefixUnary(GreenToken operatorToken, GreenExpression operand)");
-            writer.WriteLine("        {");
-            writer.WriteLine("            return operatorToken.Kind switch");
-            writer.WriteLine("            {");
-            foreach (var node in preNodes)
-            {
-                string greenName = "Green" + StripSyntax(node.Name);
-                writer.WriteLine($"                SyntaxKind.{node.OperatorKind} => new {greenName}(operatorToken, operand),");
-            }
-            writer.WriteLine("                _ => throw new InvalidOperationException($\"Unexpected prefix unary operator: {operatorToken.Kind}\")");
-            writer.WriteLine("            };");
-            writer.WriteLine("        }");
-            writer.WriteLine();
+        EmitFactory(writer, "CreatePrefixUnary",
+            "GreenToken operatorToken, GreenExpression operand",
+            "Unexpected prefix unary operator",
+            preNodes,
+            n => $"new Green{StripSyntax(n.Name)}(operatorToken, operand)",
+            n => n.OperatorKind);
 
-            writer.WriteLine("        public static GreenExpression CreatePostfixUnary(GreenExpression operand, GreenToken operatorToken)");
-            writer.WriteLine("        {");
-            writer.WriteLine("            return operatorToken.Kind switch");
-            writer.WriteLine("            {");
-            foreach (var node in postNodes)
-            {
-                string greenName = "Green" + StripSyntax(node.Name);
-                writer.WriteLine($"                SyntaxKind.{node.OperatorKind} => new {greenName}(operand, operatorToken),");
-            }
-            writer.WriteLine("                _ => throw new InvalidOperationException($\"Unexpected postfix unary operator: {operatorToken.Kind}\")");
-            writer.WriteLine("            };");
-            writer.WriteLine("        }");
-            writer.WriteLine();
-        }
+        // Postfix Unary
+        EmitFactory(writer, "CreatePostfixUnary",
+            "GreenExpression operand, GreenToken operatorToken",
+            "Unexpected postfix unary operator",
+            postNodes,
+            n => $"new Green{StripSyntax(n.Name)}(operand, operatorToken)",
+            n => n.OperatorKind);
 
         // Assignment
-        if (assignmentNodes.Any())
-        {
-            writer.WriteLine("        public static GreenExpression CreateAssignment(GreenToken identifierToken, GreenToken operatorToken, GreenExpression expression)");
-            writer.WriteLine("        {");
-            writer.WriteLine("            return operatorToken.Kind switch");
-            writer.WriteLine("            {");
-            foreach (var node in assignmentNodes)
-            {
-                string greenName = "Green" + StripSyntax(node.Name);
-                writer.WriteLine($"                SyntaxKind.{node.OperatorKind} => new {greenName}(identifierToken, operatorToken, expression),");
-            }
-            writer.WriteLine("                _ => throw new InvalidOperationException($\"Unexpected assignment operator: {operatorToken.Kind}\")");
-            writer.WriteLine("            };");
-            writer.WriteLine("        }");
-            writer.WriteLine();
-        }
+        EmitFactory(writer, "CreateAssignment",
+            "GreenToken identifierToken, GreenToken operatorToken, GreenExpression expression",
+            "Unexpected assignment operator",
+            assignmentNodes,
+            n => $"new Green{StripSyntax(n.Name)}(identifierToken, operatorToken, expression)",
+            n => n.OperatorKind);
 
         // Literal
-        if (literalNodes.Any())
-        {
-            writer.WriteLine("        public static GreenExpression CreateLiteral(GreenToken token)");
-            writer.WriteLine("        {");
-            writer.WriteLine("            return token.Kind switch");
-            writer.WriteLine("            {");
-            foreach (var node in literalNodes)
-            {
-                string greenName = "Green" + StripSyntax(node.Name);
-                string tokenKind = node.Kind.Replace("Expression", "Token");
-                writer.WriteLine($"                SyntaxKind.{tokenKind} => new {greenName}(token),");
-            }
-            writer.WriteLine("                _ => throw new InvalidOperationException($\"Invalid literal token kind: {token.Kind}\")");
-            writer.WriteLine("            };");
-            writer.WriteLine("        }");
-            writer.WriteLine();
-        }
+        EmitFactory(writer, "CreateLiteral",
+            "GreenToken token",
+            "Invalid literal token kind",
+            literalNodes,
+            n => $"new Green{StripSyntax(n.Name)}(token)",
+            n => n.Kind.Replace("Expression", "Token"));
 
         writer.WriteLine("    }");
         writer.WriteLine("}");
 
         Console.WriteLine($"Generated: {outputFile}");
+    }
+
+    private static void EmitFactory(
+        StreamWriter writer,
+        string methodName,
+        string parameters,
+        string errorMessage,
+        List<NodeInfo> nodes,
+        Func<NodeInfo, string> bodyExpr,
+        Func<NodeInfo, string> kindSelector)
+    {
+        if (!nodes.Any()) return;
+
+        string switchTarget = parameters.Split(',')[0].Trim().Split(' ').Last();
+
+        writer.WriteLine($"        public static GreenExpression {methodName}({parameters})");
+        writer.WriteLine("        {");
+        writer.WriteLine($"            return {switchTarget}.Kind switch");
+        writer.WriteLine("            {");
+        foreach (var node in nodes)
+            writer.WriteLine($"                SyntaxKind.{kindSelector(node)} => {bodyExpr(node)},");
+        writer.WriteLine($"                _ => throw new InvalidOperationException($\"{errorMessage}: {{{switchTarget}.Kind}}\")");
+        writer.WriteLine("            };");
+        writer.WriteLine("        }");
+        writer.WriteLine();
     }
 
     private static void GenerateParserExpressions(List<NodeInfo> nodes, string outputFile)
@@ -192,16 +152,16 @@ public class ExpressionFactoryGenerator
         var otherNodes = nodes.Where(n => !n.Interfaces.Any()).ToList();
 
         using var writer = new StreamWriter(outputFile);
-        writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Green.Expressions;");
-        writer.WriteLine("using Minsk.CodeAnalysis.Syntax.InternalSyntax;");
-        writer.WriteLine("using Minsk.CodeAnalysis.Syntax.Kind;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green.Expressions;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Syntax.InternalSyntax;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
         writer.WriteLine();
-        writer.WriteLine("namespace Minsk.CodeAnalysis.Syntax.Parser");
+        writer.WriteLine("namespace PSharp.CodeAnalysis.Syntax.Parser");
         writer.WriteLine("{");
         writer.WriteLine("    internal partial class LanguageParser");
         writer.WriteLine("    {");
 
-        // ParseAssignmentExpression template
+        // ParseAssignmentExpression
         writer.WriteLine("        private GreenExpression ParseAssignmentExpression()");
         writer.WriteLine("        {");
         writer.WriteLine("            if (PeekToken(0).Kind == SyntaxKind.IdentifierToken &&");
@@ -216,7 +176,7 @@ public class ExpressionFactoryGenerator
         writer.WriteLine("        }");
         writer.WriteLine();
 
-        // ParseOperatorExpression template
+        // ParseOperatorExpression
         writer.WriteLine("        private GreenExpression ParseOperatorExpression(int parentPrecedence = 0)");
         writer.WriteLine("        {");
         writer.WriteLine("            GreenExpression left;");
@@ -238,9 +198,9 @@ public class ExpressionFactoryGenerator
         writer.WriteLine("                    break;");
         writer.WriteLine("                var operatorToken = EatToken();");
         writer.WriteLine("                var right = ParseOperatorExpression(precedence);");
-        writer.WriteLine("                left = CurrentToken.Kind.IsComparisonOperator()");
+        writer.WriteLine("                left = operatorToken.Kind.IsComparisonOperator()");
         writer.WriteLine("                    ? ExpressionFactory.CreateComparison(left, operatorToken, right)");
-        writer.WriteLine("                    : CurrentToken.Kind.IsLogicalOperator()");
+        writer.WriteLine("                    : operatorToken.Kind.IsLogicalOperator()");
         writer.WriteLine("                        ? ExpressionFactory.CreateLogical(left, operatorToken, right)");
         writer.WriteLine("                        : ExpressionFactory.CreateBinary(left, operatorToken, right);");
         writer.WriteLine("            }");
@@ -248,19 +208,17 @@ public class ExpressionFactoryGenerator
         writer.WriteLine("        }");
         writer.WriteLine();
 
-        // ParsePrimaryExpression dispatch
+        // ParsePrimaryExpression
         writer.WriteLine("        private GreenExpression ParsePrimaryExpression()");
         writer.WriteLine("        {");
         writer.WriteLine("            return CurrentToken.Kind switch");
         writer.WriteLine("            {");
-        // Literals
         foreach (var node in literalNodes)
         {
             string methodName = "Parse" + StripSyntax(node.Name);
             string tokenKind = node.Kind.Replace("Expression", "Token");
             writer.WriteLine($"                SyntaxKind.{tokenKind} => {methodName}(),");
         }
-        // Name and parenthesized
         writer.WriteLine("                SyntaxKind.IdentifierToken => ParseNameExpression(),");
         writer.WriteLine("                SyntaxKind.OpenParenthesisToken => ParseParenthesizedExpression(),");
         writer.WriteLine("                _ => ParseNameExpression() // fallback");
@@ -268,7 +226,7 @@ public class ExpressionFactoryGenerator
         writer.WriteLine("        }");
         writer.WriteLine();
 
-        // Generate individual Parse* methods for literals and other nodes
+        // Individual Parse* methods for literals and other nodes
         foreach (var node in literalNodes.Concat(otherNodes))
         {
             string greenName = "Green" + StripSyntax(node.Name);
@@ -284,8 +242,8 @@ public class ExpressionFactoryGenerator
                 switch (propType)
                 {
                     case "Token":
-                        string tokenKind = node.Kind.Replace("Expression", "Token");
-                        writer.WriteLine($"            var {varName} = EatToken(SyntaxKind.{tokenKind});");
+                        // Use property name to derive token kind
+                        writer.WriteLine($"            var {varName} = EatToken(SyntaxKind.{propName});");
                         break;
                     case "Expression":
                         writer.WriteLine($"            var {varName} = ParseExpression();");
