@@ -1,13 +1,12 @@
-﻿using PSharp.CodeAnalysis;
-using PSharp.CodeAnalysis.Diagnostics;
+﻿using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using System.Collections.Generic;
 
-namespace PSharp.CodeAnalysis.Syntax.InternalSyntax
+namespace PSharp.CodeAnalysis.Syntax.Green
 {
     public abstract class GreenNode
     {
-        public SyntaxKind Kind { get; }
+        public virtual SyntaxKind Kind { get; }
         public int FullWidth { get; protected set; } // length including trivia
         public int Width => FullWidth - LeadingWidth - TrailingWidth;
         public virtual int LeadingWidth { get; protected set; } // leading trivia length

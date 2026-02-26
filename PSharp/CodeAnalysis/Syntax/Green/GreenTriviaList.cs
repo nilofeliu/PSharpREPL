@@ -1,7 +1,8 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
+using PSharp.CodeAnalysis.Syntax.InternalSyntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 
-namespace PSharp.CodeAnalysis.Syntax.InternalSyntax;
+namespace PSharp.CodeAnalysis.Syntax.Green;
 
 internal sealed class GreenTriviaList : GreenNode
 {

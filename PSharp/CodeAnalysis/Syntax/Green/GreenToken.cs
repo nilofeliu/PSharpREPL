@@ -1,8 +1,9 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
+using PSharp.CodeAnalysis.Syntax.InternalSyntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using System.Text;
 
-namespace PSharp.CodeAnalysis.Syntax.InternalSyntax;
+namespace PSharp.CodeAnalysis.Syntax.Green;
 
 public sealed class GreenToken : GreenNode
 {
