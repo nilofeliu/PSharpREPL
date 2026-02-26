@@ -1,6 +1,6 @@
-﻿using Minsk.CodeAnalysis;
-using Minsk.CodeAnalysis.Syntax;
-using Minsk.CodeAnalysis.Syntax.Kind;
+﻿using Minsk.CodeAnalysis.Syntax;
+using PSharp.CodeAnalysis;
+using PSharp.CodeAnalysis.Syntax.Kind;
 
 namespace Minsk.Tests.CodeAnalysis.Syntax;
 

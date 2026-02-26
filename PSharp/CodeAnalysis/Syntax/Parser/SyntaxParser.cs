@@ -3,8 +3,6 @@ using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax.InternalSyntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
-using PSharp.CodeAnalysis.Syntax.Nodes.Statements;
 using PSharp.CodeAnalysis.Syntax.Parser;
 using PSharp.CodeAnalysis.Text;
 using System.Diagnostics;

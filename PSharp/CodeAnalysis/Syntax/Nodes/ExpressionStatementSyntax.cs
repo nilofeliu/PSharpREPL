@@ -1,7 +1,6 @@
 ﻿using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
 
-namespace PSharp.CodeAnalysis.Syntax.Nodes.Statements
+namespace PSharp.CodeAnalysis.Syntax.Nodes
 {
     public sealed class ExpressionStatementSyntax : StatementSyntax
     {

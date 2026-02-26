@@ -1,6 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿using PSharp.CodeAnalysis.Text;
+using System.Collections.Immutable;
 using System.Text;
-using Minsk.CodeAnalysis.Text;
 
 namespace PSharp.Tests.CodeAnalysis
 {

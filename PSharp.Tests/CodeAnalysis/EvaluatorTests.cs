@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Minsk.CodeAnalysis;
-using Minsk.CodeAnalysis.Compilations;
-using Minsk.CodeAnalysis.Symbols;
-using Xunit;
+﻿using PSharp.CodeAnalysis;
+using PSharp.CodeAnalysis.Compilations;
+using PSharp.CodeAnalysis.Symbols;
 
 namespace PSharp.Tests.CodeAnalysis
 {

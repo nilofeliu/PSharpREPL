@@ -1,4 +1,4 @@
-﻿using Minsk.CodeAnalysis.Text;
+﻿using PSharp.CodeAnalysis.Text;
 
 namespace PSharp.Tests.CodeAnalysis.Text;
 

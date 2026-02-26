@@ -440,19 +440,35 @@ internal abstract class Repl
         Console.ResetColor();
     }
 
+    private static string FindRepoRoot()
+    {
+        var dir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+        while (dir != null)
+        {
+            if (dir.GetFiles("*.sln").Any())
+                return dir.FullName;
+            dir = dir.Parent;
+        }
+        throw new InvalidOperationException("Could not find solution root.");
+    }
+
     protected static void RunCodeGenerator()
     {
-        var inputDir = @"E:\REPOSITORY\Compilers\minsk2\CodeGenerator\Source";
-        var outputDir = @"E:\REPOSITORY\Compilers\minsk2\Temp\GeneratedSyntax";
+        var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        var repoRoot = FindRepoRoot(); // Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\..\..\"));
+        var inputDir = Path.Combine(repoRoot, "CodeGenerator", "Source");
+        var outputDir = Path.Combine(repoRoot, "PSharp", "CodeAnalysis", "Syntax", "Generated");
         CodeGenerator.SyntaxNodeGenerator.Run(new[] { inputDir, outputDir });
         Console.WriteLine("Code generation complete.");
     }
 
     protected static void RunParserGenerator()
     {
-        var inputFile = @"E:\REPOSITORY\Compilers\minsk2\CodeGenerator\Source\Expressions.xml";
-        var factoryFile = @"E:\REPOSITORY\Compilers\minsk2\Temp\GeneratedSyntax\ExpressionFactory.cs";
-        var parserFile = @"E:\REPOSITORY\Compilers\minsk2\Temp\GeneratedSyntax\LanguageParser.Expressions.cs";
+        var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        var repoRoot = FindRepoRoot(); //Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\..\..\"));
+        var inputFile = Path.Combine(repoRoot, "CodeGenerator", "Source", "Expressions.xml");
+        var factoryFile = Path.Combine(repoRoot, "PSharp", "CodeAnalysis", "Syntax", "Generated", "ExpressionFactory.cs");
+        var parserFile = Path.Combine(repoRoot, "PSharp", "CodeAnalysis", "Syntax", "Generated", "LanguageParser.Expressions.cs");
         CodeGenerator.ExpressionFactoryGenerator.Run(new[] { inputFile, factoryFile, parserFile });
         Console.WriteLine("Parser generation complete.");
     }

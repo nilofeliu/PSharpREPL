@@ -1,6 +1,5 @@
 ﻿using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
 using System.Collections.Immutable;
 
 namespace PSharp.CodeAnalysis.Syntax.Nodes.Statements;

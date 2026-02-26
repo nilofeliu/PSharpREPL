@@ -1,5 +1,5 @@
-﻿using Minsk.CodeAnalysis;
-using Minsk.CodeAnalysis.Syntax.Kind;
+﻿using PSharp.CodeAnalysis;
+using PSharp.CodeAnalysis.Syntax.Kind;
 
 namespace PSharp.Tests.CodeAnalysis.Syntax;
 
