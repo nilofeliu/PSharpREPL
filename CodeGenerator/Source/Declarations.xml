@@ -1,0 +1,168 @@
+<SyntaxNodes>
+<!-- EqualsValueClauseSyntax - the = value part -->
+<SyntaxNode Name="EqualsValueClauseSyntax" Base="Statement" Kind="EqualsValueClause" Category="Statement">
+    <Property Name="EqualsToken" Type="Token" />
+    <Property Name="Value" Type="Expression" />
+</SyntaxNode>
+
+<!-- VariableDeclaratorSyntax - single variable with optional initializer -->
+<SyntaxNode Name="VariableDeclaratorSyntax" Base="Statement" Kind="VariableDeclarator" Category="Statement">
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="Initializer" Type="EqualsValueClause" Nullable="true" />
+</SyntaxNode>
+
+<!-- VariableDeclarationSyntax - type + one or more declarators -->
+<SyntaxNode Name="VariableDeclarationSyntax" Base="Statement" Kind="VariableDeclaration" Category="Statement">
+    <Property Name="Keyword" Type="Token" />
+    <Property Name="Type" Type="Token" Nullable="true" />
+    <Property Name="Variables" Type="VariableDeclaratorList" />
+</SyntaxNode>
+
+<!-- LocalDeclarationStatementSyntax - full statement -->
+<SyntaxNode Name="LocalDeclarationStatementSyntax" Base="Statement" Kind="LocalDeclarationStatement" Category="Statement">
+    <Property Name="Keyword" Type="Token" />
+    <Property Name="Declaration" Type="VariableDeclaration" />
+</SyntaxNode>
+
+<!-- ── Namespace / Using ─────────────────────────────────────────────── -->
+
+<!-- NamespaceDeclarationSyntax
+<SyntaxNode Name="NamespaceDeclarationSyntax" Base="Declaration" Kind="NamespaceDeclaration" Category="Declaration">
+    <Property Name="NamespaceKeyword" Type="Token" />
+    <Property Name="Name" Type="Expression" />
+    <Property Name="ColonToken" Type="Token" />
+    <Property Name="Members" Type="MemberDeclarationList" />
+    <Property Name="EndKeyword" Type="Token" />
+</SyntaxNode>
+-->
+
+<!-- UsingDirectiveSyntax
+<SyntaxNode Name="UsingDirectiveSyntax" Base="Declaration" Kind="UsingDirective" Category="Declaration">
+    <Property Name="UsingKeyword" Type="Token" />
+    <Property Name="Name" Type="Expression" />
+</SyntaxNode>
+-->
+
+<!-- ── Type Declarations ─────────────────────────────────────────────── -->
+
+<!-- ClassDeclarationSyntax
+<SyntaxNode Name="ClassDeclarationSyntax" Base="Declaration" Kind="ClassDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="ClassKeyword" Type="Token" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="ColonToken" Type="Token" />
+    <Property Name="Members" Type="MemberDeclarationList" />
+    <Property Name="EndKeyword" Type="Token" />
+</SyntaxNode>
+-->
+
+<!-- StructDeclarationSyntax
+<SyntaxNode Name="StructDeclarationSyntax" Base="Declaration" Kind="StructDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="StructKeyword" Type="Token" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="ColonToken" Type="Token" />
+    <Property Name="Members" Type="MemberDeclarationList" />
+    <Property Name="EndKeyword" Type="Token" />
+</SyntaxNode>
+-->
+
+<!-- InterfaceDeclarationSyntax
+<SyntaxNode Name="InterfaceDeclarationSyntax" Base="Declaration" Kind="InterfaceDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="InterfaceKeyword" Type="Token" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="ColonToken" Type="Token" />
+    <Property Name="Members" Type="MemberDeclarationList" />
+    <Property Name="EndKeyword" Type="Token" />
+</SyntaxNode>
+-->
+
+<!-- EnumDeclarationSyntax
+<SyntaxNode Name="EnumDeclarationSyntax" Base="Declaration" Kind="EnumDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="EnumKeyword" Type="Token" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="ColonToken" Type="Token" />
+    <Property Name="Members" Type="EnumMemberDeclarationList" />
+    <Property Name="EndKeyword" Type="Token" />
+</SyntaxNode>
+-->
+
+<!-- DelegateDeclarationSyntax
+<SyntaxNode Name="DelegateDeclarationSyntax" Base="Declaration" Kind="DelegateDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="DelegateKeyword" Type="Token" />
+    <Property Name="ReturnType" Type="Token" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="ParameterList" Type="ParameterList" />
+</SyntaxNode>
+-->
+
+<!-- ── Member Declarations ───────────────────────────────────────────── -->
+
+<!-- MethodDeclarationSyntax
+<SyntaxNode Name="MethodDeclarationSyntax" Base="Declaration" Kind="MethodDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="ReturnType" Type="Token" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="ParameterList" Type="ParameterList" />
+    <Property Name="ColonToken" Type="Token" />
+    <Property Name="Body" Type="Block" />
+    <Property Name="EndKeyword" Type="Token" />
+</SyntaxNode>
+-->
+
+<!-- ConstructorDeclarationSyntax
+<SyntaxNode Name="ConstructorDeclarationSyntax" Base="Declaration" Kind="ConstructorDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="ParameterList" Type="ParameterList" />
+    <Property Name="ColonToken" Type="Token" />
+    <Property Name="Body" Type="Block" />
+    <Property Name="EndKeyword" Type="Token" />
+</SyntaxNode>
+-->
+
+<!-- PropertyDeclarationSyntax
+<SyntaxNode Name="PropertyDeclarationSyntax" Base="Declaration" Kind="PropertyDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="Type" Type="Token" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="ColonToken" Type="Token" />
+    <Property Name="Accessors" Type="AccessorList" />
+    <Property Name="EndKeyword" Type="Token" />
+</SyntaxNode>
+-->
+
+<!-- FieldDeclarationSyntax
+<SyntaxNode Name="FieldDeclarationSyntax" Base="Declaration" Kind="FieldDeclaration" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="Declaration" Type="VariableDeclaration" />
+</SyntaxNode>
+-->
+
+<!-- EnumMemberDeclarationSyntax
+<SyntaxNode Name="EnumMemberDeclarationSyntax" Base="Declaration" Kind="EnumMemberDeclaration" Category="Declaration">
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="Initializer" Type="EqualsValueClause" Nullable="true" />
+</SyntaxNode>
+-->
+
+<!-- ParameterSyntax
+<SyntaxNode Name="ParameterSyntax" Base="Declaration" Kind="Parameter" Category="Declaration">
+    <Property Name="Modifiers" Type="TokenList" />
+    <Property Name="Type" Type="Token" />
+    <Property Name="Identifier" Type="Token" />
+    <Property Name="Default" Type="EqualsValueClause" Nullable="true" />
+</SyntaxNode>
+-->
+
+<!-- ParameterListSyntax
+<SyntaxNode Name="ParameterListSyntax" Base="Declaration" Kind="ParameterList" Category="Declaration">
+    <Property Name="OpenParenthesisToken" Type="Token" />
+    <Property Name="Parameters" Type="ParameterList" />
+    <Property Name="CloseParenthesisToken" Type="Token" />
+</SyntaxNode>
+-->
+</SyntaxNodes>

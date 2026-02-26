@@ -1,0 +1,326 @@
+﻿using PSharp.CodeAnalysis.Binding.Expressions;
+using PSharp.CodeAnalysis.Binding.Kind;
+using PSharp.CodeAnalysis.Binding.Statements;
+using PSharp.CodeAnalysis.Compilations;
+using PSharp.CodeAnalysis.Syntax.Kind;
+using System.Collections.Immutable;
+
+namespace PSharp.CodeAnalysis.Binding;
+
+internal abstract class BoundTreeRewrite
+{
+    public virtual BoundStatement RewriteStatement(BoundStatement node)
+    {
+        switch (node.Kind)
+        {
+
+            case BoundNodeKind.BlockStatement:
+                return RewriteBlockStatement((BoundBlockStatement)node);
+            case BoundNodeKind.VariableDeclaration:
+                return RewriteVariableDeclaration((BoundVariableDeclarationStatement)node);
+            case BoundNodeKind.IfStatement:
+                return RewriteIfStatement((BoundIfStatement)node);
+            case BoundNodeKind.WhileStatement:
+                return RewriteWhileStatement((BoundWhileStatement)node);
+            case BoundNodeKind.DoWhileStatement:
+                return RewriteDoWhileStatement((BoundDoWhileStatement)node);
+            case BoundNodeKind.ForStatement:
+                return RewriteForStatement((BoundForStatement)node);
+            case BoundNodeKind.SwitchStatement:
+                return RewriteSwitchStatement((BoundSwitchStatement)node);
+            case BoundNodeKind.LabelStatement:
+                return RewriteLabelStatement((BoundLabelStatement)node);
+            case BoundNodeKind.GotoStatement:
+                return RewriteGotoStatement((BoundGotoStatement)node);
+            case BoundNodeKind.ConditionalGotoStatement:
+                return RewriteConditionalGotoStatement((BoundConditionalGotoStatement)node);
+
+            case BoundNodeKind.ExpressionStatement:
+                return RewriteExpressionStatement((BoundExpressionStatement)node);
+            default:
+                throw new Exception($"Unexpecte node : {node.Kind}");
+        }
+    }
+
+    protected virtual BoundStatement RewriteBlockStatement(BoundBlockStatement node)
+    {
+        ImmutableArray<BoundStatement>.Builder builder = null;
+
+        for (var i = 0; i < node.Statements.Length; i++)
+        {
+            BoundStatement oldStatement = node.Statements[i];
+            var newStatement = RewriteStatement(oldStatement);
+
+            if (newStatement != oldStatement)
+            {
+                if (builder == null)
+                {
+                    builder = ImmutableArray.CreateBuilder<BoundStatement>(node.Statements.Length);
+                    for (var j = 0; j < i; j++)
+                    {
+                        builder.Add(node.Statements[j]);
+                    }
+                }
+            }
+
+            if (builder != null)
+                builder.Add(newStatement);
+        }
+
+        if (builder == null)
+            return node;
+
+        return new BoundBlockStatement(builder.MoveToImmutable());
+    }
+
+    protected virtual BoundStatement RewriteVariableDeclaration(BoundVariableDeclarationStatement node)
+    {
+        var initializer = RewriteExpression(node.Initializer);
+        if (initializer == node.Initializer)
+            return node;
+
+        return new BoundVariableDeclarationStatement(node.Variable, initializer);
+    }
+
+    protected virtual BoundStatement RewriteIfStatement(BoundIfStatement node)
+    {
+        var condition = RewriteExpression(node.Condition);
+        var thenStatement = RewriteStatement(node.ThenStatement);
+        var elseStatement = node.ElseStatement == null ? null :
+            RewriteStatement(node.ElseStatement);
+
+        if (condition == node.Condition && thenStatement == node.ThenStatement && elseStatement == node.ElseStatement)
+            return node;
+        
+        return new BoundIfStatement(condition, thenStatement, elseStatement); 
+    }
+
+    protected virtual BoundStatement RewriteWhileStatement(BoundWhileStatement node)
+    {
+        var condition = RewriteExpression(node.Condition);
+        var body = RewriteStatement(node.Body);
+
+        if (condition == node.Condition && body == node.Body)
+            return node;
+
+
+        return new BoundWhileStatement(condition,body);
+    }
+
+    protected virtual BoundStatement RewriteDoWhileStatement(BoundDoWhileStatement node)
+    {
+        var condition = RewriteExpression(node.Condition);
+        var body = RewriteStatement(node.Body);
+
+        if (condition == node.Condition && body == node.Body)
+            return node;
+
+        return new BoundDoWhileStatement(condition, body);
+    }
+
+    protected virtual BoundStatement RewriteForStatement(BoundForStatement node)
+    {
+        var lowerBound = RewriteExpression(node.LowerBound);
+        var upperBound = RewriteExpression(node.UpperBound);
+        var body = RewriteStatement(node.Body);
+        if (lowerBound == node.LowerBound && upperBound == node.UpperBound && body == node.Body)
+            return node;
+
+        return new BoundForStatement(node.Variable, lowerBound, upperBound, body);
+    }
+
+    protected virtual BoundStatement RewriteForeachStatement(BoundForeachStatement node)
+    {
+        var collection = RewriteExpression(node.Collection);
+        var body = RewriteStatement(node.Body);
+        if (collection == node.Collection && body == node.Body)
+            return node;
+        return new BoundForeachStatement(node.Variable, collection, body);
+    }
+
+    protected virtual BoundStatement RewriteSwitchStatement(BoundSwitchStatement node)
+    {
+        BoundStatement? result = null;
+
+        if (node.DefaultCase != null)
+        {
+            result = node.DefaultCase.Body;
+        }
+
+        if (node.Cases.HasValue)
+        {
+            for (int i = node.Cases.Value.Length - 1; i >= 0; i--)
+            {
+                var caseClause = node.Cases.Value[i];
+
+                // Skip empty cases - they'll be combined with the next non-empty case
+                if (caseClause.Body == null ||
+                    caseClause.Body is BoundBlockStatement block && block.Statements.Length == 0)
+                {
+                    continue;
+                }
+
+                // Collect conditions from this case and any preceding empty cases that fall through
+                var conditions = new List<BoundExpression>();
+
+                // Add current case condition
+                var currentCondition = new BoundBinaryExpression(
+                    node.Pattern,
+                    BoundBinaryOperator.Bind(SyntaxKind.EqualsEqualsToken,
+                                             node.Pattern.Type,
+                                             caseClause.Pattern.Type),
+                    caseClause.Pattern
+                );
+                conditions.Add(currentCondition);
+
+                // Look backwards for empty cases that fall through to this one
+                for (int j = i - 1; j >= 0; j--)
+                {
+                    var prevCase = node.Cases.Value[j];
+                    if (prevCase.Body != null &&
+                        !(prevCase.Body is BoundBlockStatement b && b.Statements.Length == 0))
+                    {
+                        break; // Hit a non-empty case, stop
+                    }
+
+                    // Add this empty case's condition
+                    var prevCondition = new BoundBinaryExpression(
+                        node.Pattern,
+                        BoundBinaryOperator.Bind(SyntaxKind.EqualsEqualsToken,
+                                                 node.Pattern.Type,
+                                                 prevCase.Pattern.Type),
+                        prevCase.Pattern
+                    );
+                    conditions.Add(prevCondition);
+                    i--; // Skip this case in the outer loop
+                }
+
+                // Combine all conditions with OR
+                BoundExpression combinedCondition = conditions[0];
+                for (int k = 1; k < conditions.Count; k++)
+                {
+                    combinedCondition = new BoundBinaryExpression(
+                        combinedCondition,
+                        BoundBinaryOperator.Bind(SyntaxKind.PipePipeToken,
+                                                Compilation.typeOf(SpecialType.System_Int32),
+                                                Compilation.typeOf(SpecialType.System_Int32)),
+                        conditions[k]
+                    );
+                }
+
+                var thenStatement = caseClause.Body;
+                var elseStatement = result;
+
+                result = RewriteIfStatement(new BoundIfStatement(combinedCondition, thenStatement, elseStatement));
+            }
+        }
+
+        return result ?? new BoundBlockStatement(ImmutableArray<BoundStatement>.Empty);
+    }
+
+    protected virtual BoundStatement RewriteLabelStatement(BoundLabelStatement node)
+    {
+        return node;
+    }
+
+    protected virtual BoundStatement RewriteGotoStatement(BoundGotoStatement node)
+    {
+        return node;
+    }
+
+    protected virtual BoundStatement RewriteConditionalGotoStatement(BoundConditionalGotoStatement node)
+    {
+        var condition = RewriteExpression(node.Condition);
+        if (condition == node.Condition)
+            return node;
+
+        return new BoundConditionalGotoStatement(node.Label, condition, node.JumpIfTrue);
+    }
+
+    protected virtual BoundStatement RewriteExpressionStatement(BoundExpressionStatement node)
+    {
+        var expression = RewriteExpression(node.Expression);
+        if (expression == node.Expression)
+            return node;
+
+        return new BoundExpressionStatement(expression);
+    }
+
+    public virtual BoundExpression RewriteExpression(BoundExpression node)
+    {
+        switch (node.Kind)
+        {
+            case BoundNodeKind.LiteralExpression:
+                return RewriteLiteralExpression((BoundLiteralExpression)node);
+            case BoundNodeKind.VoidExpression:
+                return RewriteVoidExpression((BoundVoidExpression)node);
+            case BoundNodeKind.NullExpression:
+                return RewriteNullExpression((BoundNullExpression)node);
+            case BoundNodeKind.VariableExpression:
+                return RewriteVariableExpression((BoundVariableExpression)node);
+            case BoundNodeKind.AssignmentExpression:
+                return RewriteAssignmentExpression((BoundAssignmentExpression)node);
+            case BoundNodeKind.ConversionExpression:
+                return RewriteConversionExpression((BoundConversionExpression) node);
+            case BoundNodeKind.UnaryExpression:
+                return RewriteUnaryExpression((BoundUnaryExpression)node);
+            case BoundNodeKind.BinaryExpression:
+                return RewriteBinaryExpression((BoundBinaryExpression)node);
+            default:
+                throw new Exception($"Unexpecte node : {node.Kind}");
+        }
+    }
+    protected virtual BoundExpression RewriteBinaryExpression(BoundBinaryExpression node)
+    {
+        var left = RewriteExpression(node.Left);
+        var right = RewriteExpression(node.Right);
+        if (left == node.Left && right == node.Right)
+            return node;
+        return new BoundBinaryExpression(left, node.Op, right);
+    }
+
+    protected virtual BoundExpression RewriteUnaryExpression(BoundUnaryExpression node)
+    {
+        var operand = RewriteExpression(node.Operand);
+        if (operand == node.Operand)
+            return node;
+
+        return new BoundUnaryExpression(node.Op, operand);
+    }
+    protected virtual BoundExpression RewriteConversionExpression(BoundConversionExpression node)
+    {
+        var expression = RewriteExpression(node.Expression);
+        if (expression == node.Expression)
+            return node;
+        return new BoundConversionExpression(node.Type, expression, node.ConversionKind);
+    }
+    protected virtual BoundExpression RewriteAssignmentExpression(BoundAssignmentExpression node)
+    {
+        var expression = RewriteExpression(node.Expression);
+        if (expression == node.Expression)
+            return node;
+
+        return new BoundAssignmentExpression(node.Variable, expression);
+    }
+
+    protected virtual BoundExpression RewriteVoidExpression(BoundVoidExpression node)
+    {
+        return node;
+    }
+    protected virtual BoundExpression RewriteNullExpression(BoundNullExpression node)
+    {
+        return node;
+    }
+
+    protected virtual BoundExpression RewriteVariableExpression(BoundVariableExpression node)
+    {
+        return node;
+    }
+
+    protected virtual BoundExpression RewriteLiteralExpression(BoundLiteralExpression node)
+    {
+        return node;
+    }
+
+}
+
