@@ -1,6 +1,6 @@
 ﻿using PSharp.CodeAnalysis.Syntax.Internal;
 
-namespace Minsk.CodeAnalysis.Syntax;
+namespace PSharp.CodeAnalysis.Syntax;
 public static partial class SyntaxFacts
 {
     static SyntaxFacts()

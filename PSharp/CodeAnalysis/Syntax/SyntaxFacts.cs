@@ -2,7 +2,8 @@
 using PSharp.CodeAnalysis.Syntax.Internal;
 using PSharp.CodeAnalysis.Syntax.Kind;
 
-namespace Minsk.CodeAnalysis.Syntax;
+
+namespace PSharp.CodeAnalysis.Syntax;
 
 public static partial class SyntaxFacts
 {

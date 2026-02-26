@@ -1,7 +1,7 @@
 ﻿using PSharp.CodeAnalysis.Symbols;
 using PSharp.CodeAnalysis.Syntax.Kind;
 
-namespace Minsk.CodeAnalysis.Syntax
+namespace PSharp.CodeAnalysis.Syntax
 {
     public static partial class SyntaxFacts
     {
@@ -12,7 +12,7 @@ namespace Minsk.CodeAnalysis.Syntax
         {
     
             var list = new List<SyntaxSymbol>();
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ParenthesizedExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ParenthesizedExpression, ""));
             //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ConditionalExpression, ""));
             //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.InvocationExpression, ""));
             //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ElementAccessExpression, ""));
@@ -85,18 +85,18 @@ namespace Minsk.CodeAnalysis.Syntax
         internal static List<SyntaxSymbol> LoadBinaryAssignmentExpressions()
         {
             var list = new List<SyntaxSymbol>();
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.SimpleAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.AddAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.SubtractAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.MultiplyAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.DivideAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ModuloAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.AndAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ExclusiveOrAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.OrAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LeftShiftAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.RightShiftAssignmentExpression, ""));
-            //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.CoalesceAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.SimpleAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.AddAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.SubtractAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.MultiplyAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.DivideAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ModuloAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.AndAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ExclusiveOrAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.OrAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LeftShiftAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.RightShiftAssignmentExpression, ""));
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.CoalesceAssignmentExpression, ""));
             //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.UnsignedRightShiftAssignmentExpression, ""));
             return list;
         }

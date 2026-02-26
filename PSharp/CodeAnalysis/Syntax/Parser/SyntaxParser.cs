@@ -1,13 +1,14 @@
 ﻿using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.InternalSyntax;
+using PSharp.CodeAnalysis.Syntax;
+using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Syntax.Nodes;
 using PSharp.CodeAnalysis.Syntax.Parser;
 using PSharp.CodeAnalysis.Text;
 using System.Diagnostics;
 
-namespace Minsk.CodeAnalysis.Syntax.Parser;
+namespace PSharp.CodeAnalysis.Syntax.Parser;
 
 
 /// <summary>

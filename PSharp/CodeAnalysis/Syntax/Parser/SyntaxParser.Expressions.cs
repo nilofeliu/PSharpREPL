@@ -1,8 +1,9 @@
-﻿using PSharp.CodeAnalysis.Syntax.Kind;
+﻿using PSharp.CodeAnalysis.Syntax;
+using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Syntax.Nodes;
 using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
 
-namespace Minsk.CodeAnalysis.Syntax.Parser
+namespace PSharp.CodeAnalysis.Syntax.Parser
     {
         internal partial class SyntaxParser
         {

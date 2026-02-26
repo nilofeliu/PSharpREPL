@@ -6,7 +6,7 @@ using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
 using PSharp.CodeAnalysis.Syntax.Nodes.Statements;
 using System.Collections.Immutable;
 
-namespace Minsk.CodeAnalysis.Syntax.Parser
+namespace PSharp.CodeAnalysis.Syntax.Parser
 {
     internal partial class SyntaxParser
     {
@@ -122,11 +122,11 @@ namespace Minsk.CodeAnalysis.Syntax.Parser
                 var nestedElseClause = ParseElseClause();
 
                 // Synthesize an if statement for the else‑if part
-                var syntheticIfKeyword = SyntaxFactory.Token(SyntaxKind.IfKeyword, "if");
+                var syntheticIfKeyword = SyntaxNodeFactory.Token(SyntaxKind.IfKeyword, "if");
                 var redIfKeyword = new SyntaxToken(syntheticIfKeyword, null, 0);
-                var syntheticColon = SyntaxFactory.Token(SyntaxKind.ColonToken, ":");
+                var syntheticColon = SyntaxNodeFactory.Token(SyntaxKind.ColonToken, ":");
                 var redColon = new SyntaxToken(syntheticColon, null, 1);
-                var syntheticEnd = SyntaxFactory.Token(SyntaxKind.EndKeyword, "end");
+                var syntheticEnd = SyntaxNodeFactory.Token(SyntaxKind.EndKeyword, "end");
                 var redEndKeyword = new SyntaxToken(syntheticEnd, null, 3);
                 var syntheticIf = new IfStatementSyntax(redIfKeyword, condition, redColon,
                                                        caseStatement, nestedElseClause, redEndKeyword);
@@ -203,9 +203,9 @@ namespace Minsk.CodeAnalysis.Syntax.Parser
 
         private static BlockStatementSyntax ParseScopedStatements(ImmutableArray<StatementSyntax> statements)
         {
-            var openBrace = SyntaxFactory.MissingToken(SyntaxKind.OpenBraceToken);
+            var openBrace = SyntaxNodeFactory.MissingToken(SyntaxKind.OpenBraceToken);
             var redOpenBrace = new SyntaxToken(openBrace, null, 0);
-            var closeBrace = SyntaxFactory.MissingToken(SyntaxKind.CloseBraceToken);
+            var closeBrace = SyntaxNodeFactory.MissingToken(SyntaxKind.CloseBraceToken);
             var redCloseBrace = new SyntaxToken(openBrace, null, 1);
             return new BlockStatementSyntax(redOpenBrace, statements, redCloseBrace);
         }

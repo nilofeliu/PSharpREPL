@@ -1,5 +1,4 @@
-﻿using Minsk.CodeAnalysis.Syntax;
-using PSharp.CodeAnalysis.Diagnostics;
+﻿using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax.InternalSyntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Text;
@@ -54,7 +53,7 @@ internal sealed class Lexer : AbstractLexer
             _pendingDiagnostics.ToArray() : null;
         _pendingDiagnostics.Clear();
 
-        var green =  SyntaxFactory.Token(_kind, text, _value, leadingTrivia, trailingTrivia, diagnostics: diagnostics);
+        var green =  SyntaxNodeFactory.Token(_kind, text, _value, leadingTrivia, trailingTrivia, diagnostics: diagnostics);
 
         var red = new SyntaxToken(green, null, TextWindow.LexemeStartPosition);
         return red;

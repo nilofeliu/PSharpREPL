@@ -1,4 +1,5 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
+using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.InternalSyntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Text;

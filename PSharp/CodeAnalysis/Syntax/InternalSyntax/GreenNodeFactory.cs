@@ -1,4 +1,5 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
+using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
 
 namespace PSharp.CodeAnalysis.Syntax.InternalSyntax;
@@ -6,7 +7,7 @@ namespace PSharp.CodeAnalysis.Syntax.InternalSyntax;
 /// <summary>
 /// Factory methods for creating green syntax nodes and tokens.
 /// </summary>
-public static class SyntaxFactory
+public static class GreenNodeFactory
 {
     // ----- Generic token creation -----
 

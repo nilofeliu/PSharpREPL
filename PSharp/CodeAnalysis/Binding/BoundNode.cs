@@ -1,4 +1,4 @@
-﻿using Minsk.CodeAnalysis.Syntax;
+﻿using PSharp.CodeAnalysis.Syntax;
 using PSharp.CodeAnalysis.Binding.Expressions;
 using PSharp.CodeAnalysis.Binding.Kind;
 using PSharp.CodeAnalysis.Binding.Statements;

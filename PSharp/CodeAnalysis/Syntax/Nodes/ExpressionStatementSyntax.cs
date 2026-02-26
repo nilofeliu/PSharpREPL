@@ -1,4 +1,5 @@
-﻿using PSharp.CodeAnalysis.Syntax.Kind;
+﻿using PSharp.CodeAnalysis.Syntax.Green;
+using PSharp.CodeAnalysis.Syntax.Kind;
 
 namespace PSharp.CodeAnalysis.Syntax.Nodes
 {
@@ -8,6 +9,11 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes
         {
             Expression = expression;
         }
+
+        protected ExpressionStatementSyntax(SyntaxNode? parent, GreenNode green, int position, ExpressionSyntax expression) : base(parent, green, position)
+        {
+        }
+
 
         public override SyntaxKind Kind => SyntaxKind.ExpressionStatement;
         public ExpressionSyntax Expression { get; }

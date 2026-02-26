@@ -1,5 +1,4 @@
-﻿using Minsk.CodeAnalysis.Syntax.Parser;
-using PSharp.CodeAnalysis.Diagnostics;
+﻿using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Syntax.Nodes;
 using PSharp.CodeAnalysis.Syntax.Parser;

@@ -1,7 +1,7 @@
-﻿using Minsk.CodeAnalysis.Syntax;
-using PSharp.CodeAnalysis;
+﻿using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Compilations;
 using PSharp.CodeAnalysis.Symbols;
+using PSharp.CodeAnalysis.Syntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Text;
 

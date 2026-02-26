@@ -339,5 +339,18 @@
         AwaitExpression,
         IndexExpression,
         CharLiteralToken,
+        ParenthesizedExpression,
+        SimpleAssignmentExpression,
+        AddAssignmentExpression,
+        SubtractAssignmentExpression,
+        MultiplyAssignmentExpression,
+        DivideAssignmentExpression,
+        ModuloAssignmentExpression,
+        AndAssignmentExpression,
+        OrAssignmentExpression,
+        ExclusiveOrAssignmentExpression,
+        LeftShiftAssignmentExpression,
+        RightShiftAssignmentExpression,
+        CoalesceAssignmentExpression,
     }
 }
