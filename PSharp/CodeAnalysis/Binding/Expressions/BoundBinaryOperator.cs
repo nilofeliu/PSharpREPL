@@ -47,9 +47,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.ByteEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.ByteEqual, Compilation.typeOf(SpecialType.System_Byte), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ByteNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.ByteNotEqual, Compilation.typeOf(SpecialType.System_Byte), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ByteLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.ByteLT, Compilation.typeOf(SpecialType.System_Byte), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.ByteLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.ByteLTE, Compilation.typeOf(SpecialType.System_Byte), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.ByteLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.ByteLTE, Compilation.typeOf(SpecialType.System_Byte), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ByteGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.ByteGT, Compilation.typeOf(SpecialType.System_Byte), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.ByteGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.ByteGTE, Compilation.typeOf(SpecialType.System_Byte), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.ByteGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.ByteGTE, Compilation.typeOf(SpecialType.System_Byte), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // SByte arithmetic
             [BinaryOperatorKind.SByteAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.SByteAdd, Compilation.typeOf(SpecialType.System_SByte)),
@@ -62,9 +62,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.SByteEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.SByteEqual, Compilation.typeOf(SpecialType.System_SByte), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.SByteNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.SByteNotEqual, Compilation.typeOf(SpecialType.System_SByte), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.SByteLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.SByteLT, Compilation.typeOf(SpecialType.System_SByte), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.SByteLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.SByteLTE, Compilation.typeOf(SpecialType.System_SByte), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.SByteLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.SByteLTE, Compilation.typeOf(SpecialType.System_SByte), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.SByteGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.SByteGT, Compilation.typeOf(SpecialType.System_SByte), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.SByteGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.SByteGTE, Compilation.typeOf(SpecialType.System_SByte), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.SByteGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.SByteGTE, Compilation.typeOf(SpecialType.System_SByte), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // Short
             [BinaryOperatorKind.ShortAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.ShortAdd, Compilation.typeOf(SpecialType.System_Int16)),
@@ -77,9 +77,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.ShortEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.ShortEqual, Compilation.typeOf(SpecialType.System_Int16), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ShortNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.ShortNotEqual, Compilation.typeOf(SpecialType.System_Int16), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ShortLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.ShortLT, Compilation.typeOf(SpecialType.System_Int16), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.ShortLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.ShortLTE, Compilation.typeOf(SpecialType.System_Int16), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.ShortLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.ShortLTE, Compilation.typeOf(SpecialType.System_Int16), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ShortGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.ShortGT, Compilation.typeOf(SpecialType.System_Int16), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.ShortGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.ShortGTE, Compilation.typeOf(SpecialType.System_Int16), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.ShortGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.ShortGTE, Compilation.typeOf(SpecialType.System_Int16), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // UShort
             [BinaryOperatorKind.UShortAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.UShortAdd, Compilation.typeOf(SpecialType.System_UInt16)),
@@ -92,9 +92,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.UShortEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.UShortEqual, Compilation.typeOf(SpecialType.System_UInt16), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.UShortNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.UShortNotEqual, Compilation.typeOf(SpecialType.System_UInt16), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.UShortLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.UShortLT, Compilation.typeOf(SpecialType.System_UInt16), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.UShortLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.UShortLTE, Compilation.typeOf(SpecialType.System_UInt16), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.UShortLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.UShortLTE, Compilation.typeOf(SpecialType.System_UInt16), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.UShortGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.UShortGT, Compilation.typeOf(SpecialType.System_UInt16), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.UShortGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.UShortGTE, Compilation.typeOf(SpecialType.System_UInt16), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.UShortGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.UShortGTE, Compilation.typeOf(SpecialType.System_UInt16), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // Int
             [BinaryOperatorKind.IntAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.IntAdd, Compilation.typeOf(SpecialType.System_Int32)),
@@ -107,9 +107,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.IntEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.IntEqual, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.IntNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.IntNotEqual, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.IntLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.IntLT, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.IntLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.IntLTE, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.IntLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.IntLTE, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.IntGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.IntGT, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.IntGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.IntGTE, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.IntGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.IntGTE, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // UInt
             [BinaryOperatorKind.UIntAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.UIntAdd, Compilation.typeOf(SpecialType.System_UInt32)),
@@ -122,9 +122,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.UIntEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.UIntEqual, Compilation.typeOf(SpecialType.System_UInt32), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.UIntNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.UIntNotEqual, Compilation.typeOf(SpecialType.System_UInt32), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.UIntLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.UIntLT, Compilation.typeOf(SpecialType.System_UInt32), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.UIntLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.UIntLTE, Compilation.typeOf(SpecialType.System_UInt32), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.UIntLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.UIntLTE, Compilation.typeOf(SpecialType.System_UInt32), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.UIntGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.UIntGT, Compilation.typeOf(SpecialType.System_UInt32), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.UIntGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.UIntGTE, Compilation.typeOf(SpecialType.System_UInt32), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.UIntGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.UIntGTE, Compilation.typeOf(SpecialType.System_UInt32), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // Long
             [BinaryOperatorKind.LongAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.LongAdd, Compilation.typeOf(SpecialType.System_Int64)),
@@ -137,9 +137,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.LongEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.LongEqual, Compilation.typeOf(SpecialType.System_Int64), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.LongNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.LongNotEqual, Compilation.typeOf(SpecialType.System_Int64), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.LongLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.LongLT, Compilation.typeOf(SpecialType.System_Int64), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.LongLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.LongLTE, Compilation.typeOf(SpecialType.System_Int64), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.LongLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.LongLTE, Compilation.typeOf(SpecialType.System_Int64), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.LongGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.LongGT, Compilation.typeOf(SpecialType.System_Int64), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.LongGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.LongGTE, Compilation.typeOf(SpecialType.System_Int64), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.LongGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.LongGTE, Compilation.typeOf(SpecialType.System_Int64), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // ULong
             [BinaryOperatorKind.ULongAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.ULongAdd, Compilation.typeOf(SpecialType.System_UInt64)),
@@ -152,9 +152,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.ULongEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.ULongEqual, Compilation.typeOf(SpecialType.System_UInt64), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ULongNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.ULongNotEqual, Compilation.typeOf(SpecialType.System_UInt64), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ULongLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.ULongLT, Compilation.typeOf(SpecialType.System_UInt64), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.ULongLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.ULongLTE, Compilation.typeOf(SpecialType.System_UInt64), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.ULongLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.ULongLTE, Compilation.typeOf(SpecialType.System_UInt64), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.ULongGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.ULongGT, Compilation.typeOf(SpecialType.System_UInt64), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.ULongGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.ULongGTE, Compilation.typeOf(SpecialType.System_UInt64), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.ULongGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.ULongGTE, Compilation.typeOf(SpecialType.System_UInt64), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // Float
             [BinaryOperatorKind.FloatAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.FloatAdd, Compilation.typeOf(SpecialType.System_Single)),
@@ -164,9 +164,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.FloatEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.FloatEqual, Compilation.typeOf(SpecialType.System_Single), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.FloatNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.FloatNotEqual, Compilation.typeOf(SpecialType.System_Single), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.FloatLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.FloatLT, Compilation.typeOf(SpecialType.System_Single), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.FloatLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.FloatLTE, Compilation.typeOf(SpecialType.System_Single), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.FloatLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.FloatLTE, Compilation.typeOf(SpecialType.System_Single), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.FloatGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.FloatGT, Compilation.typeOf(SpecialType.System_Single), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.FloatGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.FloatGTE, Compilation.typeOf(SpecialType.System_Single), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.FloatGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.FloatGTE, Compilation.typeOf(SpecialType.System_Single), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // Double
             [BinaryOperatorKind.DoubleAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.DoubleAdd, Compilation.typeOf(SpecialType.System_Double)),
@@ -176,9 +176,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.DoubleEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.DoubleEqual, Compilation.typeOf(SpecialType.System_Double), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.DoubleNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.DoubleNotEqual, Compilation.typeOf(SpecialType.System_Double), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.DoubleLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.DoubleLT, Compilation.typeOf(SpecialType.System_Double), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.DoubleLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.DoubleLTE, Compilation.typeOf(SpecialType.System_Double), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.DoubleLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.DoubleLTE, Compilation.typeOf(SpecialType.System_Double), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.DoubleGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.DoubleGT, Compilation.typeOf(SpecialType.System_Double), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.DoubleGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.DoubleGTE, Compilation.typeOf(SpecialType.System_Double), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.DoubleGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.DoubleGTE, Compilation.typeOf(SpecialType.System_Double), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // Decimal
             [BinaryOperatorKind.DecimalAdd] = new(SyntaxKind.PlusToken, BinaryOperatorKind.DecimalAdd, Compilation.typeOf(SpecialType.System_Decimal)),
@@ -188,9 +188,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
             [BinaryOperatorKind.DecimalEqual] = new(SyntaxKind.EqualsEqualsToken, BinaryOperatorKind.DecimalEqual, Compilation.typeOf(SpecialType.System_Decimal), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.DecimalNotEqual] = new(SyntaxKind.BangEqualsToken, BinaryOperatorKind.DecimalNotEqual, Compilation.typeOf(SpecialType.System_Decimal), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.DecimalLT] = new(SyntaxKind.LessToken, BinaryOperatorKind.DecimalLT, Compilation.typeOf(SpecialType.System_Decimal), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.DecimalLTE] = new(SyntaxKind.LessEqualsToken, BinaryOperatorKind.DecimalLTE, Compilation.typeOf(SpecialType.System_Decimal), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.DecimalLTE] = new(SyntaxKind.LessThanEqualsToken, BinaryOperatorKind.DecimalLTE, Compilation.typeOf(SpecialType.System_Decimal), Compilation.typeOf(SpecialType.System_Boolean)),
             [BinaryOperatorKind.DecimalGT] = new(SyntaxKind.GreaterToken, BinaryOperatorKind.DecimalGT, Compilation.typeOf(SpecialType.System_Decimal), Compilation.typeOf(SpecialType.System_Boolean)),
-            [BinaryOperatorKind.DecimalGTE] = new(SyntaxKind.GreaterEqualsToken, BinaryOperatorKind.DecimalGTE, Compilation.typeOf(SpecialType.System_Decimal), Compilation.typeOf(SpecialType.System_Boolean)),
+            [BinaryOperatorKind.DecimalGTE] = new(SyntaxKind.GreaterThanEqualsToken, BinaryOperatorKind.DecimalGTE, Compilation.typeOf(SpecialType.System_Decimal), Compilation.typeOf(SpecialType.System_Boolean)),
 
             // Bool
             [BinaryOperatorKind.BoolAnd] = new(SyntaxKind.AmpersandToken, BinaryOperatorKind.BoolAnd, Compilation.typeOf(SpecialType.System_Boolean)),
@@ -249,9 +249,9 @@ namespace PSharp.CodeAnalysis.Binding.Expressions
                 SyntaxKind.EqualsEqualsToken => BinaryOperatorKind.Equal,
                 SyntaxKind.BangEqualsToken => BinaryOperatorKind.NotEqual,
                 SyntaxKind.LessToken => BinaryOperatorKind.LessThan,
-                SyntaxKind.LessEqualsToken => BinaryOperatorKind.LessThanOrEqual,
+                SyntaxKind.LessThanEqualsToken => BinaryOperatorKind.LessThanOrEqual,
                 SyntaxKind.GreaterToken => BinaryOperatorKind.GreaterThan,
-                SyntaxKind.GreaterEqualsToken => BinaryOperatorKind.GreaterThanOrEqual,
+                SyntaxKind.GreaterThanEqualsToken => BinaryOperatorKind.GreaterThanOrEqual,
                 _ => (BinaryOperatorKind)0
             };
 

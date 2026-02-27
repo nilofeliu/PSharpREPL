@@ -1,14 +1,10 @@
 ﻿using PSharp.CodeAnalysis.Binding;
-using PSharp.CodeAnalysis.Binding.Expressions;
 using PSharp.CodeAnalysis.Binding.Objects;
 using PSharp.CodeAnalysis.Binding.Semantics.Conversions;
 using PSharp.CodeAnalysis.Binding.Statements;
 using PSharp.CodeAnalysis.Compilations;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Symbols;
-using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
 using PSharp.CodeAnalysis.Syntax.Nodes.Statements;
 using System.Collections.Immutable;
 
