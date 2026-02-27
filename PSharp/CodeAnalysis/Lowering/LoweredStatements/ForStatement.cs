@@ -34,7 +34,7 @@ namespace PSharp.CodeAnalysis.Lowering.LoweredStatements
 
             var condition = new BoundBinaryExpression(
                 variableExpression,
-                BoundBinaryOperator.Bind(SyntaxKind.LessOrEqualsToken, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Int32)),                               
+                BoundBinaryOperator.Bind(SyntaxKind.LessEqualsToken, Compilation.typeOf(SpecialType.System_Int32), Compilation.typeOf(SpecialType.System_Int32)),                               
                 new BoundVariableExpression(upperBoundSymbol)
             );
             var increment = new BoundExpressionStatement(

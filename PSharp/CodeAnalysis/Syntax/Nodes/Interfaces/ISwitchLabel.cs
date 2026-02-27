@@ -7,8 +7,8 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Interfaces
 {
     public interface ISwitchLabel
     {
-        SyntaxToken Keyword { get; }
-        SyntaxToken ColonToken { get; }
-        StatementSyntax? Body { get; }
+        //SyntaxToken Keyword { get; }
+        //SyntaxToken ColonToken { get; }
+        //StatementSyntax? Body { get; }
     }
 }

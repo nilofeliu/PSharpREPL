@@ -70,20 +70,58 @@ public static partial class SyntaxFacts
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.MinusToken, "-", 4, 6));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.EqualsEqualsToken, "==", 3));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.BangEqualsToken, "!=", 3));
-        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.GreaterOrEqualsToken, ">=", 3));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.GreaterEqualsToken, ">=", 3));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.GreaterToken, ">", 3));
-        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LessOrEqualsToken, "<=", 3));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LessEqualsToken, "<=", 3));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LessToken, "<", 3));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.AmpersandAmpersandToken, "&&", 2));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.AmpersandToken, "&", 2));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.PipeToken, "|", 1));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.PipePipeToken, "||", 1));
-        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.HatToken, "^", 1));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.CaretToken, "^", 1));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.TildeToken, "~", 0, 6));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.BangToken, "!", 0, 6));
-        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.EqualsToken, "="));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.PlusPlusToken, "++", 0, 8));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.MinusMinusToken, "--", 0, 8));
         return list;
     }
+
+    internal static List<SyntaxSymbol> LoadAssignmentOperators()
+    {
+        var list = new List<SyntaxSymbol>();
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.EqualsToken, "="));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.PlusEqualsToken, "+=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.MinusEqualsToken, "-=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.AsteriskEqualsToken, "*=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.SlashEqualsToken, "/=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.PercentEqualsToken, "%=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.AmpersandEqualsToken, "&=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.PipeEqualsToken, "|=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.CaretEqualsToken, "^=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LessThanLessThanEqualsToken, "<<=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.GreaterThanGreaterThanEqualsToken, ">>=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.StarEqualsToken, "*=", 0, 0));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.QuestionQuestionEqualsToken, "??=", 0, 0));
+
+
+
+        return list;
+
+    }
+
+    internal static List<SyntaxSymbol> LoadComparisonOperators()
+    { 
+        var list = new List<SyntaxSymbol>();
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.EqualsEqualsToken, "=="));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.NotEqualsToken, "!="));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LessThanToken, "<"));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LessThanEqualsToken, "<="));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.GreaterThanToken, ">"));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.GreaterThanEqualsToken, ">="));
+
+        return list;
+    }
+
 
     // Predefined Types
     internal static List<SyntaxSymbol> LoadSpecialTypeKeywords()
@@ -117,12 +155,18 @@ public static partial class SyntaxFacts
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.DoubleLiteralToken, ""));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.DecimalLiteralToken, ""));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.StringLiteralToken, ""));
-        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.CharLiteralToken, ""));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.CharacterLiteralToken, ""));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ULongLiteralToken, ""));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.UIntLiteralToken, ""));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.BinaryIntegerLiteralToken, ""));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.InterpolatedStringLiteralToken, ""));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.VerbatimStringLiteralToken, ""));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.TrueLiteralToken, ""));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.FalseLiteralToken, ""));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.NullLiteralToken, ""));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.DefaultLiteralToken, ""));
+
+
 
 
         return list;

@@ -1,5 +1,6 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax.Kind;
+using PSharp.CodeAnalysis.Text;
 using System.Collections.Generic;
 
 namespace PSharp.CodeAnalysis.Syntax.Green
@@ -11,6 +12,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green
         public int Width => FullWidth - LeadingWidth - TrailingWidth;
         public virtual int LeadingWidth { get; protected set; } // leading trivia length
         public virtual int TrailingWidth { get; protected set; } // trailing trivia length
+
 
         public virtual int SlotCount => 0;
         public virtual GreenNode? GetSlot(int index) => null;

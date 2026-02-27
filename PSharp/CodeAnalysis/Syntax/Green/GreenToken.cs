@@ -1,6 +1,7 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax.InternalSyntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
+using PSharp.CodeAnalysis.Text;
 using System.Text;
 
 namespace PSharp.CodeAnalysis.Syntax.Green;
@@ -22,6 +23,12 @@ public sealed class GreenToken : GreenNode
 
     public GreenNode LeadingTrivia { get; }
     public GreenNode TrailingTrivia { get; }
+
+    public TextSpan Span =>
+    new TextSpan(Position + LeadingWidth, Width);
+
+    public TextSpan FullSpan =>
+        new TextSpan(Position, FullWidth);
 
     public GreenToken(SyntaxKind kind, string text, object value = null,
                       SyntaxTrivia[]? leadingTrivia = null, SyntaxTrivia[]? trailingTrivia = null,
@@ -94,4 +101,3 @@ public sealed class GreenToken : GreenNode
         => (TrailingTrivia as GreenTriviaList)?.TriviaArray ?? Array.Empty<SyntaxTrivia>();
 
 }
-

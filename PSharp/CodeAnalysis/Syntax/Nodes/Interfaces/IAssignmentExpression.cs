@@ -2,8 +2,8 @@
 {
     public interface IAssignmentExpression
     {
-        SyntaxToken IdentifierToken { get; }
-        SyntaxToken OperatorToken { get; }
-        ExpressionSyntax Expression { get; }
+        //SyntaxToken IdentifierToken { get; }
+        //SyntaxToken OperatorToken { get; }
+        //ExpressionSyntax Expression { get; }
     }
 }

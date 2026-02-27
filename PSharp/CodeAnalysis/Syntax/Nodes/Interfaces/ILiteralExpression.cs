@@ -2,7 +2,7 @@
 {
     public interface ILiteralExpression
     {
-        SyntaxToken LiteralToken { get; }
-        object Value { get; }
+        //SyntaxToken LiteralToken { get; }
+        //object Value { get; }
     }
 }

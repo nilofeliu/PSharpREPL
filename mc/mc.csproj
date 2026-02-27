@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CodeGenerator\CodeGenerator.csproj" />
-    <ProjectReference Include="..\Minsk\PSharp.csproj" />
     <ProjectReference Include="..\PSharp\PSharp.csproj" />
   </ItemGroup>
 

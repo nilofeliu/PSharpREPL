@@ -50,7 +50,12 @@ namespace PSharp.CodeAnalysis
             {
                 var greenChild = _green.GetSlot(i);
                 if (greenChild != null)
-                    yield return RedNodeFactory.CreateRed(greenChild, this, GetChildPosition(i));
+                {
+                    if (greenChild is GreenToken token)
+                        yield return new SyntaxToken(token, this, GetChildPosition(i));
+                    else
+                        yield return RedNodeFactory.CreateRed(greenChild, this, GetChildPosition(i));
+                }
             }
         }
 

@@ -161,6 +161,52 @@ public static partial class SyntaxFacts
     public static bool IsKeyword(SyntaxKind kind) => IsSystemKeyword(kind) || IsControlKeyword(kind);
     public static bool IsKeyword(string text) => IsSystemKeyword(text) || IsControlKeyword(text);
 
+    public static bool IsAssignmentOperator(SyntaxKind kind) => kind switch
+    {
+        SyntaxKind.EqualsToken => true,
+        SyntaxKind.PlusEqualsToken => true,
+        SyntaxKind.MinusEqualsToken => true,
+        SyntaxKind.AsteriskEqualsToken => true,
+        SyntaxKind.SlashEqualsToken => true,
+        SyntaxKind.PercentEqualsToken => true,
+        SyntaxKind.AmpersandEqualsToken => true,
+        SyntaxKind.PipeEqualsToken => true,
+        SyntaxKind.CaretEqualsToken => true,
+        SyntaxKind.LessThanLessThanEqualsToken => true,
+        SyntaxKind.GreaterThanGreaterThanEqualsToken => true,
+        _ => false
+    };
+
+    public static bool IsComparisonOperator(this SyntaxKind kind)
+    {
+        return kind is
+            SyntaxKind.EqualsEqualsToken or
+            SyntaxKind.NotEqualsToken or
+            SyntaxKind.LessThanToken or
+            SyntaxKind.LessThanEqualsToken or
+            SyntaxKind.GreaterThanToken or
+            SyntaxKind.GreaterThanEqualsToken;
+        // Add any others like ===, !==, <=>, etc. if your language has them
+    }
+
+    public static bool IsLogicalOperator(this SyntaxKind kind)
+    {
+        return kind is
+            SyntaxKind.AmpersandAmpersandToken or  
+            SyntaxKind.PipePipeToken or             
+            SyntaxKind.CaretToken or               
+            SyntaxKind.BangToken;            
+    }
+
+    // Optional: If you want to separate unary logical NOT
+    public static bool IsLogicalNotOperator(this SyntaxKind kind)
+    {
+        return kind == SyntaxKind.BangToken;
+    }
+
+
+
+
     public static SyntaxKind GetKeywordKind(string text)
         => _kindIndex.TryGetValue(text, out var kind) ? kind : SyntaxKind.IdentifierToken;
 }

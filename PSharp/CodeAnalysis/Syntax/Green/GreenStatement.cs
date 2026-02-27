@@ -1,8 +1,9 @@
 ﻿using PSharp.CodeAnalysis.Syntax.Kind;
+using PSharp.CodeAnalysis.Syntax.Nodes;
 
 namespace PSharp.CodeAnalysis.Syntax.Green;
 
-internal abstract class GreenStatement : GreenNode
+public abstract class GreenStatement : GreenNode
 {
     protected GreenStatement(SyntaxKind kind) : base(kind)
     {

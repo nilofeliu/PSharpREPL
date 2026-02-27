@@ -7,6 +7,10 @@ public static partial class SyntaxFacts
     {
         // ── Operators ─────────────────────────────────────────────────────────
         Register(SymbolTable.Operators, LoadOperators());
+        Register(SymbolTable.Operators, LoadAssignmentOperators());
+        Register(SymbolTable.Operators, LoadComparisonOperators());
+                
+            
 
         // ── Keywords ──────────────────────────────────────────────────────────
         Register(SymbolTable.Keywords, LoadBooleanKeywords());

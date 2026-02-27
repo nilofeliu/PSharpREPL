@@ -1,4 +1,5 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
+using PSharp.CodeAnalysis.Syntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Syntax.Nodes;
 using PSharp.CodeAnalysis.Syntax.Parser;
@@ -13,20 +14,34 @@ namespace PSharp.CodeAnalysis
         public ImmutableArray<Diagnostic> Diagnostics { get; }
         public CompilationUnitSyntax Root { get; }
         public SyntaxToken EndOfFileToken { get; }
-        
-        public SyntaxTree(SourceText text) 
+
+        public SyntaxTree(SourceText text)
         {
-            var parser = new SyntaxParser(text);
-            var root = parser.ParseCompilationUnit();
-            
+            var parser = new LanguageParser(text);
+            var greenRoot = parser.ParseCompilationUnit();
+
+            var root = (CompilationUnitSyntax)RedNodeFactory.CreateRed(greenRoot, null, 0);
+
             Text = text;
-            //Diagnostics = parser.Diagnostics.ToImmutableArray(); 
             Diagnostics = parser.Diagnostics
-                    .Concat(root.DescendantTokens().SelectMany(t => t.GetDiagnostics()))
-                    .ToImmutableArray();
+                .Concat(root.DescendantTokens().SelectMany(t => t.GetDiagnostics()))
+                .ToImmutableArray();
             Root = root;
-                         
         }
+
+        //public SyntaxTree(SourceText text) 
+        //{
+        //    var parser = new SyntaxParser(text);
+        //    var root = parser.ParseCompilationUnit();
+
+        //    Text = text;
+        //    //Diagnostics = parser.Diagnostics.ToImmutableArray(); 
+        //    Diagnostics = parser.Diagnostics
+        //            .Concat(root.DescendantTokens().SelectMany(t => t.GetDiagnostics()))
+        //            .ToImmutableArray();
+        //    Root = root;
+
+        //}
 
         public static SyntaxTree Parse(string text)
         {

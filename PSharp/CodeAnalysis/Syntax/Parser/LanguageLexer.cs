@@ -53,7 +53,7 @@ internal sealed class Lexer : AbstractLexer
             _pendingDiagnostics.ToArray() : null;
         _pendingDiagnostics.Clear();
 
-        var green =  SyntaxNodeFactory.Token(_kind, text, _value, leadingTrivia, trailingTrivia, diagnostics: diagnostics);
+        var green =  GreenNodeFactory.Token(_kind, text, _value, leadingTrivia, trailingTrivia, diagnostics: diagnostics);
 
         var red = new SyntaxToken(green, null, TextWindow.LexemeStartPosition);
         return red;

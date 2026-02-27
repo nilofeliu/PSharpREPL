@@ -2,8 +2,8 @@
 {
     public interface IBinaryExpression
     {
-        ExpressionSyntax Left { get; }
-        SyntaxToken OperatorToken { get; }
-        ExpressionSyntax Right { get; }
+        //ExpressionSyntax Left { get; }
+        //SyntaxToken OperatorToken { get; }
+        //ExpressionSyntax Right { get; }
     }
 }

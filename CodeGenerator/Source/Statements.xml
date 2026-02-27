@@ -51,7 +51,7 @@
 		<Property Name="CaseColonToken" Type="Token" />
 		<Property Name="Body" Type="Statement" Nullable="true" />
 	</SyntaxNode>
-
+	
 	<SyntaxNode Name="SwitchStatementSyntax" Base="Statement" Kind="SwitchStatement" Category="Statement" Interfaces="">
 		<Property Name="SwitchKeyword" Type="Token" />
 		<Property Name="Pattern" Type="Expression" />

@@ -2,6 +2,6 @@
 {
     public interface IJumpStatement
     {
-        SyntaxToken Keyword { get; }
+        //SyntaxToken Keyword { get; }
     }
 }

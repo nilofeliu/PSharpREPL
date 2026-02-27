@@ -306,6 +306,7 @@ namespace PSharp.CodeAnalysis.Syntax
         internal static List<SyntaxSymbol> LoadMemberDeclarations()
         {
             var list = new List<SyntaxSymbol>();
+            TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.CompilationUnit, ""));
             //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.BaseConstructorInitializer, ""));
             //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ThisConstructorInitializer, ""));
             //TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.DestructorDeclaration, ""));

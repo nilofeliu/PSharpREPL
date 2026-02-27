@@ -2,7 +2,7 @@
 {
     public interface IUnaryExpression
     {
-        SyntaxToken OperatorToken { get; }
-        ExpressionSyntax Operand { get; }
+        //SyntaxToken OperatorToken { get; }
+        //ExpressionSyntax Operand { get; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface ILoopStatement
     {
-        StatementSyntax Body { get; }
+        //StatementSyntax Body { get; }
     }
 }
