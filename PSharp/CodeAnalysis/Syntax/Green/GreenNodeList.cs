@@ -10,7 +10,7 @@ internal class GreenNodeList : GreenNode, IEnumerable<GreenNode>
     private readonly List<GreenNode> _nodes;
 
     public GreenNodeList(List<GreenNode> nodes)
-        : base(SyntaxKind.GreenSyntaxList)
+        : base(SyntaxKind.GreenNodeList)
     {
         _nodes = nodes ?? new List<GreenNode>();
     }
