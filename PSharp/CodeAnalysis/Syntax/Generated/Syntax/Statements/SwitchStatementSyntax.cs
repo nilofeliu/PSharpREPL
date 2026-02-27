@@ -13,7 +13,7 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Statements
         private readonly GreenSwitchStatement _green;
 
         private ExpressionSyntax _pattern;
-        private CaseSwitchLabelSyntax? _defaultCase;
+        private DefaultSwitchLabelSyntax? _defaultCase;
 
         internal SwitchStatementSyntax(GreenSwitchStatement green, SyntaxNode? parent, int position)
             : base(parent, green, position)
@@ -54,12 +54,12 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Statements
             }
         }
 
-        public CaseSwitchLabelSyntax? DefaultCase
+        public DefaultSwitchLabelSyntax? DefaultCase
         {
             get
             {
                 if (_defaultCase == null)
-                    _defaultCase = (CaseSwitchLabelSyntax)RedNodeFactory.CreateRed(_green.DefaultCase, this, GetChildPosition(4));
+                    _defaultCase = (DefaultSwitchLabelSyntax)RedNodeFactory.CreateRed(_green.DefaultCase, this, GetChildPosition(4));
                 return _defaultCase;
             }
         }

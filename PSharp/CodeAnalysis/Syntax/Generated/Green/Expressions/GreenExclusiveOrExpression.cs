@@ -1,16 +1,13 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenExclusiveOrExpression : GreenExpression, IBinaryExpression
+    internal sealed class GreenExclusiveOrExpression : GreenExpression
     {
         public GreenExpression Left { get; }
-        public GreenToken OperatorToken { get; }
+        public GreenToken CaretToken { get; }
         public GreenExpression Right { get; }
 
         public override int SlotCount => 3;
@@ -18,7 +15,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public override GreenNode? GetSlot(int index) => index switch
         {
             0 => Left,
-            1 => OperatorToken,
+            1 => CaretToken,
             2 => Right,
             _ => null
         };
@@ -26,13 +23,13 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public GreenExclusiveOrExpression(
             SyntaxKind kind,
             GreenExpression left,
-            GreenToken operatorToken,
+            GreenToken caretToken,
             GreenExpression right
         )
             : base(kind)
         {
             Left = left;
-            OperatorToken = operatorToken;
+            CaretToken = caretToken;
             Right = right;
         }
 
@@ -40,7 +37,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenExclusiveOrExpression(Kind, Left, OperatorToken, Right);
+            var node = new GreenExclusiveOrExpression(Kind, Left, CaretToken, Right);
             node.Diagnostics = diagnostics;
             return node;
         }

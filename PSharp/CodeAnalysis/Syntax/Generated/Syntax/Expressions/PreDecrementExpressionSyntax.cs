@@ -22,8 +22,8 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Expressions
 
         public override SyntaxKind Kind => SyntaxKind.PreDecrementExpression;
 
-        public SyntaxToken OperatorToken
-            => new SyntaxToken(_green.OperatorToken, this, GetChildPosition(0));
+        public SyntaxToken MinusMinusToken
+            => new SyntaxToken(_green.MinusMinusToken, this, GetChildPosition(0));
 
         public ExpressionSyntax Operand
         {

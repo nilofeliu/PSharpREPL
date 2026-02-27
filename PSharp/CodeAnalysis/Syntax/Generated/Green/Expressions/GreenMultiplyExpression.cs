@@ -1,16 +1,13 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenMultiplyExpression : GreenExpression, IBinaryExpression
+    internal sealed class GreenMultiplyExpression : GreenExpression
     {
         public GreenExpression Left { get; }
-        public GreenToken OperatorToken { get; }
+        public GreenToken StarToken { get; }
         public GreenExpression Right { get; }
 
         public override int SlotCount => 3;
@@ -18,7 +15,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public override GreenNode? GetSlot(int index) => index switch
         {
             0 => Left,
-            1 => OperatorToken,
+            1 => StarToken,
             2 => Right,
             _ => null
         };
@@ -26,13 +23,13 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public GreenMultiplyExpression(
             SyntaxKind kind,
             GreenExpression left,
-            GreenToken operatorToken,
+            GreenToken starToken,
             GreenExpression right
         )
             : base(kind)
         {
             Left = left;
-            OperatorToken = operatorToken;
+            StarToken = starToken;
             Right = right;
         }
 
@@ -40,7 +37,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenMultiplyExpression(Kind, Left, OperatorToken, Right);
+            var node = new GreenMultiplyExpression(Kind, Left, StarToken, Right);
             node.Diagnostics = diagnostics;
             return node;
         }

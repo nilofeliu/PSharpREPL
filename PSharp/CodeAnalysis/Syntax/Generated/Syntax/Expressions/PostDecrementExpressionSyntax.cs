@@ -22,18 +22,18 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Expressions
 
         public override SyntaxKind Kind => SyntaxKind.PostDecrementExpression;
 
-        public SyntaxToken OperatorToken
-            => new SyntaxToken(_green.OperatorToken, this, GetChildPosition(0));
-
         public ExpressionSyntax Operand
         {
             get
             {
                 if (_operand == null)
-                    _operand = (ExpressionSyntax)RedNodeFactory.CreateRed(_green.Operand, this, GetChildPosition(1));
+                    _operand = (ExpressionSyntax)RedNodeFactory.CreateRed(_green.Operand, this, GetChildPosition(0));
                 return _operand;
             }
         }
+
+        public SyntaxToken MinusMinusToken
+            => new SyntaxToken(_green.MinusMinusToken, this, GetChildPosition(1));
 
     }
 }

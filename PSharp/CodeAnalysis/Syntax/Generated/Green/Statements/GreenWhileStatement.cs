@@ -1,13 +1,10 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Statements
 {
-    internal sealed class GreenWhileStatement : GreenStatement, ILoopStatement
+    internal sealed class GreenWhileStatement : GreenStatement
     {
         public GreenToken WhileKeyword { get; }
         public GreenExpression Condition { get; }

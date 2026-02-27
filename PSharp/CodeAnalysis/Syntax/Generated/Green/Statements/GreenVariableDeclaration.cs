@@ -1,52 +1,53 @@
+using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
 
-internal sealed class GreenVariableDeclaration : GreenStatement
+namespace PSharp.CodeAnalysis.Syntax.Green.Statements
 {
-    public GreenToken Keyword { get; }
-    public GreenToken Identifier { get; }
-    public GreenToken EqualsToken { get; }
-    public GreenExpression Initializer { get; }
-
-    public override int SlotCount => 4;
-    public override GreenNode? GetSlot(int index) => index switch
+    internal sealed class GreenVariableDeclaration : GreenStatement
     {
-        0 => Keyword,
-        1 => Identifier,
-        2 => EqualsToken,
-        3 => Initializer,
-        _ => null
-    };
+        public GreenToken Keyword { get; }
+        public GreenToken? Type { get; }
+        public GreenNodeList Variables { get; }
 
-    public GreenVariableDeclaration(
-        SyntaxKind kind,
-        GreenToken keyword,
-        GreenToken identifier,
-        GreenToken equalsToken,
-        GreenExpression initializer
-    ) : base(kind)
-    {
-        Keyword = keyword;
-        Identifier = identifier;
-        EqualsToken = equalsToken;
-        Initializer = initializer;
-    }
+        public override int SlotCount => 3;
 
-    public override SyntaxKind Kind => SyntaxKind.LocalDeclarationStatement;
+        public override GreenNode? GetSlot(int index) => index switch
+        {
+            0 => Keyword,
+            1 => Type,
+            2 => Variables,
+            _ => null
+        };
 
-    protected override GreenNode CreateWithDiagnostics(DiagnosticInfo[]? diagnostics)
-    {
-        var node = new GreenVariableDeclaration(Kind, Keyword, Identifier, EqualsToken, Initializer);
-        node.Diagnostics = diagnostics;
-        return node;
-    }
+        public GreenVariableDeclaration(
+            SyntaxKind kind,
+            GreenToken keyword,
+            GreenToken? type,
+            GreenNodeList variables
+        )
+            : base(kind)
+        {
+            Keyword = keyword;
+            Type = type;
+            Variables = variables;
+        }
 
-    public override string ToFullString()
-    {
-        var sb = new System.Text.StringBuilder();
-        foreach (var child in GetChildren())
-            sb.Append(child.ToFullString());
-        return sb.ToString();
+        public override SyntaxKind Kind => SyntaxKind.VariableDeclaration;
+
+        protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
+        {
+            var node = new GreenVariableDeclaration(Kind, Keyword, Type, Variables);
+            node.Diagnostics = diagnostics;
+            return node;
+        }
+
+        public override string ToFullString()
+        {
+            var sb = new System.Text.StringBuilder();
+            foreach (var child in GetChildren())
+                sb.Append(child.ToFullString());
+            return sb.ToString();
+        }
     }
 }

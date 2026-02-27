@@ -22,8 +22,8 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Expressions
 
         public override SyntaxKind Kind => SyntaxKind.PreIncrementExpression;
 
-        public SyntaxToken OperatorToken
-            => new SyntaxToken(_green.OperatorToken, this, GetChildPosition(0));
+        public SyntaxToken PlusPlusToken
+            => new SyntaxToken(_green.PlusPlusToken, this, GetChildPosition(0));
 
         public ExpressionSyntax Operand
         {

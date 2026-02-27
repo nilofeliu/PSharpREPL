@@ -1,41 +1,38 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenNullLiteralExpression : GreenExpression, ILiteralExpression
+    internal sealed class GreenNullLiteralExpression : GreenExpression
     {
-        public GreenToken LiteralToken { get; }
+        public GreenToken NullLiteralToken { get; }
 
         public override int SlotCount => 1;
 
         public override GreenNode? GetSlot(int index) => index switch
         {
-            0 => LiteralToken,
+            0 => NullLiteralToken,
             _ => null
         };
 
         public GreenNullLiteralExpression(
             SyntaxKind kind,
-            GreenToken literalToken
+            GreenToken nullLiteralToken
         )
             : base(kind)
         {
-            LiteralToken = literalToken;
+            NullLiteralToken = nullLiteralToken;
         }
 
         public override SyntaxKind Kind => SyntaxKind.NullLiteralExpression;
 
         public object Value
-            => LiteralToken.Value;
+            => NullLiteralToken.Value;
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenNullLiteralExpression(Kind, LiteralToken);
+            var node = new GreenNullLiteralExpression(Kind, NullLiteralToken);
             node.Diagnostics = diagnostics;
             return node;
         }

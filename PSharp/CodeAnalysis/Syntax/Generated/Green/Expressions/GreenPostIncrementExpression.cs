@@ -1,42 +1,39 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenPostIncrementExpression : GreenExpression, IUnaryExpression
+    internal sealed class GreenPostIncrementExpression : GreenExpression
     {
-        public GreenToken OperatorToken { get; }
         public GreenExpression Operand { get; }
+        public GreenToken PlusPlusToken { get; }
 
         public override int SlotCount => 2;
 
         public override GreenNode? GetSlot(int index) => index switch
         {
-            0 => OperatorToken,
-            1 => Operand,
+            0 => Operand,
+            1 => PlusPlusToken,
             _ => null
         };
 
         public GreenPostIncrementExpression(
             SyntaxKind kind,
-            GreenToken operatorToken,
-            GreenExpression operand
+            GreenExpression operand,
+            GreenToken plusPlusToken
         )
             : base(kind)
         {
-            OperatorToken = operatorToken;
             Operand = operand;
+            PlusPlusToken = plusPlusToken;
         }
 
         public override SyntaxKind Kind => SyntaxKind.PostIncrementExpression;
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenPostIncrementExpression(Kind, OperatorToken, Operand);
+            var node = new GreenPostIncrementExpression(Kind, Operand, PlusPlusToken);
             node.Diagnostics = diagnostics;
             return node;
         }

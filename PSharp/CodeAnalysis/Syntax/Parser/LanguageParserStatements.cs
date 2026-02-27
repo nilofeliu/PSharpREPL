@@ -16,6 +16,18 @@ namespace PSharp.CodeAnalysis.Syntax.Parser;
 
 internal partial class LanguageParser
 {
+
+
+    //private GreenExpression ParsePrimaryExpression()
+    //{
+    //    return CurrentToken.Kind switch
+    //    {
+    //        SyntaxKind.IdentifierToken => ParseNameExpression(),
+    //        SyntaxKind.OpenParenthesisToken => ParseParenthesizedExpression(),
+    //        _ => ParseNameExpression() // fallback
+    //    };
+    //}
+
     private GreenBlockStatement ParseBlockStatement()
     {
         var openBrace = EatToken(SyntaxKind.OpenBraceToken);
@@ -69,23 +81,6 @@ internal partial class LanguageParser
 
         return new GreenBlockStatement(SyntaxKind.BlockStatement, openBrace, greenStatements, closeBrace);
     }
-
-    private GreenStatement ParseVariableDeclaration()
-    {
-        var expected = CurrentToken.Kind switch
-        {
-            SyntaxKind.LetKeyword => SyntaxKind.LetKeyword,
-            SyntaxKind.VarKeyword => SyntaxKind.VarKeyword,
-            _ when SyntaxFacts.IsSpecialTypeKeyword(CurrentToken.Kind) => CurrentToken.Kind,
-            _ => SyntaxKind.VarKeyword
-        };
-        var keyword = EatToken(expected);
-        var identifier = EatToken(SyntaxKind.IdentifierToken);
-        var equals = EatToken(SyntaxKind.EqualsToken);
-        var initializer = ParseExpression();
-        return new GreenVariableDeclaration(SyntaxKind.LocalDeclarationStatement, keyword, identifier, equals, initializer);
-    }
-
     private GreenStatement ParseIfStatement()
     {
         var ifKeyword = EatToken(SyntaxKind.IfKeyword);
@@ -225,6 +220,74 @@ internal partial class LanguageParser
                                         SyntaxKind.CaseKeyword);
         return new GreenDefaultSwitchLabel(SyntaxKind.DefaultSwitchLabel, keyword, caseColonToken, body);
     }
+
+
+    private GreenStatement ParseVariableDeclaration()
+    {
+        // Parse keyword (let, var, or type keyword)
+        var expected = CurrentToken.Kind switch
+        {
+            SyntaxKind.LetKeyword => SyntaxKind.LetKeyword,
+            SyntaxKind.VarKeyword => SyntaxKind.VarKeyword,
+            _ when SyntaxFacts.IsSpecialTypeKeyword(CurrentToken.Kind) => CurrentToken.Kind,
+            _ => SyntaxKind.VarKeyword
+        };
+        var keyword = EatToken(expected);
+
+        // Optional explicit type
+        GreenToken? type = null;
+        if (SyntaxFacts.IsSpecialTypeKeyword(CurrentToken.Kind))
+        {
+            type = EatToken(CurrentToken.Kind);
+        }
+
+        // Parse declarators (comma-separated)
+        var declarators = new List<GreenNode>();
+        declarators.Add(ParseDeclarator());
+
+        while (CurrentToken.Kind == SyntaxKind.CommaToken && CurrentToken.Kind !=SyntaxKind.NewLineTrivia)
+        {
+            var comma = EatToken(SyntaxKind.CommaToken);
+            declarators.Add(comma);
+            declarators.Add(ParseDeclarator());
+        }
+
+        var variables = new GreenNodeList(declarators);
+
+        return new GreenVariableDeclaration(SyntaxKind.LocalDeclarationStatement, keyword, type, variables);
+    }
+
+    private GreenVariableDeclarator ParseDeclarator()
+    {
+        var identifier = EatToken(SyntaxKind.IdentifierToken);
+
+        GreenEqualsValueClause? initializer = null;
+        if (CurrentToken.Kind == SyntaxKind.EqualsToken)
+        {
+            var equals = EatToken(SyntaxKind.EqualsToken);
+            var expression = ParseExpression();
+            initializer = new GreenEqualsValueClause(SyntaxKind.EqualsValueClause, equals, expression);
+        }
+
+        return new GreenVariableDeclarator(SyntaxKind.VariableDeclarator, identifier, initializer);
+    }
+
+
+    //private GreenStatement ParseVariableDeclaration()
+    //{
+    //    var expected = CurrentToken.Kind switch
+    //    {
+    //        SyntaxKind.LetKeyword => SyntaxKind.LetKeyword,
+    //        SyntaxKind.VarKeyword => SyntaxKind.VarKeyword,
+    //        _ when SyntaxFacts.IsSpecialTypeKeyword(CurrentToken.Kind) => CurrentToken.Kind,
+    //        _ => SyntaxKind.VarKeyword
+    //    };
+    //    var keyword = EatToken(expected);
+    //    var identifier = EatToken(SyntaxKind.IdentifierToken);
+    //    var equals = EatToken(SyntaxKind.EqualsToken);
+    //    var initializer = ParseExpression();
+    //    return new GreenVariableDeclaration(SyntaxKind.LocalDeclarationStatement, keyword, identifier, equals, initializer);
+    //}
 }
 
 

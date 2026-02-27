@@ -33,8 +33,8 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Expressions
             }
         }
 
-        public SyntaxToken OperatorToken
-            => new SyntaxToken(_green.OperatorToken, this, GetChildPosition(1));
+        public SyntaxToken PipePipeToken
+            => new SyntaxToken(_green.PipePipeToken, this, GetChildPosition(1));
 
         public ExpressionSyntax Right
         {

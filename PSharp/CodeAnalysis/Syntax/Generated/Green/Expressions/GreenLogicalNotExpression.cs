@@ -1,34 +1,31 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenLogicalNotExpression : GreenExpression, IUnaryExpression
+    internal sealed class GreenLogicalNotExpression : GreenExpression
     {
-        public GreenToken OperatorToken { get; }
+        public GreenToken BangToken { get; }
         public GreenExpression Operand { get; }
 
         public override int SlotCount => 2;
 
         public override GreenNode? GetSlot(int index) => index switch
         {
-            0 => OperatorToken,
+            0 => BangToken,
             1 => Operand,
             _ => null
         };
 
         public GreenLogicalNotExpression(
             SyntaxKind kind,
-            GreenToken operatorToken,
+            GreenToken bangToken,
             GreenExpression operand
         )
             : base(kind)
         {
-            OperatorToken = operatorToken;
+            BangToken = bangToken;
             Operand = operand;
         }
 
@@ -36,7 +33,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenLogicalNotExpression(Kind, OperatorToken, Operand);
+            var node = new GreenLogicalNotExpression(Kind, BangToken, Operand);
             node.Diagnostics = diagnostics;
             return node;
         }

@@ -22,8 +22,8 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Expressions
 
         public override SyntaxKind Kind => SyntaxKind.BitwiseNotExpression;
 
-        public SyntaxToken OperatorToken
-            => new SyntaxToken(_green.OperatorToken, this, GetChildPosition(0));
+        public SyntaxToken TildeToken
+            => new SyntaxToken(_green.TildeToken, this, GetChildPosition(0));
 
         public ExpressionSyntax Operand
         {

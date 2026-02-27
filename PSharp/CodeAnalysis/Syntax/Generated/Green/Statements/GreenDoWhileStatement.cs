@@ -1,13 +1,10 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Statements
 {
-    internal sealed class GreenDoWhileStatement : GreenStatement, ILoopStatement
+    internal sealed class GreenDoWhileStatement : GreenStatement
     {
         public GreenToken DoKeyword { get; }
         public GreenToken ColonToken { get; }
@@ -40,7 +37,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Statements
             Condition = condition;
         }
 
-        public override SyntaxKind Kind => SyntaxKind.DoStatement;
+        public override SyntaxKind Kind => SyntaxKind.DoWhileStatement;
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {

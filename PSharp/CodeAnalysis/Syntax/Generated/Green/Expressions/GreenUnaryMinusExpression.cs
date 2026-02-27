@@ -1,34 +1,31 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenUnaryMinusExpression : GreenExpression, IUnaryExpression
+    internal sealed class GreenUnaryMinusExpression : GreenExpression
     {
-        public GreenToken OperatorToken { get; }
+        public GreenToken MinusToken { get; }
         public GreenExpression Operand { get; }
 
         public override int SlotCount => 2;
 
         public override GreenNode? GetSlot(int index) => index switch
         {
-            0 => OperatorToken,
+            0 => MinusToken,
             1 => Operand,
             _ => null
         };
 
         public GreenUnaryMinusExpression(
             SyntaxKind kind,
-            GreenToken operatorToken,
+            GreenToken minusToken,
             GreenExpression operand
         )
             : base(kind)
         {
-            OperatorToken = operatorToken;
+            MinusToken = minusToken;
             Operand = operand;
         }
 
@@ -36,7 +33,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenUnaryMinusExpression(Kind, OperatorToken, Operand);
+            var node = new GreenUnaryMinusExpression(Kind, MinusToken, Operand);
             node.Diagnostics = diagnostics;
             return node;
         }

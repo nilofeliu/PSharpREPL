@@ -21,7 +21,7 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Statements
             _green = green;
         }
 
-        public override SyntaxKind Kind => SyntaxKind.DoStatement;
+        public override SyntaxKind Kind => SyntaxKind.DoWhileStatement;
 
         public SyntaxToken DoKeyword
             => new SyntaxToken(_green.DoKeyword, this, GetChildPosition(0));

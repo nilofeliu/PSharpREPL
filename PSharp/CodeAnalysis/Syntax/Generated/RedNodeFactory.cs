@@ -1,10 +1,13 @@
-using PSharp.CodeAnalysis.Syntax.Green;
-using PSharp.CodeAnalysis.Syntax.Green.Expressions;
-using PSharp.CodeAnalysis.Syntax.Green.Statements;
+using PSharp.CodeAnalysis;
+using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
+using PSharp.CodeAnalysis.Syntax.Green.Expressions;
+using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Nodes.Statements;
+using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
+using PSharp.CodeAnalysis.Syntax.Green.Statements;
+using PSharp.CodeAnalysis.Syntax.Green.Expressions;
+using System;
 
 namespace PSharp.CodeAnalysis.Syntax
 {
@@ -14,13 +17,11 @@ namespace PSharp.CodeAnalysis.Syntax
         {
             return green.Kind switch
             {
-                SyntaxKind.CompilationUnit => new CompilationUnitSyntax((GreenCompilationUnit)green, parent, position),
                 SyntaxKind.EqualsValueClause => new EqualsValueClauseSyntax((GreenEqualsValueClause)green, parent, position),
                 SyntaxKind.VariableDeclarator => new VariableDeclaratorSyntax((GreenVariableDeclarator)green, parent, position),
                 SyntaxKind.VariableDeclaration => new VariableDeclarationSyntax((GreenVariableDeclaration)green, parent, position),
                 SyntaxKind.LocalDeclarationStatement => new LocalDeclarationStatementSyntax((GreenLocalDeclarationStatement)green, parent, position),
                 SyntaxKind.IdentifierName => new NameExpressionSyntax((GreenNameExpression)green, parent, position),
-                SyntaxKind.ParenthesizedExpression => new ParenthesizedExpressionSyntax((GreenParenthesizedExpression)green, parent, position),
                 SyntaxKind.UnaryMinusExpression => new UnaryMinusExpressionSyntax((GreenUnaryMinusExpression)green, parent, position),
                 SyntaxKind.UnaryPlusExpression => new UnaryPlusExpressionSyntax((GreenUnaryPlusExpression)green, parent, position),
                 SyntaxKind.LogicalNotExpression => new LogicalNotExpressionSyntax((GreenLogicalNotExpression)green, parent, position),
@@ -58,15 +59,27 @@ namespace PSharp.CodeAnalysis.Syntax
                 SyntaxKind.LeftShiftAssignmentExpression => new LeftShiftAssignmentExpressionSyntax((GreenLeftShiftAssignmentExpression)green, parent, position),
                 SyntaxKind.RightShiftAssignmentExpression => new RightShiftAssignmentExpressionSyntax((GreenRightShiftAssignmentExpression)green, parent, position),
                 SyntaxKind.CoalesceAssignmentExpression => new CoalesceAssignmentExpressionSyntax((GreenCoalesceAssignmentExpression)green, parent, position),
-                SyntaxKind.NumericLiteralExpression => new NumericLiteralExpressionSyntax((GreenNumericLiteralExpression)green, parent, position),
+                SyntaxKind.ByteLiteralExpression => new ByteLiteralExpressionSyntax((GreenByteLiteralExpression)green, parent, position),
+                SyntaxKind.SByteLiteralExpression => new SByteLiteralExpressionSyntax((GreenSByteLiteralExpression)green, parent, position),
+                SyntaxKind.ShortLiteralExpression => new ShortLiteralExpressionSyntax((GreenShortLiteralExpression)green, parent, position),
+                SyntaxKind.UShortLiteralExpression => new UShortLiteralExpressionSyntax((GreenUShortLiteralExpression)green, parent, position),
+                SyntaxKind.IntLiteralExpression => new IntLiteralExpressionSyntax((GreenIntLiteralExpression)green, parent, position),
+                SyntaxKind.UIntLiteralExpression => new UIntLiteralExpressionSyntax((GreenUIntLiteralExpression)green, parent, position),
+                SyntaxKind.LongLiteralExpression => new LongLiteralExpressionSyntax((GreenLongLiteralExpression)green, parent, position),
+                SyntaxKind.ULongLiteralExpression => new ULongLiteralExpressionSyntax((GreenULongLiteralExpression)green, parent, position),
+                SyntaxKind.FloatLiteralExpression => new FloatLiteralExpressionSyntax((GreenFloatLiteralExpression)green, parent, position),
+                SyntaxKind.DoubleLiteralExpression => new DoubleLiteralExpressionSyntax((GreenDoubleLiteralExpression)green, parent, position),
+                SyntaxKind.DecimalLiteralExpression => new DecimalLiteralExpressionSyntax((GreenDecimalLiteralExpression)green, parent, position),
                 SyntaxKind.StringLiteralExpression => new StringLiteralExpressionSyntax((GreenStringLiteralExpression)green, parent, position),
+                SyntaxKind.VoidLiteralExpression => new VoidLiteralExpressionSyntax((GreenVoidLiteralExpression)green, parent, position),
                 SyntaxKind.CharacterLiteralExpression => new CharacterLiteralExpressionSyntax((GreenCharacterLiteralExpression)green, parent, position),
                 SyntaxKind.TrueLiteralExpression => new TrueLiteralExpressionSyntax((GreenTrueLiteralExpression)green, parent, position),
                 SyntaxKind.FalseLiteralExpression => new FalseLiteralExpressionSyntax((GreenFalseLiteralExpression)green, parent, position),
                 SyntaxKind.NullLiteralExpression => new NullLiteralExpressionSyntax((GreenNullLiteralExpression)green, parent, position),
                 SyntaxKind.DefaultLiteralExpression => new DefaultLiteralExpressionSyntax((GreenDefaultLiteralExpression)green, parent, position),
+                SyntaxKind.ParenthesizedExpression => new ParenthesizedExpressionSyntax((GreenParenthesizedExpression)green, parent, position),
                 SyntaxKind.Block => new BlockStatementSyntax((GreenBlockStatement)green, parent, position),
-                SyntaxKind.DoStatement => new DoWhileStatementSyntax((GreenDoWhileStatement)green, parent, position),
+                SyntaxKind.DoWhileStatement => new DoWhileStatementSyntax((GreenDoWhileStatement)green, parent, position),
                 SyntaxKind.ForStatement => new ForStatementSyntax((GreenForStatement)green, parent, position),
                 SyntaxKind.IfStatement => new IfStatementSyntax((GreenIfStatement)green, parent, position),
                 SyntaxKind.ElseClause => new ElseClauseSyntax((GreenElseClause)green, parent, position),
@@ -74,7 +87,6 @@ namespace PSharp.CodeAnalysis.Syntax
                 SyntaxKind.DefaultSwitchLabel => new DefaultSwitchLabelSyntax((GreenDefaultSwitchLabel)green, parent, position),
                 SyntaxKind.SwitchStatement => new SwitchStatementSyntax((GreenSwitchStatement)green, parent, position),
                 SyntaxKind.WhileStatement => new WhileStatementSyntax((GreenWhileStatement)green, parent, position),
-                SyntaxKind.ExpressionStatement => new ExpressionStatementSyntax((GreenExpressionStatement)green, parent, position),
                 _ => throw new InvalidOperationException($"Unknown SyntaxKind: {green.Kind}")
             };
         }

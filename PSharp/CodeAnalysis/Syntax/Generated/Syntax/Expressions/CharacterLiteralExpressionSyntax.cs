@@ -20,8 +20,8 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Expressions
 
         public override SyntaxKind Kind => SyntaxKind.CharacterLiteralExpression;
 
-        public SyntaxToken LiteralToken
-            => new SyntaxToken(_green.LiteralToken, this, GetChildPosition(0));
+        public SyntaxToken CharacterLiteralToken
+            => new SyntaxToken(_green.CharacterLiteralToken, this, GetChildPosition(0));
 
     }
 }

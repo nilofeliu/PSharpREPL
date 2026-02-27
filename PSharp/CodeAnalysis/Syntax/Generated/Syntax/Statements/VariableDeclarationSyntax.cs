@@ -1,31 +1,45 @@
 using PSharp.CodeAnalysis;
-using PSharp.CodeAnalysis.Syntax;
-using PSharp.CodeAnalysis.Syntax.Green.Statements;
+using PSharp.CodeAnalysis.Diagnostics;
+using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Syntax.Nodes;
+using PSharp.CodeAnalysis.Syntax.Green.Statements;
+using System.Collections.Immutable;
 
-public sealed class VariableDeclarationSyntax : StatementSyntax
+namespace PSharp.CodeAnalysis.Syntax.Nodes.Statements
 {
-    private readonly GreenVariableDeclaration _green;
-
-    internal VariableDeclarationSyntax(GreenVariableDeclaration green, SyntaxNode? parent, int position)
-        : base(parent, green, position)
+    public sealed class VariableDeclarationSyntax : StatementSyntax
     {
-        _green = green;
+        private readonly GreenVariableDeclaration _green;
+
+        internal VariableDeclarationSyntax(GreenVariableDeclaration green, SyntaxNode? parent, int position)
+            : base(parent, green, position)
+        {
+            _green = green;
+        }
+
+        public override SyntaxKind Kind => SyntaxKind.VariableDeclaration;
+
+        public SyntaxToken Keyword
+            => new SyntaxToken(_green.Keyword, this, GetChildPosition(0));
+
+        public SyntaxToken? Type
+            => new SyntaxToken(_green.Type, this, GetChildPosition(1));
+
+        public List<VariableDeclaratorSyntax> Variables
+        {
+            get
+            {
+                var list = new List<VariableDeclaratorSyntax>();
+                int pos = GetChildPosition(2);
+                foreach (var child in _green.Variables)
+                {
+                    list.Add((VariableDeclaratorSyntax)RedNodeFactory.CreateRed(child, this, pos));
+                    pos += child.FullWidth;
+                }
+                return list;
+            }
+        }
+
     }
-
-    public override SyntaxKind Kind => SyntaxKind.LocalDeclarationStatement;
-
-    public SyntaxToken Keyword
-        => new SyntaxToken(_green.Keyword, this, GetChildPosition(0));
-
-    public SyntaxToken Identifier
-        => new SyntaxToken(_green.Identifier, this, GetChildPosition(1));
-
-    public SyntaxToken EqualsToken
-        => new SyntaxToken(_green.EqualsToken, this, GetChildPosition(2));
-
-    private ExpressionSyntax? _initializer;
-    public ExpressionSyntax Initializer
-        => _initializer ??= (ExpressionSyntax)RedNodeFactory.CreateRed(_green.Initializer, this, GetChildPosition(3));
 }

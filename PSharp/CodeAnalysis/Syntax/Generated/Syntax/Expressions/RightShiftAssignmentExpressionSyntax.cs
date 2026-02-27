@@ -25,8 +25,8 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Expressions
         public SyntaxToken IdentifierToken
             => new SyntaxToken(_green.IdentifierToken, this, GetChildPosition(0));
 
-        public SyntaxToken OperatorToken
-            => new SyntaxToken(_green.OperatorToken, this, GetChildPosition(1));
+        public SyntaxToken GreaterThanGreaterThanEqualsToken
+            => new SyntaxToken(_green.GreaterThanGreaterThanEqualsToken, this, GetChildPosition(1));
 
         public ExpressionSyntax Expression
         {

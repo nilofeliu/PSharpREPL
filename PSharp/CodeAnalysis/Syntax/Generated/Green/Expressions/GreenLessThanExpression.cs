@@ -1,16 +1,13 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenLessThanExpression : GreenExpression, IComparisonExpression
+    internal sealed class GreenLessThanExpression : GreenExpression
     {
         public GreenExpression Left { get; }
-        public GreenToken OperatorToken { get; }
+        public GreenToken LessThanToken { get; }
         public GreenExpression Right { get; }
 
         public override int SlotCount => 3;
@@ -18,7 +15,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public override GreenNode? GetSlot(int index) => index switch
         {
             0 => Left,
-            1 => OperatorToken,
+            1 => LessThanToken,
             2 => Right,
             _ => null
         };
@@ -26,13 +23,13 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public GreenLessThanExpression(
             SyntaxKind kind,
             GreenExpression left,
-            GreenToken operatorToken,
+            GreenToken lessThanToken,
             GreenExpression right
         )
             : base(kind)
         {
             Left = left;
-            OperatorToken = operatorToken;
+            LessThanToken = lessThanToken;
             Right = right;
         }
 
@@ -40,7 +37,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenLessThanExpression(Kind, Left, OperatorToken, Right);
+            var node = new GreenLessThanExpression(Kind, Left, LessThanToken, Right);
             node.Diagnostics = diagnostics;
             return node;
         }

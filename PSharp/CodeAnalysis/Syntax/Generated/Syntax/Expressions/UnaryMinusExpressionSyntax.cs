@@ -22,8 +22,8 @@ namespace PSharp.CodeAnalysis.Syntax.Nodes.Expressions
 
         public override SyntaxKind Kind => SyntaxKind.UnaryMinusExpression;
 
-        public SyntaxToken OperatorToken
-            => new SyntaxToken(_green.OperatorToken, this, GetChildPosition(0));
+        public SyntaxToken MinusToken
+            => new SyntaxToken(_green.MinusToken, this, GetChildPosition(0));
 
         public ExpressionSyntax Operand
         {

@@ -1,16 +1,13 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenLeftShiftAssignmentExpression : GreenExpression, IAssignmentExpression
+    internal sealed class GreenLeftShiftAssignmentExpression : GreenExpression
     {
         public GreenToken IdentifierToken { get; }
-        public GreenToken OperatorToken { get; }
+        public GreenToken LessThanLessThanEqualsToken { get; }
         public GreenExpression Expression { get; }
 
         public override int SlotCount => 3;
@@ -18,7 +15,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public override GreenNode? GetSlot(int index) => index switch
         {
             0 => IdentifierToken,
-            1 => OperatorToken,
+            1 => LessThanLessThanEqualsToken,
             2 => Expression,
             _ => null
         };
@@ -26,13 +23,13 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public GreenLeftShiftAssignmentExpression(
             SyntaxKind kind,
             GreenToken identifierToken,
-            GreenToken operatorToken,
+            GreenToken lessThanLessThanEqualsToken,
             GreenExpression expression
         )
             : base(kind)
         {
             IdentifierToken = identifierToken;
-            OperatorToken = operatorToken;
+            LessThanLessThanEqualsToken = lessThanLessThanEqualsToken;
             Expression = expression;
         }
 
@@ -40,7 +37,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenLeftShiftAssignmentExpression(Kind, IdentifierToken, OperatorToken, Expression);
+            var node = new GreenLeftShiftAssignmentExpression(Kind, IdentifierToken, LessThanLessThanEqualsToken, Expression);
             node.Diagnostics = diagnostics;
             return node;
         }

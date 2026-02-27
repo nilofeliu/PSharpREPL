@@ -1,16 +1,13 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenAddAssignmentExpression : GreenExpression, IAssignmentExpression
+    internal sealed class GreenAddAssignmentExpression : GreenExpression
     {
         public GreenToken IdentifierToken { get; }
-        public GreenToken OperatorToken { get; }
+        public GreenToken PlusEqualsToken { get; }
         public GreenExpression Expression { get; }
 
         public override int SlotCount => 3;
@@ -18,7 +15,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public override GreenNode? GetSlot(int index) => index switch
         {
             0 => IdentifierToken,
-            1 => OperatorToken,
+            1 => PlusEqualsToken,
             2 => Expression,
             _ => null
         };
@@ -26,13 +23,13 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public GreenAddAssignmentExpression(
             SyntaxKind kind,
             GreenToken identifierToken,
-            GreenToken operatorToken,
+            GreenToken plusEqualsToken,
             GreenExpression expression
         )
             : base(kind)
         {
             IdentifierToken = identifierToken;
-            OperatorToken = operatorToken;
+            PlusEqualsToken = plusEqualsToken;
             Expression = expression;
         }
 
@@ -40,7 +37,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenAddAssignmentExpression(Kind, IdentifierToken, OperatorToken, Expression);
+            var node = new GreenAddAssignmentExpression(Kind, IdentifierToken, PlusEqualsToken, Expression);
             node.Diagnostics = diagnostics;
             return node;
         }

@@ -1,16 +1,13 @@
 using PSharp.CodeAnalysis;
 using PSharp.CodeAnalysis.Diagnostics;
-using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
-using PSharp.CodeAnalysis.Syntax.Nodes;
-using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;
 
 namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
-    internal sealed class GreenModuloExpression : GreenExpression, IBinaryExpression
+    internal sealed class GreenModuloExpression : GreenExpression
     {
         public GreenExpression Left { get; }
-        public GreenToken OperatorToken { get; }
+        public GreenToken PercentToken { get; }
         public GreenExpression Right { get; }
 
         public override int SlotCount => 3;
@@ -18,7 +15,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public override GreenNode? GetSlot(int index) => index switch
         {
             0 => Left,
-            1 => OperatorToken,
+            1 => PercentToken,
             2 => Right,
             _ => null
         };
@@ -26,13 +23,13 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
         public GreenModuloExpression(
             SyntaxKind kind,
             GreenExpression left,
-            GreenToken operatorToken,
+            GreenToken percentToken,
             GreenExpression right
         )
             : base(kind)
         {
             Left = left;
-            OperatorToken = operatorToken;
+            PercentToken = percentToken;
             Right = right;
         }
 
@@ -40,7 +37,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         protected override GreenNode CreateWithDiagnostics(PSharp.CodeAnalysis.Diagnostics.DiagnosticInfo[]? diagnostics)
         {
-            var node = new GreenModuloExpression(Kind, Left, OperatorToken, Right);
+            var node = new GreenModuloExpression(Kind, Left, PercentToken, Right);
             node.Diagnostics = diagnostics;
             return node;
         }
