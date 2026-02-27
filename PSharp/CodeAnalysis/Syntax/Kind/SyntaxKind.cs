@@ -22,57 +22,6 @@
         InterpolatedStringLiteralToken,
         VerbatimStringLiteralToken,
 
-
-        // ── Literal Tokens ───────────────────────────────────────────────────────
-        TrueLiteralToken,
-        FalseLiteralToken,
-        NullLiteralToken,
-        DefaultLiteralToken,
-
-        // Math Operator Tokens
-        PlusToken,
-        MinusToken,
-        StarToken,
-        SlashToken,
-
-        // Comparison Operator Tokens
-        NotEqualsToken,
-        LessThanToken,
-        LessThanEqualsToken,
-        GreaterThanToken,
-        GreaterThanEqualsToken,
-
-        // Assignment Operator Tokens
-        PlusEqualsToken,                    // +=
-        MinusEqualsToken,                   // -=
-        PercentEqualsToken,                 // %=
-        AsteriskEqualsToken,                // *=
-        SlashEqualsToken,                   // /=
-        AmpersandEqualsToken,               // &=
-        PipeEqualsToken,                    // |=
-        CaretEqualsToken,                   // ^=
-        LessThanLessThanEqualsToken,        // <<=
-        GreaterThanGreaterThanEqualsToken,  // >>=
-        QuestionQuestionEqualsToken,
-        StarEqualsToken,
-
-        // Logical Operatos
-        AmpersandToken,                     // & (bitwise AND)
-        AmpersandAmpersandToken,            // && (logical AND)
-        BangToken,                          // ! (logical NOT)
-        BangEqualsToken,                    // != (not equals)
-        EqualsToken,                        // = (simple assignment — sometimes grouped here)
-        EqualsEqualsToken,                  // == (equality)
-        LessToken,                          // <
-        LessEqualsToken,                    // <=
-        GreaterToken,                       // >
-        GreaterEqualsToken,                 // >=
-        CaretToken,                         // ^ (bitwise XOR)
-        PipeToken,                          // | (bitwise OR)
-        PipePipeToken,                      // || (logical OR)
-        TildeToken,                         // ~ (bitwise NOT)
-
-
         // Scope Tokens
         OpenParenthesisToken,
         CloseParenthesisToken,
@@ -91,10 +40,60 @@
         ElseIfClause,
         CaseSwitchLabel,
         DefaultSwitchLabel,
+        // Operators
 
-        // Green Nodes
-        GreenList,
-        GreenSyntaxList,
+        // Arithmetic
+        StarToken,
+        SlashToken,
+        PercentToken,
+        PlusToken,
+        MinusToken,
+        PlusPlusToken,
+        MinusMinusToken,
+
+        // Comparison
+        EqualsEqualsToken,
+        BangEqualsToken,
+        GreaterToken,
+        GreaterOrEqualsToken,
+        LessToken,
+        LessThanEqualsToken,
+        GreaterThanToken,
+        GreaterThanEqualsToken,
+        LessThanToken,
+        LessThanOrEqualsToken,
+
+        // Logical
+        AmpersandAmpersandToken,
+        PipePipeToken,
+        QuestionQuestionToken,
+
+        // Bitwise
+        AmpersandToken,
+        PipeToken,
+        CaretToken,
+        TildeToken,
+
+        // Unary
+        BangToken,
+
+        // Assignment
+        EqualsToken,
+
+        // Compound Assignment
+        PlusEqualsToken,
+        MinusEqualsToken,
+        StarEqualsToken,
+        SlashEqualsToken,
+        PercentEqualsToken,
+        AmpersandEqualsToken,
+        PipeEqualsToken,
+        CaretEqualsToken,
+        LessThanLessThanEqualsToken,
+        GreaterThanGreaterThanEqualsToken,
+        QuestionQuestionEqualsToken,
+
+        // Literal Tokens
 
 
         // Boolean Keywords
@@ -155,7 +154,7 @@
         VoidKeyword,
 
 
-        // Variable Type Tokens
+        // Literal Type Tokens
         //HexLongLiteralToken,
         //HexIntegerLiteralToken,
         FloatLiteralToken,
@@ -166,6 +165,16 @@
         UIntLiteralToken,
         IntegerLiteralToken,
         BinaryIntegerLiteralToken,
+        ByteLiteralToken,
+        SByteLiteralToken,
+        ShortLiteralToken,
+        UShortLiteralToken,
+        IntLiteralToken,
+        NullLiteralToken,
+        DefaultLiteralToken,
+        VoidLiteralToken,
+        TrueLiteralToken,
+        FalseLiteralToken,
 
         // Type Kind Keywords
         ClassKeyword,
@@ -273,6 +282,49 @@
         CatchDeclaration,
         CatchFilterClause,
         FinallyClause,
+        ParenthesizedExpression,
+
+        // Other Expressions
+
+        UnaryPlusExpression,
+        UnaryMinusExpression,
+        BitwiseNotExpression,
+        LogicalNotExpression,
+        PreIncrementExpression,
+        PreDecrementExpression,
+        PointerIndirectionExpression,
+        AddressOfExpression,
+        PostIncrementExpression,
+        PostDecrementExpression,
+        AwaitExpression,
+        IndexExpression,
+        CharacterLiteralToken,
+        SimpleAssignmentExpression,
+        AddAssignmentExpression,
+        SubtractAssignmentExpression,
+        MultiplyAssignmentExpression,
+        DivideAssignmentExpression,
+        AndAssignmentExpression,
+        ExclusiveOrAssignmentExpression,
+        LeftShiftAssignmentExpression,
+        ModuloAssignmentExpression,
+        RightShiftAssignmentExpression,
+        CoalesceAssignmentExpression,
+        UnsignedRightShiftAssignmentExpression,
+        OrAssignmentExpression,
+        ByteLiteralExpression,
+        SByteLiteralExpression,
+        ShortLiteralExpression,
+        IntLiteralExpression,
+        UIntLiteralExpression,
+        ULongLiteralExpression,
+        UShortLiteralExpression,
+        LongLiteralExpression,
+        FloatLiteralExpression,
+        DoubleLiteralExpression,
+        DecimalLiteralExpression,
+        VoidLiteralExpression,
+
 
         // ── Literal Expressions ───────────────────────────────────────────────────────
         NumericLiteralExpression,
@@ -327,7 +379,7 @@
         ForStatement,
         IfStatement,
         WhileStatement,
-        DoStatement,
+        DoWhileStatement,
         VariableDeclaration,
         SwitchStatement,
         GlobalStatement,
@@ -336,16 +388,6 @@
         ExternAliasDirective,
         FileScopedNamespaceDeclaration,
         LocalFunctionStatement,
-        GotoStatement,
-        GotoCaseStatement,
-        GotoDefaultStatement,
-        BreakStatement,
-        ContinueStatement,
-        ReturnStatement,
-        ThrowStatement,
-        YieldReturnStatement,
-        YieldBreakStateme,
-        ForEachStatement,
 
 
         // ── Statements ───────────────────────────────────────────────────────────────
@@ -357,36 +399,20 @@
         EqualsValueClause,
         EmptyStatement,
         LabeledStatement,
+        GotoStatement,
+        GotoCaseStatement,
+        GotoDefaultStatement,
+        BreakStatement,
+        ContinueStatement,
+        ReturnStatement,
+        ThrowStatement,
+        YieldReturnStatement,
+        YieldBreakStatement,
+        DoStatement,
+        ForEachStatement,
         UsingStatement,
         FixedStatement,
-        UnaryPlusExpression,
-        UnaryMinusExpression,
-        BitwiseNotExpression,
-        LogicalNotExpression,
-        PreIncrementExpression,
-        PreDecrementExpression,
-        PointerIndirectionExpression,
-        AddressOfExpression,
-        PostIncrementExpression,
-        PostDecrementExpression,
-        AwaitExpression,
-        IndexExpression,
-        CharacterLiteralToken,
-        ParenthesizedExpression,
-        SimpleAssignmentExpression,
-        AddAssignmentExpression,
-        SubtractAssignmentExpression,
-        MultiplyAssignmentExpression,
-        DivideAssignmentExpression,
-        ModuloAssignmentExpression,
-        AndAssignmentExpression,
-        OrAssignmentExpression,
-        ExclusiveOrAssignmentExpression,
-        LeftShiftAssignmentExpression,
-        RightShiftAssignmentExpression,
-        CoalesceAssignmentExpression,
-        PlusPlusToken,
-        MinusMinusToken,
-        YieldBreakStatement,
+        GreenNodeList,
+        CommaToken,
     }
 }
