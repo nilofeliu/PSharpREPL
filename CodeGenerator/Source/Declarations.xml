@@ -1,32 +1,32 @@
 <SyntaxNodes>
-<!-- EqualsValueClauseSyntax - the = value part -->
-<SyntaxNode Name="EqualsValueClauseSyntax" Base="Statement" Kind="EqualsValueClause" Category="Statement">
-    <Property Name="EqualsToken" Type="Token" />
-    <Property Name="Value" Type="Expression" />
-</SyntaxNode>
+	<!-- EqualsValueClauseSyntax - the = value part -->
+	<SyntaxNode Name="EqualsValueClauseSyntax" Base="Statement" Kind="EqualsValueClause" Category="Statement">
+		<Property Name="EqualsToken" Type="Token" />
+		<Property Name="Value" Type="Expression" />
+	</SyntaxNode>
 
-<!-- VariableDeclaratorSyntax - single variable with optional initializer -->
-<SyntaxNode Name="VariableDeclaratorSyntax" Base="Statement" Kind="VariableDeclarator" Category="Statement">
-    <Property Name="Identifier" Type="Token" />
-    <Property Name="Initializer" Type="EqualsValueClause" Nullable="true" />
-</SyntaxNode>
+	<!-- VariableDeclaratorSyntax - single variable with optional initializer -->
+	<SyntaxNode Name="VariableDeclaratorSyntax" Base="Statement" Kind="VariableDeclarator" Category="Statement">
+		<Property Name="Identifier" Type="Token" />
+		<Property Name="Initializer" Type="EqualsValueClause" Nullable="true" />
+	</SyntaxNode>
 
-<!-- VariableDeclarationSyntax - type + one or more declarators -->
-<SyntaxNode Name="VariableDeclarationSyntax" Base="Statement" Kind="VariableDeclaration" Category="Statement">
-    <Property Name="Keyword" Type="Token" />
-    <Property Name="Type" Type="Token" Nullable="true" />
-    <Property Name="Variables" Type="VariableDeclaratorList" />
-</SyntaxNode>
+	<!-- VariableDeclarationSyntax - type + one or more declarators -->
+	<SyntaxNode Name="VariableDeclarationSyntax" Base="Statement" Kind="VariableDeclaration" Category="Statement">
+		<Property Name="Keyword" Type="Token" />
+		<Property Name="Type" Type="Token" Nullable="true" />
+		<Property Name="Variables" Type="VariableDeclaratorList" />
+	</SyntaxNode>
 
-<!-- LocalDeclarationStatementSyntax - full statement -->
-<SyntaxNode Name="LocalDeclarationStatementSyntax" Base="Statement" Kind="LocalDeclarationStatement" Category="Statement">
-    <Property Name="Keyword" Type="Token" />
-    <Property Name="Declaration" Type="VariableDeclaration" />
-</SyntaxNode>
+	<!-- LocalDeclarationStatementSyntax - full statement -->
+	<SyntaxNode Name="LocalDeclarationStatementSyntax" Base="Statement" Kind="LocalDeclarationStatement" Category="Statement">
+		<Property Name="Keyword" Type="Token" />
+		<Property Name="Declaration" Type="VariableDeclaration" />
+	</SyntaxNode>
 
-<!-- ── Namespace / Using ─────────────────────────────────────────────── -->
+	<!-- ── Namespace / Using ─────────────────────────────────────────────── -->
 
-<!-- NamespaceDeclarationSyntax
+	<!-- NamespaceDeclarationSyntax
 <SyntaxNode Name="NamespaceDeclarationSyntax" Base="Declaration" Kind="NamespaceDeclaration" Category="Declaration">
     <Property Name="NamespaceKeyword" Type="Token" />
     <Property Name="Name" Type="Expression" />
@@ -36,16 +36,16 @@
 </SyntaxNode>
 -->
 
-<!-- UsingDirectiveSyntax
+	<!-- UsingDirectiveSyntax
 <SyntaxNode Name="UsingDirectiveSyntax" Base="Declaration" Kind="UsingDirective" Category="Declaration">
     <Property Name="UsingKeyword" Type="Token" />
     <Property Name="Name" Type="Expression" />
 </SyntaxNode>
 -->
 
-<!-- ── Type Declarations ─────────────────────────────────────────────── -->
+	<!-- ── Type Declarations ─────────────────────────────────────────────── -->
 
-<!-- ClassDeclarationSyntax
+	<!-- ClassDeclarationSyntax
 <SyntaxNode Name="ClassDeclarationSyntax" Base="Declaration" Kind="ClassDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="ClassKeyword" Type="Token" />
@@ -56,7 +56,7 @@
 </SyntaxNode>
 -->
 
-<!-- StructDeclarationSyntax
+	<!-- StructDeclarationSyntax
 <SyntaxNode Name="StructDeclarationSyntax" Base="Declaration" Kind="StructDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="StructKeyword" Type="Token" />
@@ -67,7 +67,7 @@
 </SyntaxNode>
 -->
 
-<!-- InterfaceDeclarationSyntax
+	<!-- InterfaceDeclarationSyntax
 <SyntaxNode Name="InterfaceDeclarationSyntax" Base="Declaration" Kind="InterfaceDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="InterfaceKeyword" Type="Token" />
@@ -78,7 +78,7 @@
 </SyntaxNode>
 -->
 
-<!-- EnumDeclarationSyntax
+	<!-- EnumDeclarationSyntax
 <SyntaxNode Name="EnumDeclarationSyntax" Base="Declaration" Kind="EnumDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="EnumKeyword" Type="Token" />
@@ -89,7 +89,7 @@
 </SyntaxNode>
 -->
 
-<!-- DelegateDeclarationSyntax
+	<!-- DelegateDeclarationSyntax
 <SyntaxNode Name="DelegateDeclarationSyntax" Base="Declaration" Kind="DelegateDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="DelegateKeyword" Type="Token" />
@@ -99,9 +99,9 @@
 </SyntaxNode>
 -->
 
-<!-- ── Member Declarations ───────────────────────────────────────────── -->
+	<!-- ── Member Declarations ───────────────────────────────────────────── -->
 
-<!-- MethodDeclarationSyntax
+	<!-- MethodDeclarationSyntax
 <SyntaxNode Name="MethodDeclarationSyntax" Base="Declaration" Kind="MethodDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="ReturnType" Type="Token" />
@@ -113,7 +113,7 @@
 </SyntaxNode>
 -->
 
-<!-- ConstructorDeclarationSyntax
+	<!-- ConstructorDeclarationSyntax
 <SyntaxNode Name="ConstructorDeclarationSyntax" Base="Declaration" Kind="ConstructorDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="Identifier" Type="Token" />
@@ -124,7 +124,7 @@
 </SyntaxNode>
 -->
 
-<!-- PropertyDeclarationSyntax
+	<!-- PropertyDeclarationSyntax
 <SyntaxNode Name="PropertyDeclarationSyntax" Base="Declaration" Kind="PropertyDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="Type" Type="Token" />
@@ -135,21 +135,21 @@
 </SyntaxNode>
 -->
 
-<!-- FieldDeclarationSyntax
+	<!-- FieldDeclarationSyntax
 <SyntaxNode Name="FieldDeclarationSyntax" Base="Declaration" Kind="FieldDeclaration" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="Declaration" Type="VariableDeclaration" />
 </SyntaxNode>
 -->
 
-<!-- EnumMemberDeclarationSyntax
+	<!-- EnumMemberDeclarationSyntax
 <SyntaxNode Name="EnumMemberDeclarationSyntax" Base="Declaration" Kind="EnumMemberDeclaration" Category="Declaration">
     <Property Name="Identifier" Type="Token" />
     <Property Name="Initializer" Type="EqualsValueClause" Nullable="true" />
 </SyntaxNode>
 -->
 
-<!-- ParameterSyntax
+	<!-- ParameterSyntax
 <SyntaxNode Name="ParameterSyntax" Base="Declaration" Kind="Parameter" Category="Declaration">
     <Property Name="Modifiers" Type="TokenList" />
     <Property Name="Type" Type="Token" />
@@ -158,7 +158,7 @@
 </SyntaxNode>
 -->
 
-<!-- ParameterListSyntax
+	<!-- ParameterListSyntax
 <SyntaxNode Name="ParameterListSyntax" Base="Declaration" Kind="ParameterList" Category="Declaration">
     <Property Name="OpenParenthesisToken" Type="Token" />
     <Property Name="Parameters" Type="ParameterList" />

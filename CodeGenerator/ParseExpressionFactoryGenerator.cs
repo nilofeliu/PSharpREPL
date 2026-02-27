@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using PSharp.CodeAnalysis.Syntax;
+using PSharp.CodeAnalysis.Syntax.Kind;
+using System.Xml.Linq;
 
 namespace CodeGenerator;
 
@@ -36,20 +38,42 @@ public class ExpressionFactoryGenerator
 
     private static void GenerateExpressionFactory(List<NodeInfo> nodes, string outputFile)
     {
-        var binaryNodes = GetNodesByInterface(nodes, "IBinaryExpression");
-        var comparisonNodes = GetNodesByInterface(nodes, "IComparisonExpression");
-        var logicalNodes = GetNodesByInterface(nodes, "ILogicalExpression");
-        var unaryNodes = GetNodesByInterface(nodes, "IUnaryExpression");
-        var assignmentNodes = GetNodesByInterface(nodes, "IAssignmentExpression");
-        var literalNodes = GetNodesByInterface(nodes, "ILiteralExpression");
+        var binaryNodes = new List<NodeInfo>();
+        var comparisonNodes = new List<NodeInfo>();
+        var logicalNodes = new List<NodeInfo>();
+        var unaryNodes = new List<NodeInfo>();
+        var assignmentNodes = new List<NodeInfo>();
+        var literalNodes = new List<NodeInfo>();
+        var otherNodes = new List<NodeInfo>();
+
+        foreach (var node in nodes)
+        {
+            var kind = Enum.Parse<SyntaxKind>(node.Kind);
+
+            if (SyntaxFacts.IsBinaryExpression(kind))
+                binaryNodes.Add(node);
+            else if (SyntaxFacts.IsComparisonExpression(kind))
+                comparisonNodes.Add(node);
+            else if (SyntaxFacts.IsLogicalExpression(kind))
+                logicalNodes.Add(node);
+            else if (SyntaxFacts.IsUnaryExpression(kind))
+                unaryNodes.Add(node);
+            else if (SyntaxFacts.IsAssignmentExpression(kind))
+                assignmentNodes.Add(node);
+            else if (SyntaxFacts.IsLiteralExpression(kind))
+                literalNodes.Add(node);
+            else
+                otherNodes.Add(node);
+        }
+
 
         using var writer = new StreamWriter(outputFile);
-writer.WriteLine("using PSharp.CodeAnalysis;");
-writer.WriteLine("using PSharp.CodeAnalysis.Diagnostics;");
-writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
-writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
-writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes;");
-writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
+        writer.WriteLine("using PSharp.CodeAnalysis;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Diagnostics;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green.Expressions;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes;");
         writer.WriteLine();
         writer.WriteLine("namespace PSharp.CodeAnalysis.Syntax.Parser");
         writer.WriteLine("{");
@@ -61,7 +85,7 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             "GreenExpression left, GreenToken operatorToken, GreenExpression right",
             "Unexpected binary operator",
             binaryNodes,
-            n => $"new Green{StripSyntax(n.Name)}(left, operatorToken, right)",
+            n => $"new Green{StripSyntax(n.Name)}(operatorToken.Kind, left, operatorToken, right)",
             n => n.OperatorKind);
 
         // Comparison
@@ -69,7 +93,7 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             "GreenExpression left, GreenToken operatorToken, GreenExpression right",
             "Unexpected comparison operator",
             comparisonNodes,
-            n => $"new Green{StripSyntax(n.Name)}(left, operatorToken, right)",
+            n => $"new Green{StripSyntax(n.Name)}(operatorToken.Kind, left, operatorToken, right)",
             n => n.OperatorKind);
 
         // Logical
@@ -77,7 +101,7 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             "GreenExpression left, GreenToken operatorToken, GreenExpression right",
             "Unexpected logical operator",
             logicalNodes,
-            n => $"new Green{StripSyntax(n.Name)}(left, operatorToken, right)",
+            n => $"new Green{StripSyntax(n.Name)}(operatorToken.Kind, left, operatorToken, right)",
             n => n.OperatorKind);
 
         // Prefix Unary
@@ -88,7 +112,7 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             "GreenToken operatorToken, GreenExpression operand",
             "Unexpected prefix unary operator",
             preNodes,
-            n => $"new Green{StripSyntax(n.Name)}(operatorToken, operand)",
+            n => $"new Green{StripSyntax(n.Name)}(operatorToken.Kind, operatorToken, operand)",
             n => n.OperatorKind);
 
         // Postfix Unary
@@ -96,7 +120,7 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             "GreenExpression operand, GreenToken operatorToken",
             "Unexpected postfix unary operator",
             postNodes,
-            n => $"new Green{StripSyntax(n.Name)}(operand, operatorToken)",
+            n => $"new Green{StripSyntax(n.Name)}(operatorToken.Kind, operand, operatorToken)",
             n => n.OperatorKind);
 
         // Assignment
@@ -104,7 +128,7 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             "GreenToken identifierToken, GreenToken operatorToken, GreenExpression expression",
             "Unexpected assignment operator",
             assignmentNodes,
-            n => $"new Green{StripSyntax(n.Name)}(identifierToken, operatorToken, expression)",
+            n => $"new Green{StripSyntax(n.Name)}(operatorToken.Kind, identifierToken, operatorToken, expression)",
             n => n.OperatorKind);
 
         // Literal
@@ -112,13 +136,17 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             "GreenToken token",
             "Invalid literal token kind",
             literalNodes,
-            n => $"new Green{StripSyntax(n.Name)}(token)",
+            n => $"new Green{StripSyntax(n.Name)}(token.Kind, token)",
             n => n.Kind.Replace("Expression", "Token"));
-
+        // Others
+        EmitFactory(writer, "CreateOtherNodes",
+            "GreenToken token",
+            "Invalid token kind",
+            otherNodes,
+            n => $"new Green{StripSyntax(n.Name)}(token.Kind, token)",
+            n => n.Kind.Replace("Expression", "Token"));
         writer.WriteLine("    }");
         writer.WriteLine("}");
-
-        Console.WriteLine($"Generated: {outputFile}");
     }
 
     private static void EmitFactory(
@@ -155,6 +183,7 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
         writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green.Expressions;");
         writer.WriteLine("using PSharp.CodeAnalysis.Syntax.InternalSyntax;");
         writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
+        writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
         writer.WriteLine();
         writer.WriteLine("namespace PSharp.CodeAnalysis.Syntax.Parser");
         writer.WriteLine("{");
@@ -208,23 +237,23 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
         writer.WriteLine("        }");
         writer.WriteLine();
 
-        // ParsePrimaryExpression
-        writer.WriteLine("        private GreenExpression ParsePrimaryExpression()");
-        writer.WriteLine("        {");
-        writer.WriteLine("            return CurrentToken.Kind switch");
-        writer.WriteLine("            {");
-        foreach (var node in literalNodes)
-        {
-            string methodName = "Parse" + StripSyntax(node.Name);
-            string tokenKind = node.Kind.Replace("Expression", "Token");
-            writer.WriteLine($"                SyntaxKind.{tokenKind} => {methodName}(),");
-        }
-        writer.WriteLine("                SyntaxKind.IdentifierToken => ParseNameExpression(),");
-        writer.WriteLine("                SyntaxKind.OpenParenthesisToken => ParseParenthesizedExpression(),");
-        writer.WriteLine("                _ => ParseNameExpression() // fallback");
-        writer.WriteLine("            };");
-        writer.WriteLine("        }");
-        writer.WriteLine();
+        //// ParsePrimaryExpression
+        //writer.WriteLine("        private GreenExpression ParsePrimaryExpression()");
+        //writer.WriteLine("        {");
+        //writer.WriteLine("            return CurrentToken.Kind switch");
+        //writer.WriteLine("            {");
+        //foreach (var node in literalNodes)
+        //{
+        //    string methodName = "Parse" + StripSyntax(node.Name);
+        //    string tokenKind = node.Kind.Replace("Expression", "Token");
+        //    writer.WriteLine($"                SyntaxKind.{tokenKind} => {methodName}(),");
+        //}
+        //writer.WriteLine("                SyntaxKind.IdentifierToken => ParseNameExpression(),");
+        //writer.WriteLine("                SyntaxKind.OpenParenthesisToken => ParseParenthesizedExpression(),");
+        //writer.WriteLine("                _ => ParseNameExpression() // fallback");
+        //writer.WriteLine("            };");
+        //writer.WriteLine("        }");
+        //writer.WriteLine();
 
         // Individual Parse* methods for literals and other nodes
         foreach (var node in literalNodes.Concat(otherNodes))
@@ -236,6 +265,7 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
             writer.WriteLine("        {");
 
             var argList = new List<string>();
+            argList.Insert(0, $"SyntaxKind.{node.Kind}");
             foreach (var (propName, propType) in node.Properties)
             {
                 string varName = LowerFirst(propName);
@@ -285,6 +315,9 @@ writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
 
     private static List<NodeInfo> GetNodesByInterface(List<NodeInfo> nodes, string interfaceName)
         => nodes.Where(n => n.Interfaces.Contains(interfaceName)).ToList();
+
+    private static List<NodeInfo> GetNodesByOperatorKind(List<NodeInfo> nodes, string operatorKind)
+    => nodes.Where(n => n.OperatorKind == operatorKind).ToList();
 
     private static string StripSyntax(string name) =>
         name.EndsWith("Syntax") ? name[..^6] : name;

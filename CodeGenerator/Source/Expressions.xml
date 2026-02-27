@@ -1,269 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SyntaxNodes>
-	<SyntaxNode Name="NameExpressionSyntax" Base="Expression" Kind="IdentifierName" Category="Expression" Interfaces="">
+	<SyntaxNode Name="NameExpressionSyntax" Base="Expression" Kind="IdentifierName" Category="Expression">
 		<Property Name="IdentifierToken" Type="Token" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="ParenthesizedExpressionSyntax" Base="Expression" Kind="ParenthesizedExpression" Category="Expression" Interfaces="">
-		<Property Name="OpenParenthesisToken" Type="Token" />
-		<Property Name="Expression" Type="Expression" />
-		<Property Name="CloseParenthesisToken" Type="Token" />
-	</SyntaxNode>
 
-	<SyntaxNode Name="UnaryMinusExpressionSyntax" Base="Expression" Kind="UnaryMinusExpression" Category="Expression" Interfaces="IUnaryExpression" OperatorKind="MinusToken">
-		<Property Name="OperatorToken" Type="Token" />
+	<SyntaxNode Name="UnaryMinusExpressionSyntax" Base="Expression" Kind="UnaryMinusExpression" Category="Expression" OperatorKind="MinusToken">
+		<Property Name="MinusToken" Type="Token" />
 		<Property Name="Operand" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="UnaryPlusExpressionSyntax" Base="Expression" Kind="UnaryPlusExpression" Category="Expression" Interfaces="IUnaryExpression" OperatorKind="PlusToken">
-		<Property Name="OperatorToken" Type="Token" />
+	<SyntaxNode Name="UnaryPlusExpressionSyntax" Base="Expression" Kind="UnaryPlusExpression" Category="Expression" OperatorKind="PlusToken">
+		<Property Name="PlusToken" Type="Token" />
 		<Property Name="Operand" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="LogicalNotExpressionSyntax" Base="Expression" Kind="LogicalNotExpression" Category="Expression" Interfaces="IUnaryExpression" OperatorKind="BangToken">
-		<Property Name="OperatorToken" Type="Token" />
+	<SyntaxNode Name="LogicalNotExpressionSyntax" Base="Expression" Kind="LogicalNotExpression" Category="Expression" OperatorKind="BangToken">
+		<Property Name="BangToken" Type="Token" />
 		<Property Name="Operand" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="BitwiseNotExpressionSyntax" Base="Expression" Kind="BitwiseNotExpression" Category="Expression" Interfaces="IUnaryExpression" OperatorKind="TildeToken">
-		<Property Name="OperatorToken" Type="Token" />
+	<SyntaxNode Name="BitwiseNotExpressionSyntax" Base="Expression" Kind="BitwiseNotExpression" Category="Expression" OperatorKind="TildeToken">
+		<Property Name="TildeToken" Type="Token" />
 		<Property Name="Operand" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="PreIncrementExpressionSyntax" Base="Expression" Kind="PreIncrementExpression" Category="Expression" Interfaces="IUnaryExpression" OperatorKind="PlusPlusToken">
-		<Property Name="OperatorToken" Type="Token" />
+	<SyntaxNode Name="PreIncrementExpressionSyntax" Base="Expression" Kind="PreIncrementExpression" Category="Expression" OperatorKind="PlusPlusToken">
+		<Property Name="PlusPlusToken" Type="Token" />
 		<Property Name="Operand" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="PreDecrementExpressionSyntax" Base="Expression" Kind="PreDecrementExpression" Category="Expression" Interfaces="IUnaryExpression" OperatorKind="MinusMinusToken">
-		<Property Name="OperatorToken" Type="Token" />
+	<SyntaxNode Name="PreDecrementExpressionSyntax" Base="Expression" Kind="PreDecrementExpression" Category="Expression" OperatorKind="MinusMinusToken">
+		<Property Name="MinusMinusToken" Type="Token" />
 		<Property Name="Operand" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="PostIncrementExpressionSyntax" Base="Expression" Kind="PostIncrementExpression" Category="Expression" Interfaces="IUnaryExpression" OperatorKind="PlusPlusToken">
-		<Property Name="OperatorToken" Type="Token" />
+	<SyntaxNode Name="PostIncrementExpressionSyntax" Base="Expression" Kind="PostIncrementExpression" Category="Expression" OperatorKind="PlusPlusToken">
 		<Property Name="Operand" Type="Expression" />
+		<Property Name="PlusPlusToken" Type="Token" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="PostDecrementExpressionSyntax" Base="Expression" Kind="PostDecrementExpression" Category="Expression" Interfaces="IUnaryExpression" OperatorKind="MinusMinusToken">
-		<Property Name="OperatorToken" Type="Token" />
+	<SyntaxNode Name="PostDecrementExpressionSyntax" Base="Expression" Kind="PostDecrementExpression" Category="Expression" OperatorKind="MinusMinusToken">
 		<Property Name="Operand" Type="Expression" />
+		<Property Name="MinusMinusToken" Type="Token" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="AddExpressionSyntax" Base="Expression" Kind="AddExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="PlusToken">
+	<SyntaxNode Name="AddExpressionSyntax" Base="Expression" Kind="AddExpression" Category="Expression" OperatorKind="PlusToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="PlusToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="SubtractExpressionSyntax" Base="Expression" Kind="SubtractExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="MinusToken">
+	<SyntaxNode Name="SubtractExpressionSyntax" Base="Expression" Kind="SubtractExpression" Category="Expression" OperatorKind="MinusToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="MinusToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="MultiplyExpressionSyntax" Base="Expression" Kind="MultiplyExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="StarToken">
+	<SyntaxNode Name="MultiplyExpressionSyntax" Base="Expression" Kind="MultiplyExpression" Category="Expression" OperatorKind="StarToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="StarToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="DivideExpressionSyntax" Base="Expression" Kind="DivideExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="SlashToken">
+	<SyntaxNode Name="DivideExpressionSyntax" Base="Expression" Kind="DivideExpression" Category="Expression" OperatorKind="SlashToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="SlashToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="ModuloExpressionSyntax" Base="Expression" Kind="ModuloExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="PercentToken">
+	<SyntaxNode Name="ModuloExpressionSyntax" Base="Expression" Kind="ModuloExpression" Category="Expression" OperatorKind="PercentToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="PercentToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="EqualsExpressionSyntax" Base="Expression" Kind="EqualsExpression" Category="Expression" Interfaces="IComparisonExpression" OperatorKind="EqualsEqualsToken">
+	<SyntaxNode Name="EqualsExpressionSyntax" Base="Expression" Kind="EqualsExpression" Category="Expression" OperatorKind="EqualsEqualsToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="EqualsEqualsToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="NotEqualsExpressionSyntax" Base="Expression" Kind="NotEqualsExpression" Category="Expression" Interfaces="IComparisonExpression" OperatorKind="BangEqualsToken">
+	<SyntaxNode Name="NotEqualsExpressionSyntax" Base="Expression" Kind="NotEqualsExpression" Category="Expression" OperatorKind="BangEqualsToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="BangEqualsToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="LessThanExpressionSyntax" Base="Expression" Kind="LessThanExpression" Category="Expression" Interfaces="IComparisonExpression" OperatorKind="LessThanToken">
+	<SyntaxNode Name="LessThanExpressionSyntax" Base="Expression" Kind="LessThanExpression" Category="Expression" OperatorKind="LessThanToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="LessThanToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="LessThanOrEqualExpressionSyntax" Base="Expression" Kind="LessThanOrEqualExpression" Category="Expression" Interfaces="IComparisonExpression" OperatorKind="LessThanEqualsToken">
+	<SyntaxNode Name="LessThanOrEqualExpressionSyntax" Base="Expression" Kind="LessThanOrEqualExpression" Category="Expression" OperatorKind="LessThanEqualsToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="LessThanEqualsToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="GreaterThanExpressionSyntax" Base="Expression" Kind="GreaterThanExpression" Category="Expression" Interfaces="IComparisonExpression" OperatorKind="GreaterThanToken">
+	<SyntaxNode Name="GreaterThanExpressionSyntax" Base="Expression" Kind="GreaterThanExpression" Category="Expression" OperatorKind="GreaterThanToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="GreaterThanToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="GreaterThanOrEqualExpressionSyntax" Base="Expression" Kind="GreaterThanOrEqualExpression" Category="Expression" Interfaces="IComparisonExpression" OperatorKind="GreaterThanEqualsToken">
+	<SyntaxNode Name="GreaterThanOrEqualExpressionSyntax" Base="Expression" Kind="GreaterThanOrEqualExpression" Category="Expression" OperatorKind="GreaterThanEqualsToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="GreaterThanEqualsToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="LogicalAndExpressionSyntax" Base="Expression" Kind="LogicalAndExpression" Category="Expression" Interfaces="ILogicalExpression" OperatorKind="AmpersandAmpersandToken">
+	<SyntaxNode Name="LogicalAndExpressionSyntax" Base="Expression" Kind="LogicalAndExpression" Category="Expression" OperatorKind="AmpersandAmpersandToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="AmpersandAmpersandToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="LogicalOrExpressionSyntax" Base="Expression" Kind="LogicalOrExpression" Category="Expression" Interfaces="ILogicalExpression" OperatorKind="PipePipeToken">
+	<SyntaxNode Name="LogicalOrExpressionSyntax" Base="Expression" Kind="LogicalOrExpression" Category="Expression" OperatorKind="PipePipeToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="PipePipeToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="BitwiseAndExpressionSyntax" Base="Expression" Kind="BitwiseAndExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="AmpersandToken">
+	<SyntaxNode Name="BitwiseAndExpressionSyntax" Base="Expression" Kind="BitwiseAndExpression" Category="Expression" OperatorKind="AmpersandToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="AmpersandToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="BitwiseOrExpressionSyntax" Base="Expression" Kind="BitwiseOrExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="PipeToken">
+	<SyntaxNode Name="BitwiseOrExpressionSyntax" Base="Expression" Kind="BitwiseOrExpression" Category="Expression" OperatorKind="PipeToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="PipeToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="ExclusiveOrExpressionSyntax" Base="Expression" Kind="ExclusiveOrExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="CaretToken">
+	<SyntaxNode Name="ExclusiveOrExpressionSyntax" Base="Expression" Kind="ExclusiveOrExpression" Category="Expression" OperatorKind="CaretToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="CaretToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="CoalesceExpressionSyntax" Base="Expression" Kind="CoalesceExpression" Category="Expression" Interfaces="IBinaryExpression" OperatorKind="QuestionQuestionToken">
+	<SyntaxNode Name="CoalesceExpressionSyntax" Base="Expression" Kind="CoalesceExpression" Category="Expression" OperatorKind="QuestionQuestionToken">
 		<Property Name="Left" Type="Expression" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="QuestionQuestionToken" Type="Token" />
 		<Property Name="Right" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="SimpleAssignmentExpressionSyntax" Base="Expression" Kind="SimpleAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="EqualsToken">
+	<SyntaxNode Name="SimpleAssignmentExpressionSyntax" Base="Expression" Kind="SimpleAssignmentExpression" Category="Expression" OperatorKind="EqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="EqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="AddAssignmentExpressionSyntax" Base="Expression" Kind="AddAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="PlusEqualsToken">
+	<SyntaxNode Name="AddAssignmentExpressionSyntax" Base="Expression" Kind="AddAssignmentExpression" Category="Expression" OperatorKind="PlusEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="PlusEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="SubtractAssignmentExpressionSyntax" Base="Expression" Kind="SubtractAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="MinusEqualsToken">
+	<SyntaxNode Name="SubtractAssignmentExpressionSyntax" Base="Expression" Kind="SubtractAssignmentExpression" Category="Expression" OperatorKind="MinusEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="MinusEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="MultiplyAssignmentExpressionSyntax" Base="Expression" Kind="MultiplyAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="StarEqualsToken">
+	<SyntaxNode Name="MultiplyAssignmentExpressionSyntax" Base="Expression" Kind="MultiplyAssignmentExpression" Category="Expression" OperatorKind="StarEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="StarEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="DivideAssignmentExpressionSyntax" Base="Expression" Kind="DivideAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="SlashEqualsToken">
+	<SyntaxNode Name="DivideAssignmentExpressionSyntax" Base="Expression" Kind="DivideAssignmentExpression" Category="Expression" OperatorKind="SlashEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="SlashEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="ModuloAssignmentExpressionSyntax" Base="Expression" Kind="ModuloAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="PercentEqualsToken">
+	<SyntaxNode Name="ModuloAssignmentExpressionSyntax" Base="Expression" Kind="ModuloAssignmentExpression" Category="Expression" OperatorKind="PercentEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="PercentEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="AndAssignmentExpressionSyntax" Base="Expression" Kind="AndAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="AmpersandEqualsToken">
+	<SyntaxNode Name="AndAssignmentExpressionSyntax" Base="Expression" Kind="AndAssignmentExpression" Category="Expression" OperatorKind="AmpersandEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="AmpersandEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="OrAssignmentExpressionSyntax" Base="Expression" Kind="OrAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="PipeEqualsToken">
+	<SyntaxNode Name="OrAssignmentExpressionSyntax" Base="Expression" Kind="OrAssignmentExpression" Category="Expression" OperatorKind="PipeEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="PipeEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="ExclusiveOrAssignmentExpressionSyntax" Base="Expression" Kind="ExclusiveOrAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="CaretEqualsToken">
+	<SyntaxNode Name="ExclusiveOrAssignmentExpressionSyntax" Base="Expression" Kind="ExclusiveOrAssignmentExpression" Category="Expression" OperatorKind="CaretEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="CaretEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="LeftShiftAssignmentExpressionSyntax" Base="Expression" Kind="LeftShiftAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="LessThanLessThanEqualsToken">
+	<SyntaxNode Name="LeftShiftAssignmentExpressionSyntax" Base="Expression" Kind="LeftShiftAssignmentExpression" Category="Expression" OperatorKind="LessThanLessThanEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="LessThanLessThanEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="RightShiftAssignmentExpressionSyntax" Base="Expression" Kind="RightShiftAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="GreaterThanGreaterThanEqualsToken">
+	<SyntaxNode Name="RightShiftAssignmentExpressionSyntax" Base="Expression" Kind="RightShiftAssignmentExpression" Category="Expression" OperatorKind="GreaterThanGreaterThanEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="GreaterThanGreaterThanEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="CoalesceAssignmentExpressionSyntax" Base="Expression" Kind="CoalesceAssignmentExpression" Category="Expression" Interfaces="IAssignmentExpression" OperatorKind="QuestionQuestionEqualsToken">
+	<SyntaxNode Name="CoalesceAssignmentExpressionSyntax" Base="Expression" Kind="CoalesceAssignmentExpression" Category="Expression" OperatorKind="QuestionQuestionEqualsToken">
 		<Property Name="IdentifierToken" Type="Token" />
-		<Property Name="OperatorToken" Type="Token" />
+		<Property Name="QuestionQuestionEqualsToken" Type="Token" />
 		<Property Name="Expression" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="NumericLiteralExpressionSyntax" Base="Expression" Kind="NumericLiteralExpression" Category="Expression" Interfaces="ILiteralExpression">
-		<Property Name="LiteralToken" Type="Token" />
-		<ComputedProperty Name="Value" Type="object" Expression="LiteralToken.Value" />
+	<SyntaxNode Name="ByteLiteralExpressionSyntax" Base="Expression" Kind="ByteLiteralExpression" Category="Expression">
+		<Property Name="ByteLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="ByteLiteralToken.Value" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="StringLiteralExpressionSyntax" Base="Expression" Kind="StringLiteralExpression" Category="Expression" Interfaces="ILiteralExpression">
-		<Property Name="LiteralToken" Type="Token" />
-		<ComputedProperty Name="Value" Type="object" Expression="LiteralToken.Value" />
+	<SyntaxNode Name="SByteLiteralExpressionSyntax" Base="Expression" Kind="SByteLiteralExpression" Category="Expression">
+		<Property Name="SByteLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="SByteLiteralToken.Value" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="CharacterLiteralExpressionSyntax" Base="Expression" Kind="CharacterLiteralExpression" Category="Expression" Interfaces="ILiteralExpression">
-		<Property Name="LiteralToken" Type="Token" />
-		<ComputedProperty Name="Value" Type="object" Expression="LiteralToken.Value" />
+	<SyntaxNode Name="ShortLiteralExpressionSyntax" Base="Expression" Kind="ShortLiteralExpression" Category="Expression">
+		<Property Name="ShortLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="ShortLiteralToken.Value" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="TrueLiteralExpressionSyntax" Base="Expression" Kind="TrueLiteralExpression" Category="Expression" Interfaces="ILiteralExpression">
-		<Property Name="LiteralToken" Type="Token" />
-		<ComputedProperty Name="Value" Type="object" Expression="LiteralToken.Value" />
+	<SyntaxNode Name="UShortLiteralExpressionSyntax" Base="Expression" Kind="UShortLiteralExpression" Category="Expression">
+		<Property Name="UShortLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="UShortLiteralToken.Value" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="FalseLiteralExpressionSyntax" Base="Expression" Kind="FalseLiteralExpression" Category="Expression" Interfaces="ILiteralExpression">
-		<Property Name="LiteralToken" Type="Token" />
-		<ComputedProperty Name="Value" Type="object" Expression="LiteralToken.Value" />
+	<SyntaxNode Name="IntLiteralExpressionSyntax" Base="Expression" Kind="IntLiteralExpression" Category="Expression">
+		<Property Name="IntLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="IntLiteralToken.Value" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="NullLiteralExpressionSyntax" Base="Expression" Kind="NullLiteralExpression" Category="Expression" Interfaces="ILiteralExpression">
-		<Property Name="LiteralToken" Type="Token" />
-		<ComputedProperty Name="Value" Type="object" Expression="LiteralToken.Value" />
+	<SyntaxNode Name="UIntLiteralExpressionSyntax" Base="Expression" Kind="UIntLiteralExpression" Category="Expression">
+		<Property Name="UIntLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="UIntLiteralToken.Value" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="DefaultLiteralExpressionSyntax" Base="Expression" Kind="DefaultLiteralExpression" Category="Expression" Interfaces="ILiteralExpression">
-		<Property Name="LiteralToken" Type="Token" />
-		<ComputedProperty Name="Value" Type="object" Expression="LiteralToken.Value" />
+	<SyntaxNode Name="LongLiteralExpressionSyntax" Base="Expression" Kind="LongLiteralExpression" Category="Expression">
+		<Property Name="LongLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="LongLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="ULongLiteralExpressionSyntax" Base="Expression" Kind="ULongLiteralExpression" Category="Expression">
+		<Property Name="ULongLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="ULongLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="FloatLiteralExpressionSyntax" Base="Expression" Kind="FloatLiteralExpression" Category="Expression">
+		<Property Name="FloatLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="FloatLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="DoubleLiteralExpressionSyntax" Base="Expression" Kind="DoubleLiteralExpression" Category="Expression">
+		<Property Name="DoubleLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="DoubleLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="DecimalLiteralExpressionSyntax" Base="Expression" Kind="DecimalLiteralExpression" Category="Expression">
+		<Property Name="DecimalLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="DecimalLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="StringLiteralExpressionSyntax" Base="Expression" Kind="StringLiteralExpression" Category="Expression">
+		<Property Name="StringLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="StringLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="VoidLiteralExpressionSyntax" Base="Expression" Kind="VoidLiteralExpression" Category="Expression">
+		<Property Name="VoidLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="VoidLiteralToken.Value" />
+	</SyntaxNode>
+
+	<!-- Literal Expressions -->
+
+	<SyntaxNode Name="CharacterLiteralExpressionSyntax" Base="Expression" Kind="CharacterLiteralExpression" Category="Expression">
+		<Property Name="CharacterLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="CharacterLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="TrueLiteralExpressionSyntax" Base="Expression" Kind="TrueLiteralExpression" Category="Expression">
+		<Property Name="TrueLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="TrueLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="FalseLiteralExpressionSyntax" Base="Expression" Kind="FalseLiteralExpression" Category="Expression">
+		<Property Name="FalseLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="FalseLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="NullLiteralExpressionSyntax" Base="Expression" Kind="NullLiteralExpression" Category="Expression">
+		<Property Name="NullLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="NullLiteralToken.Value" />
+	</SyntaxNode>
+
+	<SyntaxNode Name="DefaultLiteralExpressionSyntax" Base="Expression" Kind="DefaultLiteralExpression" Category="Expression">
+		<Property Name="DefaultLiteralToken" Type="Token" />
+		<ComputedProperty Name="Value" Type="object" Expression="DefaultLiteralToken.Value" />
 	</SyntaxNode>
 
 	<!-- ── To Be Implemented ────────────────────────────────────────────── -->
 
 	<!-- CallExpressionSyntax - function calls e.g. foo(a, b, c) -->
 	<!--
-	<SyntaxNode Name="CallExpressionSyntax" Base="Expression" Kind="InvocationExpression" Category="Expression" Interfaces="" OperatorKind="OpenParenthesisToken">
+	<SyntaxNode Name="CallExpressionSyntax" Base="Expression" Kind="InvocationExpression" Category="Expression" OperatorKind="OpenParenthesisToken">
 		<Property Name="IdentifierToken" Type="Token" />
 		<Property Name="OpenParenthesisToken" Type="Token" />
 		<Property Name="Arguments" Type="ArgumentList" />
@@ -273,7 +325,7 @@
 
 	<!-- ConditionalExpressionSyntax - ternary e.g. x ? a : b -->
 	<!--
-	<SyntaxNode Name="ConditionalExpressionSyntax" Base="Expression" Kind="ConditionalExpression" Category="Expression" Interfaces="" OperatorKind="QuestionToken">
+	<SyntaxNode Name="ConditionalExpressionSyntax" Base="Expression" Kind="ConditionalExpression" Category="Expression" OperatorKind="QuestionToken">
 		<Property Name="Condition" Type="Expression" />
 		<Property Name="QuestionToken" Type="Token" />
 		<Property Name="WhenTrue" Type="Expression" />
@@ -284,14 +336,14 @@
 
 	<!-- ThisExpressionSyntax - this keyword -->
 	<!--
-	<SyntaxNode Name="ThisExpressionSyntax" Base="Expression" Kind="ThisExpression" Category="Expression" Interfaces="" OperatorKind="ThisKeyword">
+	<SyntaxNode Name="ThisExpressionSyntax" Base="Expression" Kind="ThisExpression" Category="Expression" OperatorKind="ThisKeyword">
 		<Property Name="ThisKeyword" Type="Token" />
 	</SyntaxNode>
 	-->
 
 	<!-- BaseExpressionSyntax - base keyword -->
 	<!--
-	<SyntaxNode Name="BaseExpressionSyntax" Base="Expression" Kind="BaseExpression" Category="Expression" Interfaces="" OperatorKind="BaseKeyword">
+	<SyntaxNode Name="BaseExpressionSyntax" Base="Expression" Kind="BaseExpression" Category="Expression" OperatorKind="BaseKeyword">
 		<Property Name="BaseKeyword" Type="Token" />
 	</SyntaxNode>
 	-->

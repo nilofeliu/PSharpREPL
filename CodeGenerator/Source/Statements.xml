@@ -1,18 +1,26 @@
 <SyntaxNodes>
-	<SyntaxNode Name="BlockStatementSyntax" Base="Statement" Kind="Block" Category="Statement" Interfaces="">
+
+	<SyntaxNode Name="ParenthesizedExpressionSyntax" Base="Expression" Kind="ParenthesizedExpression" Category="Expression">
+		<Property Name="OpenParenthesisToken" Type="Token" />
+		<Property Name="Expression" Type="Expression" />
+		<Property Name="CloseParenthesisToken" Type="Token" />
+	</SyntaxNode>
+
+
+	<SyntaxNode Name="BlockStatementSyntax" Base="Statement" Kind="Block" Category="Statement">
 		<Property Name="OpenBraceToken" Type="Token" />
 		<Property Name="Statements" Type="StatementList" />
 		<Property Name="ClosedBraceToken" Type="Token" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="DoWhileStatementSyntax" Base="Statement" Kind="DoWhileStatement" Category="Statement" Interfaces="ILoopStatement">
+	<SyntaxNode Name="DoWhileStatementSyntax" Base="Statement" Kind="DoWhileStatement" Category="Statement">
 		<Property Name="DoKeyword" Type="Token" />
 		<Property Name="ColonToken" Type="Token" />
 		<Property Name="Body" Type="Block" />
 		<Property Name="Condition" Type="Expression" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="ForStatementSyntax" Base="Statement" Kind="ForStatement" Category="Statement" Interfaces="ILoopStatement">
+	<SyntaxNode Name="ForStatementSyntax" Base="Statement" Kind="ForStatement" Category="Statement">
 		<Property Name="Keyword" Type="Token" />
 		<Property Name="Identifier" Type="Token" />
 		<Property Name="EqualsToken" Type="Token" />
@@ -24,7 +32,7 @@
 		<Property Name="EndToken" Type="Token" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="IfStatementSyntax" Base="Statement" Kind="IfStatement" Category="Statement" Interfaces="">
+	<SyntaxNode Name="IfStatementSyntax" Base="Statement" Kind="IfStatement" Category="Statement">
 		<Property Name="IfKeyword" Type="Token" />
 		<Property Name="Condition" Type="Expression" />
 		<Property Name="ColonToken" Type="Token" />
@@ -33,35 +41,35 @@
 		<Property Name="EndKeyword" Type="Token" Nullable="true" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="ElseClauseSyntax" Base="Statement" Kind="ElseClause" Category="Statement" Interfaces="">
+	<SyntaxNode Name="ElseClauseSyntax" Base="Statement" Kind="ElseClause" Category="Statement">
 		<Property Name="ElseKeyword" Type="Token" />
 		<Property Name="ElseColonToken" Type="Token" />
 		<Property Name="ElseStatement" Type="Statement" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="CaseSwitchLabelSyntax" Base="Statement" Kind="CaseSwitchLabel" Category="Statement" Interfaces="ISwitchLabel">
+	<SyntaxNode Name="CaseSwitchLabelSyntax" Base="Statement" Kind="CaseSwitchLabel" Category="Statement">
 		<Property Name="CaseKeyword" Type="Token" />
 		<Property Name="Expression" Type="Expression" Nullable="true" />
 		<Property Name="CaseColonToken" Type="Token" />
 		<Property Name="Body" Type="Statement" Nullable="true" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="DefaultSwitchLabelSyntax" Base="Statement" Kind="DefaultSwitchLabel" Category="Statement" Interfaces="ISwitchLabel">
+	<SyntaxNode Name="DefaultSwitchLabelSyntax" Base="Statement" Kind="DefaultSwitchLabel" Category="Statement">
 		<Property Name="DefaultKeyword" Type="Token" />
 		<Property Name="CaseColonToken" Type="Token" />
 		<Property Name="Body" Type="Statement" Nullable="true" />
 	</SyntaxNode>
-	
-	<SyntaxNode Name="SwitchStatementSyntax" Base="Statement" Kind="SwitchStatement" Category="Statement" Interfaces="">
+
+	<SyntaxNode Name="SwitchStatementSyntax" Base="Statement" Kind="SwitchStatement" Category="Statement">
 		<Property Name="SwitchKeyword" Type="Token" />
 		<Property Name="Pattern" Type="Expression" />
 		<Property Name="ColonToken" Type="Token" />
-		<Property Name="Cases" Type="SwitchLabelList" Nullable="true" />
-		<Property Name="DefaultCase" Type="SwitchLabel" Nullable="true" />
+		<Property Name="Cases" Type="CaseSwitchLabelList" Nullable="true" />
+		<Property Name="DefaultCase" Type="DefaultSwitchLabel" Nullable="true" />
 		<Property Name="EndToken" Type="Token" />
 	</SyntaxNode>
 
-	<SyntaxNode Name="WhileStatementSyntax" Base="Statement" Kind="WhileStatement" Category="Statement" Interfaces="ILoopStatement">
+	<SyntaxNode Name="WhileStatementSyntax" Base="Statement" Kind="WhileStatement" Category="Statement">
 		<Property Name="WhileKeyword" Type="Token" />
 		<Property Name="Condition" Type="Expression" />
 		<Property Name="ColonToken" Type="Token" />
@@ -72,21 +80,18 @@
 	<!-- ── To Be Implemented ────────────────────────────────────────────── -->
 
 	<!-- ReturnStatementSyntax
-<SyntaxNode Name="ReturnStatementSyntax" Base="Statement" Kind="ReturnStatement" Category="Statement" Interfaces="IJumpStatement">
-    <Property Name="ReturnKeyword" Type="Token" />
+<SyntaxNode Name="ReturnStatementSyntax" Base="Statement" Kind="ReturnStatement" Category="Statement"     <Property Name="ReturnKeyword" Type="Token" />
     <Property Name="Expression" Type="Expression" Nullable="true" />
 </SyntaxNode>
 -->
 
 	<!-- BreakStatementSyntax
-<SyntaxNode Name="BreakStatementSyntax" Base="Statement" Kind="BreakStatement" Category="Statement" Interfaces="IJumpStatement">
-    <Property Name="BreakKeyword" Type="Token" />
+<SyntaxNode Name="BreakStatementSyntax" Base="Statement" Kind="BreakStatement" Category="Statement"     <Property Name="BreakKeyword" Type="Token" />
 </SyntaxNode>
 -->
 
 	<!-- ContinueStatementSyntax
-<SyntaxNode Name="ContinueStatementSyntax" Base="Statement" Kind="ContinueStatement" Category="Statement" Interfaces="IJumpStatement">
-    <Property Name="ContinueKeyword" Type="Token" />
+<SyntaxNode Name="ContinueStatementSyntax" Base="Statement" Kind="ContinueStatement" Category="Statement"     <Property Name="ContinueKeyword" Type="Token" />
 </SyntaxNode>
 -->
 

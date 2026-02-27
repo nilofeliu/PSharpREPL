@@ -76,13 +76,15 @@ namespace CodeGenerator
         {
             string filePath = Path.Combine(outputDir, "RedNodeFactory.cs");
             using var writer = new StreamWriter(filePath);
+            writer.WriteLine("using PSharp.CodeAnalysis;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Diagnostics;");
             writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
-            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
-            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes;");
             writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green.Expressions;");
-            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green.Statements;");
+            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
             writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Statements;");
             writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;");
+
+
             foreach (var category in allNodes.Select(n => n.Category).Distinct())
                 writer.WriteLine($"using PSharp.CodeAnalysis.Syntax.Green.{category}s;");
             writer.WriteLine("using System;");
@@ -153,10 +155,8 @@ namespace CodeGenerator
             using var writer = new StreamWriter(filePath);
             writer.WriteLine("using PSharp.CodeAnalysis;");
             writer.WriteLine("using PSharp.CodeAnalysis.Diagnostics;");
-            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Green;");
             writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Kind;");
-            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes;");
-            writer.WriteLine("using PSharp.CodeAnalysis.Syntax.Nodes.Interfaces;");
+
             writer.WriteLine();
             writer.WriteLine($"namespace {ns}");
             writer.WriteLine("{");
@@ -332,20 +332,21 @@ namespace CodeGenerator
             "Statement" => "GreenStatement",
             "Block" => "GreenBlockStatement",
             "ElseClause" => "GreenElseClause",
-            "SwitchLabel" => "GreenCaseSwitchLabel",
+            "CaseSwitchLabel" => "GreenCaseSwitchLabel",
             "EqualsValueClause" => "GreenEqualsValueClause",
             "VariableDeclaration" => "GreenVariableDeclaration",
             "VariableDeclarator" => "GreenVariableDeclarator",
             "ParameterList" => "GreenParameterList",
             "AccessorList" => "GreenAccessorList",
-            "StatementList" => "List<GreenStatement>",
-            "ExpressionList" => "List<GreenExpression>",
+            "StatementList" => "GreenNodeList",
+            "ExpressionList" => "GreenNodeList",
             "TokenList" => "List<GreenToken>",
-            "SwitchLabelList" => "List<GreenCaseSwitchLabel>",
-            "VariableDeclaratorList" => "List<GreenVariableDeclarator>",
-            "MemberDeclarationList" => "List<GreenMemberDeclaration>",
-            "EnumMemberDeclarationList" => "List<GreenEnumMemberDeclaration>",
-            "ParameterListItems" => "List<GreenParameter>",
+            "CaseSwitchLabelList" => "GreenNodeList",
+            "DefaultSwitchLabel" => "GreenDefaultSwitchLabel",
+            "VariableDeclaratorList" => "GreenNodeList",
+            "MemberDeclarationList" => "GreenNodeList",
+            "EnumMemberDeclarationList" => "GreenNodeList",
+            "ParameterListItems" => "GreenNodeList",
             _ => "Green" + type
         };
 
@@ -356,7 +357,8 @@ namespace CodeGenerator
             "Statement" => "StatementSyntax",
             "Block" => "BlockStatementSyntax",
             "ElseClause" => "ElseClauseSyntax",
-            "SwitchLabel" => "CaseSwitchLabelSyntax",
+            "CaseSwitchLabel" => "CaseSwitchLabelSyntax",
+            "DefaultSwitchLabel" => "DefaultSwitchLabelSyntax",
             "EqualsValueClause" => "EqualsValueClauseSyntax",
             "VariableDeclaration" => "VariableDeclarationSyntax",
             "VariableDeclarator" => "VariableDeclaratorSyntax",
@@ -365,11 +367,11 @@ namespace CodeGenerator
             "StatementList" => "List<StatementSyntax>",
             "ExpressionList" => "List<ExpressionSyntax>",
             "TokenList" => "List<SyntaxToken>",
-            "SwitchLabelList" => "List<CaseSwitchLabelSyntax>",
-            "VariableDeclaratorList" => "List<VariableDeclaratorSyntax>",
-            "MemberDeclarationList" => "List<MemberDeclarationSyntax>",
-            "EnumMemberDeclarationList" => "List<EnumMemberDeclarationSyntax>",
-            "ParameterListItems" => "List<ParameterSyntax>",
+            "CaseSwitchLabelList" => "List<StatementSyntax>",
+            "VariableDeclaratorList" => "List<StatementSyntax>",
+            "MemberDeclarationList" => "List<StatementSyntax>",
+            "EnumMemberDeclarationList" => "List<StatementSyntax>",
+            "ParameterListItems" => "List<StatementSyntax>",
             _ => type + "Syntax"
         };
 
