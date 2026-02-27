@@ -307,5 +307,32 @@ internal partial class LanguageParser
     }
 
 
+    //private ExpressionSyntax ParsePrimaryExpression()
+    //{
+    //    switch (CurrentToken.Kind)
+    //    {
+    //        case SyntaxKind.OpenParenthesisToken:
+    //            return ParseParenthesizedExpression();
+
+    //        case SyntaxKind.TrueKeyword:
+    //        case SyntaxKind.FalseKeyword:
+    //            return ParseBooleanLiteral();
+
+    //        case SyntaxKind.NumericLiteralToken:
+    //        case SyntaxKind.IntegerLiteralToken:
+    //        case SyntaxKind.LongLiteralToken:
+    //        case SyntaxKind.FloatLiteralToken:
+    //        case SyntaxKind.DoubleLiteralToken:
+    //        case SyntaxKind.DecimalLiteralToken:
+    //            return ParseNumberLiteral();
+
+    //        case SyntaxKind.StringLiteralToken:
+    //            return ParseStringLiteral();
+
+    //        default:
+    //            return ParseNameExpression();
+    //    }
+    //}
+
 }
 
