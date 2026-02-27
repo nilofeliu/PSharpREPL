@@ -1,5 +1,6 @@
 ﻿using PSharp.CodeAnalysis.Syntax.Internal;
 
+
 namespace PSharp.CodeAnalysis.Syntax;
 public static partial class SyntaxFacts
 {
@@ -7,10 +8,6 @@ public static partial class SyntaxFacts
     {
         // ── Operators ─────────────────────────────────────────────────────────
         Register(SymbolTable.Operators, LoadOperators());
-        Register(SymbolTable.Operators, LoadAssignmentOperators());
-        Register(SymbolTable.Operators, LoadComparisonOperators());
-                
-            
 
         // ── Keywords ──────────────────────────────────────────────────────────
         Register(SymbolTable.Keywords, LoadBooleanKeywords());
@@ -31,7 +28,7 @@ public static partial class SyntaxFacts
 
         // ── Flow / Control Keywords ───────────────────────────────────────────
         Register(SymbolTable.FlowKeywords, LoadConditionalsKeywords());
-        Register(SymbolTable.FlowKeywords, LoadFlowControlKeywords());
+        Register(SymbolTable.FlowKeywords, LoadFlowControlStatement());
         Register(SymbolTable.FlowKeywords, LoadExceptionKeywords());
 
         // ── Trivia ────────────────────────────────────────────────────────────
@@ -49,6 +46,7 @@ public static partial class SyntaxFacts
         Register(SymbolTable.Expressions, LoadPrimaryExpressions());
         Register(SymbolTable.Expressions, LoadPrimaryFunctionExpressions());
         Register(SymbolTable.Expressions, LoadQueryExpressions());
+        Register(SymbolTable.Expressions, LoadLiteralExpressions());
 
         // ── Statements ────────────────────────────────────────────────────────
         Register(SymbolTable.Statements, LoadStatements());

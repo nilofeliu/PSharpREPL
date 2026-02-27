@@ -2,7 +2,6 @@
 using PSharp.CodeAnalysis.Syntax.Internal;
 using PSharp.CodeAnalysis.Syntax.Kind;
 
-
 namespace PSharp.CodeAnalysis.Syntax;
 
 public static partial class SyntaxFacts
@@ -161,50 +160,31 @@ public static partial class SyntaxFacts
     public static bool IsKeyword(SyntaxKind kind) => IsSystemKeyword(kind) || IsControlKeyword(kind);
     public static bool IsKeyword(string text) => IsSystemKeyword(text) || IsControlKeyword(text);
 
-    public static bool IsAssignmentOperator(SyntaxKind kind) => kind switch
-    {
-        SyntaxKind.EqualsToken => true,
-        SyntaxKind.PlusEqualsToken => true,
-        SyntaxKind.MinusEqualsToken => true,
-        SyntaxKind.AsteriskEqualsToken => true,
-        SyntaxKind.SlashEqualsToken => true,
-        SyntaxKind.PercentEqualsToken => true,
-        SyntaxKind.AmpersandEqualsToken => true,
-        SyntaxKind.PipeEqualsToken => true,
-        SyntaxKind.CaretEqualsToken => true,
-        SyntaxKind.LessThanLessThanEqualsToken => true,
-        SyntaxKind.GreaterThanGreaterThanEqualsToken => true,
-        _ => false
-    };
-
-    public static bool IsComparisonOperator(this SyntaxKind kind)
-    {
-        return kind is
-            SyntaxKind.EqualsEqualsToken or
-            SyntaxKind.NotEqualsToken or
-            SyntaxKind.LessThanToken or
-            SyntaxKind.LessThanEqualsToken or
-            SyntaxKind.GreaterThanToken or
-            SyntaxKind.GreaterThanEqualsToken;
-        // Add any others like ===, !==, <=>, etc. if your language has them
-    }
-
-    public static bool IsLogicalOperator(this SyntaxKind kind)
-    {
-        return kind is
-            SyntaxKind.AmpersandAmpersandToken or  
-            SyntaxKind.PipePipeToken or             
-            SyntaxKind.CaretToken or               
-            SyntaxKind.BangToken;            
-    }
-
-    // Optional: If you want to separate unary logical NOT
-    public static bool IsLogicalNotOperator(this SyntaxKind kind)
-    {
-        return kind == SyntaxKind.BangToken;
-    }
 
 
+    public static bool IsComparisonOperator(SyntaxKind kind)
+        => Operators.Any(s => s.Kind == kind && s.Group == SyntaxGroup.ComparisonOperator);
+    public static bool IsAssignmentOperator(SyntaxKind kind)
+    => Operators.Any(s => s.Kind == kind && s.Group == SyntaxGroup.AssignmentOperator);
+
+
+    public static bool IsBinaryExpression(SyntaxKind kind)
+    => Expressions.Any(s => s.Kind == kind && s.Group == SyntaxGroup.BinaryExpression);
+
+    public static bool IsComparisonExpression(SyntaxKind kind)
+        => Expressions.Any(s => s.Kind == kind && s.Group == SyntaxGroup.ComparisonExpression);
+
+    public static bool IsLogicalExpression(SyntaxKind kind)
+        => Expressions.Any(s => s.Kind == kind && s.Group == SyntaxGroup.LogicalExpression);
+
+    public static bool IsUnaryExpression(SyntaxKind kind)
+        => Expressions.Any(s => s.Kind == kind && s.Group == SyntaxGroup.UnaryExpression);
+
+    public static bool IsAssignmentExpression(SyntaxKind kind)
+        => Expressions.Any(s => s.Kind == kind && s.Group == SyntaxGroup.AssignmentExpression);
+
+    public static bool IsLiteralExpression(SyntaxKind kind)
+        => Expressions.Any(s => s.Kind == kind && s.Group == SyntaxGroup.LiteralExpression);
 
 
     public static SyntaxKind GetKeywordKind(string text)
