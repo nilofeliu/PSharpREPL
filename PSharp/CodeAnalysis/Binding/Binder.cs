@@ -88,7 +88,8 @@ internal sealed partial class Binder
             //case SyntaxKind.ExpressionStatement:
             //    return BindExpressionStatement((ExpressionStatementSyntax)syntax);
             default:
-                throw new Exception($"Unexpected syntax {syntax.Kind}");
+                throw new Exception("Binder Not implemented yet!");
+                //throw new Exception($"Unexpected syntax {syntax.Kind}");
         }
     }
 
