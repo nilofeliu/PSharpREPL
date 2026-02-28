@@ -109,9 +109,9 @@ internal partial class LanguageParser
     private void FetchMoreTokens()
     {
         // Fetch the next token using the current lexer mode
-        //var token = _lexer.Lex(_mode);
-        GreenToken token = new GreenToken(SyntaxKind.NullLiteralExpression, "");
-       // token = _lexer.Lex();
+        var token = _lexer.Lex();
+        //GreenToken token = new GreenToken(SyntaxKind.NullLiteralExpression, "");
+        
         if (token.Kind == SyntaxKind.EndOfFileToken)
         {
             // EOF token is always added; we stop fetching after that.
@@ -302,7 +302,15 @@ internal partial class LanguageParser
     public GreenCompilationUnit ParseCompilationUnit()
     {
         var statement = ParseStatement();
+
         var endOfFileToken = EatToken(SyntaxKind.EndOfFileToken);
+
+        if (statement == null)
+        {
+            // Create a statement node that *contains* the EOF token
+            statement = new GreenEmptyStatement(endOfFileToken);
+        }
+
         return new GreenCompilationUnit(statement, endOfFileToken);
     }
 

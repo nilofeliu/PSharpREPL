@@ -15,7 +15,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
                 var identifierToken = EatToken();
                 var operatorToken = EatToken();
                 var right = ParseAssignmentExpression();
-                return ExpressionFactory.CreateAssignment(identifierToken, operatorToken, right);
+                return ParseAssignmentNodes(identifierToken, operatorToken, right);
             }
             return ParseOperatorExpression();
         }
@@ -28,7 +28,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
             {
                 var operatorToken = EatToken();
                 var operand = ParseOperatorExpression(unaryPrecedence);
-                left = ExpressionFactory.CreatePrefixUnary(operatorToken, operand);
+                left = ParsePrefixUnaryNodes(operatorToken, operand);
             }
             else
             {
@@ -42,10 +42,10 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
                 var operatorToken = EatToken();
                 var right = ParseOperatorExpression(precedence);
                 left = operatorToken.Kind.IsComparisonOperator()
-                    ? ExpressionFactory.CreateComparison(left, operatorToken, right)
+                    ? ParseComparisonNodes(left, operatorToken, right)
                     : operatorToken.Kind.IsLogicalOperator()
-                        ? ExpressionFactory.CreateLogical(left, operatorToken, right)
-                        : ExpressionFactory.CreateBinary(left, operatorToken, right);
+                        ? ParseLogicalNodes(left, operatorToken, right)
+                        : ParseBinaryNodes(left, operatorToken, right);
             }
             return left;
         }

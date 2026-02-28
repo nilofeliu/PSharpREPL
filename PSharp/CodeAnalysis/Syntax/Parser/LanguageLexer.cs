@@ -1,4 +1,5 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
+using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.InternalSyntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Text;
@@ -29,7 +30,7 @@ internal sealed class Lexer : AbstractLexer
     //    return Lex(); // calls the parameterless version which now returns GreenToken
     //}
 
-    public SyntaxToken Lex()
+    public GreenToken Lex()
     {
         var leadingTrivia = ScanSyntaxTrivia(isTrailing: false);
         StartLexeme();
@@ -55,8 +56,8 @@ internal sealed class Lexer : AbstractLexer
 
         var green =  GreenNodeFactory.Token(_kind, text, _value, leadingTrivia, trailingTrivia, diagnostics: diagnostics);
 
-        var red = new SyntaxToken(green, null, TextWindow.LexemeStartPosition);
-        return red;
+       // var red = new SyntaxToken(green, null, TextWindow.LexemeStartPosition);
+        return green;
     }
 
     private void ScanTokenInMode()
@@ -370,7 +371,7 @@ internal sealed class Lexer : AbstractLexer
         }
         else
         {
-            intendedKind = SyntaxKind.IntegerLiteralToken; // will be refined after parsing
+            intendedKind = SyntaxKind.IntLiteralToken; // will be refined after parsing
         }
 
         // ---- 6. Extract the full lexeme and parse the value ----
@@ -387,13 +388,13 @@ internal sealed class Lexer : AbstractLexer
 
         // For integer literals without suffix, we may have parsed as int, but if it overflowed int,
         // ParseNumericValue will have returned a long (or null if both fail). We need to adjust the kind accordingly.
-        if (intendedKind == SyntaxKind.IntegerLiteralToken && value is long)
+        if (intendedKind == SyntaxKind.IntLiteralToken && value is long)
         {
             _kind = SyntaxKind.LongLiteralToken;
         }
-        else if (intendedKind == SyntaxKind.IntegerLiteralToken && value is int)
+        else if (intendedKind == SyntaxKind.IntLiteralToken && value is int)
         {
-            _kind = SyntaxKind.IntegerLiteralToken;
+            _kind = SyntaxKind.IntLiteralToken;
         }
         //else if (intendedKind == SyntaxKind.HexIntegerLiteralToken && value is long)
         //{
@@ -496,7 +497,7 @@ internal sealed class Lexer : AbstractLexer
         {
             switch (kind)
             {
-                case SyntaxKind.IntegerLiteralToken:
+                case SyntaxKind.IntLiteralToken:
                     // Try int first, then long
                     if (int.TryParse(text, NumberStyles.Integer, CultureInfo.InvariantCulture, out int intVal))
                         return intVal;

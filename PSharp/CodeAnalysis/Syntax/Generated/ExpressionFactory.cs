@@ -7,9 +7,9 @@ using PSharp.CodeAnalysis.Syntax.Nodes;
 
 namespace PSharp.CodeAnalysis.Syntax.Parser
 {
-    internal static partial class ExpressionFactory
+    internal partial class LanguageParser
     {
-        public static GreenExpression CreateBinary(GreenExpression left, GreenToken operatorToken, GreenExpression right)
+        public GreenExpression ParseBinaryNodes(GreenExpression left, GreenToken operatorToken, GreenExpression right)
         {
             return left.Kind switch
             {
@@ -26,7 +26,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
             };
         }
 
-        public static GreenExpression CreateComparison(GreenExpression left, GreenToken operatorToken, GreenExpression right)
+        public GreenExpression ParseComparisonNodes(GreenExpression left, GreenToken operatorToken, GreenExpression right)
         {
             return left.Kind switch
             {
@@ -40,7 +40,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
             };
         }
 
-        public static GreenExpression CreateLogical(GreenExpression left, GreenToken operatorToken, GreenExpression right)
+        public GreenExpression ParseLogicalNodes(GreenExpression left, GreenToken operatorToken, GreenExpression right)
         {
             return left.Kind switch
             {
@@ -50,7 +50,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
             };
         }
 
-        public static GreenExpression CreatePrefixUnary(GreenToken operatorToken, GreenExpression operand)
+        public  GreenExpression ParsePrefixUnaryNodes(GreenToken operatorToken, GreenExpression operand)
         {
             return operatorToken.Kind switch
             {
@@ -64,7 +64,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
             };
         }
 
-        public static GreenExpression CreatePostfixUnary(GreenExpression operand, GreenToken operatorToken)
+        public GreenExpression ParsePostfixUnaryNodes(GreenExpression operand, GreenToken operatorToken)
         {
             return operand.Kind switch
             {
@@ -74,7 +74,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
             };
         }
 
-        public static GreenExpression CreateAssignment(GreenToken identifierToken, GreenToken operatorToken, GreenExpression expression)
+        public GreenExpression ParseAssignmentNodes(GreenToken identifierToken, GreenToken operatorToken, GreenExpression expression)
         {
             return identifierToken.Kind switch
             {
@@ -94,7 +94,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
             };
         }
 
-        public static GreenExpression CreateLiteral(GreenToken token)
+        public GreenExpression ParseLiteralNodes(GreenToken token)
         {
             return token.Kind switch
             {
@@ -120,7 +120,7 @@ namespace PSharp.CodeAnalysis.Syntax.Parser
             };
         }
 
-        public static GreenExpression CreateOtherNodes(GreenToken token)
+        public GreenExpression ParseIdentifierNameNodes(GreenToken token)
         {
             return token.Kind switch
             {

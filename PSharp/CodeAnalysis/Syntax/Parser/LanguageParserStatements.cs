@@ -17,17 +17,6 @@ namespace PSharp.CodeAnalysis.Syntax.Parser;
 internal partial class LanguageParser
 {
 
-
-    //private GreenExpression ParsePrimaryExpression()
-    //{
-    //    return CurrentToken.Kind switch
-    //    {
-    //        SyntaxKind.IdentifierToken => ParseNameExpression(),
-    //        SyntaxKind.OpenParenthesisToken => ParseParenthesizedExpression(),
-    //        _ => ParseNameExpression() // fallback
-    //    };
-    //}
-
     private GreenBlockStatement ParseBlockStatement()
     {
         var openBrace = EatToken(SyntaxKind.OpenBraceToken);
