@@ -138,8 +138,8 @@ public class LexerTests
         {
             (SyntaxKind.IdentifierToken, "a"),
             (SyntaxKind.IdentifierToken, "abc"),
-            (SyntaxKind.IntegerLiteralToken, "1"),
-            (SyntaxKind.IntegerLiteralToken, "123"),
+            (SyntaxKind.IntLiteralToken, "1"),
+            (SyntaxKind.IntLiteralToken, "123"),
             (SyntaxKind.DoubleLiteralToken, "12.3"),
             (SyntaxKind.StringLiteralToken, "\"Hello World!\""),
         };
@@ -184,9 +184,9 @@ public class LexerTests
 
         if (t1keyword && t2keyword) return true;
         if (t1keyword && t2 == SyntaxKind.IdentifierToken) return true;
-        if (t1keyword && t2 == SyntaxKind.IntegerLiteralToken) return true;
+        if (t1keyword && t2 == SyntaxKind.IntLiteralToken) return true;
         if (t1keyword && t2 == SyntaxKind.DoubleLiteralToken) return true;
-        if (t1 == SyntaxKind.IntegerLiteralToken && t2keyword) return true;
+        if (t1 == SyntaxKind.IntLiteralToken && t2keyword) return true;
         if (t1 == SyntaxKind.DoubleLiteralToken && t2keyword) return true;
         if (t1 == SyntaxKind.IdentifierToken && t2keyword) return true;
         if (t1 == SyntaxKind.SlashToken && t2 == SyntaxKind.SlashToken) return true;
@@ -194,13 +194,13 @@ public class LexerTests
         if (t1 == SyntaxKind.IdentifierToken && t2 == SyntaxKind.IdentifierToken) return true;
         if (t1 == SyntaxKind.IdentifierToken && t2 == SyntaxKind.IdentifierToken) return true;
         if (t1 == SyntaxKind.IdentifierToken && t2 == SyntaxKind.DoubleLiteralToken) return true;
-        if (t1 == SyntaxKind.IdentifierToken && t2 == SyntaxKind.IntegerLiteralToken) return true;
+        if (t1 == SyntaxKind.IdentifierToken && t2 == SyntaxKind.IntLiteralToken) return true;
         if (t1 == SyntaxKind.DoubleLiteralToken && t2 == SyntaxKind.DoubleLiteralToken) return true;
-        if (t1 == SyntaxKind.IntegerLiteralToken && t2 == SyntaxKind.IntegerLiteralToken) return true;
-        if (t1 == SyntaxKind.IntegerLiteralToken && t2 == SyntaxKind.StringLiteralToken) return true;
-        if (t1 == SyntaxKind.DoubleLiteralToken && t2 == SyntaxKind.IntegerLiteralToken) return true;
-        if (t1 == SyntaxKind.IntegerLiteralToken && t2 == SyntaxKind.DoubleLiteralToken) return true;
-        if (t1 == SyntaxKind.StringLiteralToken && t2 == SyntaxKind.IntegerLiteralToken) return true;
+        if (t1 == SyntaxKind.IntLiteralToken && t2 == SyntaxKind.IntLiteralToken) return true;
+        if (t1 == SyntaxKind.IntLiteralToken && t2 == SyntaxKind.StringLiteralToken) return true;
+        if (t1 == SyntaxKind.DoubleLiteralToken && t2 == SyntaxKind.IntLiteralToken) return true;
+        if (t1 == SyntaxKind.IntLiteralToken && t2 == SyntaxKind.DoubleLiteralToken) return true;
+        if (t1 == SyntaxKind.StringLiteralToken && t2 == SyntaxKind.IntLiteralToken) return true;
         if (t1 == SyntaxKind.UIntLiteralToken && t2 == SyntaxKind.StringLiteralToken) return true;
         if (t1 == SyntaxKind.StringLiteralToken && t2 == SyntaxKind.UIntLiteralToken) return true;
         if (t1 == SyntaxKind.DoubleLiteralToken && t2 == SyntaxKind.StringLiteralToken) return true;
