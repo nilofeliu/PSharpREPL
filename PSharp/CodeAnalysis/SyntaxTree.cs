@@ -1,5 +1,6 @@
 ﻿using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax;
+using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Syntax.Nodes;
 using PSharp.CodeAnalysis.Syntax.Parser;
@@ -52,25 +53,25 @@ namespace PSharp.CodeAnalysis
         {            
             return new SyntaxTree(text);
         }
-        public static ImmutableArray<SyntaxToken> ParseTokens(string text)
+        public static ImmutableArray<GreenToken> ParseTokens(string text)
         {
             var sourceText = SourceText.From(text);
             return ParseTokens(sourceText);
         }
 
-        public static ImmutableArray<SyntaxToken> ParseTokens(string text, out ImmutableArray<Diagnostic> diagnostics)
+        public static ImmutableArray<GreenToken> ParseTokens(string text, out ImmutableArray<Diagnostic> diagnostics)
         {
             var sourceText = SourceText.From(text);
             return ParseTokens(sourceText, out diagnostics);
         }
 
-        public static ImmutableArray<SyntaxToken> ParseTokens(SourceText text)
+        public static ImmutableArray<GreenToken> ParseTokens(SourceText text)
         {
             return ParseTokens(text, out _);
         }
-        public static ImmutableArray<SyntaxToken> ParseTokens(SourceText text, out ImmutableArray<Diagnostic> diagnostics)
+        public static ImmutableArray<GreenToken> ParseTokens(SourceText text, out ImmutableArray<Diagnostic> diagnostics)
         {
-            IEnumerable<SyntaxToken> LexTokens(Lexer lexer)
+            IEnumerable<GreenToken> LexTokens(Lexer lexer)
             {
                 while (true)
                 {
@@ -86,8 +87,15 @@ namespace PSharp.CodeAnalysis
 
             var l = new Lexer(text);
             var result = LexTokens(l).ToImmutableArray();
-            diagnostics = result.SelectMany(t => t.GetDiagnostics()).ToImmutableArray();
+
+            diagnostics = result
+                .SelectMany(t => t.GetDiagnostics()
+                    .Select(info => Diagnostic.FromInfo(info, t.Span)))
+                .ToImmutableArray();
+
             return result;
         }
+
+
     }
 }
