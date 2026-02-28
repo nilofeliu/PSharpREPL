@@ -21,4 +21,15 @@ public sealed class Diagnostic
     public TextSpan Span => Location.Span;
 
     public override string ToString() => $"[{Code}] {Message}";
+
+    public static Diagnostic FromInfo(DiagnosticInfo info, TextSpan span)
+    {
+        var finalSpan = info.OverrideSpan ?? span;
+
+        return new Diagnostic(
+            finalSpan,
+            info.Message,
+            info.Code,
+            info.Severity);
+    }
 }
