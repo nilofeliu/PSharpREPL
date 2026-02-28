@@ -2,6 +2,7 @@
 using PSharp.CodeAnalysis.Compilations;
 using PSharp.CodeAnalysis.Symbols;
 using PSharp.CodeAnalysis.Syntax;
+using PSharp.CodeAnalysis.Syntax.Green;
 using PSharp.CodeAnalysis.Syntax.Kind;
 using PSharp.CodeAnalysis.Text;
 
@@ -53,21 +54,24 @@ internal sealed class PSharpRepl : Repl
         var tokens = SyntaxTree.ParseTokens(line);
         foreach (var token in tokens)
         {
-            foreach (var trivia in token.LeadingTrivia)
+            if (token.LeadingTrivia is GreenTriviaList leadingtriviaList)
             {
-                if (trivia.Kind == SyntaxKind.SingleLineCommentTrivia ||
-                    trivia.Kind == SyntaxKind.MultiLineCommentTrivia)
-                    Console.ForegroundColor = ConsoleColor.Green;
-                else
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write(trivia.Text);
-                Console.ResetColor();
+                foreach (var trivia in leadingtriviaList)
+                {
+                    if (trivia.Kind == SyntaxKind.SingleLineCommentTrivia ||
+                        trivia.Kind == SyntaxKind.MultiLineCommentTrivia)
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    else
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.Write(trivia.Text);
+                    Console.ResetColor();
+                }
             }
 
             var isSystemKeyword = SyntaxFacts.IsSystemKeyword(token.Kind);
             var isControlKeyword = SyntaxFacts.IsControlKeyword(token.Kind);
             var isNumber = token.Kind == SyntaxKind.NumericLiteralToken ||
-                token.Kind == SyntaxKind.IntegerLiteralToken ||
+                token.Kind == SyntaxKind.IntLiteralToken ||
                 token.Kind == SyntaxKind.LongLiteralToken ||
                 token.Kind == SyntaxKind.DoubleLiteralToken ||
                 token.Kind == SyntaxKind.DecimalLiteralToken;
@@ -90,15 +94,18 @@ internal sealed class PSharpRepl : Repl
             Console.Write(token.Text);
             Console.ResetColor();
 
-            foreach (var trivia in token.TrailingTrivia)
+            if (token.LeadingTrivia is GreenTriviaList trailingtriviaList)
             {
-                if (trivia.Kind == SyntaxKind.SingleLineCommentTrivia ||
-                    trivia.Kind == SyntaxKind.MultiLineCommentTrivia)
-                    Console.ForegroundColor = ConsoleColor.Green;
-                else
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write(trivia.Text);
-                Console.ResetColor();
+                foreach (var trivia in trailingtriviaList)
+                {
+                    if (trivia.Kind == SyntaxKind.SingleLineCommentTrivia ||
+                        trivia.Kind == SyntaxKind.MultiLineCommentTrivia)
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    else
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.Write(trivia.Text);
+                    Console.ResetColor();
+                }
             }
         }
 
