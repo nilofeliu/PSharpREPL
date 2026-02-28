@@ -6,7 +6,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 {
     internal sealed class GreenNullLiteralExpression : GreenExpression
     {
-        public GreenToken NullLiteralToken { get; }
+        public GreenToken? NullLiteralToken { get; }
 
         public override int SlotCount => 1;
 
@@ -18,7 +18,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green.Expressions
 
         public GreenNullLiteralExpression(
             SyntaxKind kind,
-            GreenToken nullLiteralToken
+            GreenToken? nullLiteralToken
         )
             : base(kind)
         {
