@@ -1,10 +1,14 @@
-﻿using PSharp.CodeAnalysis.Diagnostics;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using PSharp.CodeAnalysis.Diagnostics;
 using PSharp.CodeAnalysis.Syntax.InternalSyntax;
 using PSharp.CodeAnalysis.Syntax.Kind;
 
 namespace PSharp.CodeAnalysis.Syntax.Green;
 
-internal sealed class GreenTriviaList : GreenNode
+public sealed class GreenTriviaList : GreenNode, IEnumerable<SyntaxTrivia>
 {
     internal readonly SyntaxTrivia[] TriviaArray;   // accessible to GreenToken
 
@@ -33,5 +37,16 @@ internal sealed class GreenTriviaList : GreenNode
     public override string ToFullString()
     {
         return string.Concat(TriviaArray.Select(t => t.Text));
+    }
+
+    // IEnumerable<SyntaxTrivia> implementation
+    public IEnumerator<SyntaxTrivia> GetEnumerator()
+    {
+        return ((IEnumerable<SyntaxTrivia>)TriviaArray).GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return TriviaArray.GetEnumerator();
     }
 }

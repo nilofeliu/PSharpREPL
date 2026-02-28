@@ -8,6 +8,7 @@ namespace PSharp.CodeAnalysis.Syntax.Green;
 
 public sealed class GreenToken : GreenNode
 {
+
     public string TokenText { get; }
     public object Value { get; }
     public int Position { get; }
@@ -99,5 +100,9 @@ public sealed class GreenToken : GreenNode
 
     internal SyntaxTrivia[] GetTrailingTriviaArray()
         => (TrailingTrivia as GreenTriviaList)?.TriviaArray ?? Array.Empty<SyntaxTrivia>();
+
+    public bool IsComparisonOperator => SyntaxFacts.IsComparisonOperator(Kind);
+    public bool IsAssignmentOperator => SyntaxFacts.IsAssignmentOperator(Kind);
+    public bool IsLogicalOperator => SyntaxFacts.IsLogicalOperators(Kind);
 
 }
