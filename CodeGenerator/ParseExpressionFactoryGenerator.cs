@@ -44,7 +44,7 @@ public class ExpressionFactoryGenerator
         var unaryNodes = new List<NodeInfo>();
         var assignmentNodes = new List<NodeInfo>();
         var literalNodes = new List<NodeInfo>();
-        var otherNodes = new List<NodeInfo>();
+        var identifierNodes = new List<NodeInfo>();
 
         foreach (var node in nodes)
         {
@@ -63,7 +63,7 @@ public class ExpressionFactoryGenerator
             else if (SyntaxFacts.IsLiteralExpression(kind))
                 literalNodes.Add(node);
             else
-                otherNodes.Add(node);
+                identifierNodes.Add(node);
         }
 
 
@@ -77,11 +77,11 @@ public class ExpressionFactoryGenerator
         writer.WriteLine();
         writer.WriteLine("namespace PSharp.CodeAnalysis.Syntax.Parser");
         writer.WriteLine("{");
-        writer.WriteLine("    internal static partial class ExpressionFactory");
+        writer.WriteLine("    internal partial class LanguageParser");
         writer.WriteLine("    {");
 
         // Binary
-        EmitFactory(writer, "CreateBinary",
+        EmitFactory(writer, "ParseBinaryNodes",
             "GreenExpression left, GreenToken operatorToken, GreenExpression right",
             "Unexpected binary operator",
             binaryNodes,
@@ -89,7 +89,7 @@ public class ExpressionFactoryGenerator
             n => n.OperatorKind);
 
         // Comparison
-        EmitFactory(writer, "CreateComparison",
+        EmitFactory(writer, "ParseComparisonNodes",
             "GreenExpression left, GreenToken operatorToken, GreenExpression right",
             "Unexpected comparison operator",
             comparisonNodes,
@@ -97,7 +97,7 @@ public class ExpressionFactoryGenerator
             n => n.OperatorKind);
 
         // Logical
-        EmitFactory(writer, "CreateLogical",
+        EmitFactory(writer, "ParseLogicalNodes",
             "GreenExpression left, GreenToken operatorToken, GreenExpression right",
             "Unexpected logical operator",
             logicalNodes,
@@ -108,7 +108,7 @@ public class ExpressionFactoryGenerator
         var preNodes = unaryNodes.Where(n => !n.Name.StartsWith("Post")).ToList();
         var postNodes = unaryNodes.Where(n => n.Name.StartsWith("Post")).ToList();
 
-        EmitFactory(writer, "CreatePrefixUnary",
+        EmitFactory(writer, "ParsePrefixUnaryNodes",
             "GreenToken operatorToken, GreenExpression operand",
             "Unexpected prefix unary operator",
             preNodes,
@@ -116,7 +116,7 @@ public class ExpressionFactoryGenerator
             n => n.OperatorKind);
 
         // Postfix Unary
-        EmitFactory(writer, "CreatePostfixUnary",
+        EmitFactory(writer, "ParsePostfixUnaryNodes",
             "GreenExpression operand, GreenToken operatorToken",
             "Unexpected postfix unary operator",
             postNodes,
@@ -124,7 +124,7 @@ public class ExpressionFactoryGenerator
             n => n.OperatorKind);
 
         // Assignment
-        EmitFactory(writer, "CreateAssignment",
+        EmitFactory(writer, "ParseAssignmentNodes",
             "GreenToken identifierToken, GreenToken operatorToken, GreenExpression expression",
             "Unexpected assignment operator",
             assignmentNodes,
@@ -132,17 +132,17 @@ public class ExpressionFactoryGenerator
             n => n.OperatorKind);
 
         // Literal
-        EmitFactory(writer, "CreateLiteral",
+        EmitFactory(writer, "ParseLiteralNodes",
             "GreenToken token",
             "Invalid literal token kind",
             literalNodes,
             n => $"new Green{StripSyntax(n.Name)}(token.Kind, token)",
             n => n.Kind.Replace("Expression", "Token"));
         // Others
-        EmitFactory(writer, "CreateOtherNodes",
+        EmitFactory(writer, "ParseOtherNodes",
             "GreenToken token",
             "Invalid token kind",
-            otherNodes,
+            identifierNodes,
             n => $"new Green{StripSyntax(n.Name)}(token.Kind, token)",
             n => n.Kind.Replace("Expression", "Token"));
         writer.WriteLine("    }");
@@ -199,7 +199,7 @@ public class ExpressionFactoryGenerator
         writer.WriteLine("                var identifierToken = EatToken();");
         writer.WriteLine("                var operatorToken = EatToken();");
         writer.WriteLine("                var right = ParseAssignmentExpression();");
-        writer.WriteLine("                return ExpressionFactory.CreateAssignment(identifierToken, operatorToken, right);");
+        writer.WriteLine("                return ExpressionFactory.ParseAssignmentNodes(identifierToken, operatorToken, right);");
         writer.WriteLine("            }");
         writer.WriteLine("            return ParseOperatorExpression();");
         writer.WriteLine("        }");
@@ -214,7 +214,7 @@ public class ExpressionFactoryGenerator
         writer.WriteLine("            {");
         writer.WriteLine("                var operatorToken = EatToken();");
         writer.WriteLine("                var operand = ParseOperatorExpression(unaryPrecedence);");
-        writer.WriteLine("                left = ExpressionFactory.CreatePrefixUnary(operatorToken, operand);");
+        writer.WriteLine("                left = ExpressionFactory.ParsePrefixUnaryNodes(operatorToken, operand);");
         writer.WriteLine("            }");
         writer.WriteLine("            else");
         writer.WriteLine("            {");
@@ -228,10 +228,10 @@ public class ExpressionFactoryGenerator
         writer.WriteLine("                var operatorToken = EatToken();");
         writer.WriteLine("                var right = ParseOperatorExpression(precedence);");
         writer.WriteLine("                left = operatorToken.Kind.IsComparisonOperator()");
-        writer.WriteLine("                    ? ExpressionFactory.CreateComparison(left, operatorToken, right)");
+        writer.WriteLine("                    ? ExpressionFactory.ParseComparisonNodes(left, operatorToken, right)");
         writer.WriteLine("                    : operatorToken.Kind.IsLogicalOperator()");
-        writer.WriteLine("                        ? ExpressionFactory.CreateLogical(left, operatorToken, right)");
-        writer.WriteLine("                        : ExpressionFactory.CreateBinary(left, operatorToken, right);");
+        writer.WriteLine("                        ? ExpressionFactory.ParseLogicalNodes(left, operatorToken, right)");
+        writer.WriteLine("                        : ExpressionFactory.ParseBinaryNodes(left, operatorToken, right);");
         writer.WriteLine("            }");
         writer.WriteLine("            return left;");
         writer.WriteLine("        }");
