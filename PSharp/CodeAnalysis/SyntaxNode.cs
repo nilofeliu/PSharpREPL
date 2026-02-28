@@ -71,7 +71,7 @@ namespace PSharp.CodeAnalysis
             }
         }
 
-        public SyntaxToken GetLastToken()
+        public virtual SyntaxToken GetLastToken()
         {
             if (this is SyntaxToken token)
                 return token;
