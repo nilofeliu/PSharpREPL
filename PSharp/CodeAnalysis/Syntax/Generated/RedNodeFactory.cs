@@ -8,6 +8,7 @@ using PSharp.CodeAnalysis.Syntax.Nodes.Expressions;
 using PSharp.CodeAnalysis.Syntax.Green.Statements;
 using PSharp.CodeAnalysis.Syntax.Green.Expressions;
 using System;
+using PSharp.CodeAnalysis.Syntax.Nodes;
 
 namespace PSharp.CodeAnalysis.Syntax
 {
@@ -15,8 +16,21 @@ namespace PSharp.CodeAnalysis.Syntax
     {
         public static SyntaxNode CreateRed(GreenNode green, SyntaxNode? parent, int position)
         {
+
+            if (green == null)
+            {
+                // Return a NullLiteralExpressionSyntax placeholder for missing green nodes
+                return new NullLiteralExpressionSyntax(
+                    new GreenNullLiteralExpression(SyntaxKind.NullLiteralExpression, null),
+                    parent,
+                    position
+                );
+            }
+
             return green.Kind switch
             {
+
+                SyntaxKind.CompilationUnit => new CompilationUnitSyntax((GreenCompilationUnit)green, parent, position),
                 SyntaxKind.EqualsValueClause => new EqualsValueClauseSyntax((GreenEqualsValueClause)green, parent, position),
                 SyntaxKind.VariableDeclarator => new VariableDeclaratorSyntax((GreenVariableDeclarator)green, parent, position),
                 SyntaxKind.VariableDeclaration => new VariableDeclarationSyntax((GreenVariableDeclaration)green, parent, position),
@@ -87,6 +101,8 @@ namespace PSharp.CodeAnalysis.Syntax
                 SyntaxKind.DefaultSwitchLabel => new DefaultSwitchLabelSyntax((GreenDefaultSwitchLabel)green, parent, position),
                 SyntaxKind.SwitchStatement => new SwitchStatementSyntax((GreenSwitchStatement)green, parent, position),
                 SyntaxKind.WhileStatement => new WhileStatementSyntax((GreenWhileStatement)green, parent, position),
+                SyntaxKind.ExpressionStatement => new ExpressionStatementSyntax((GreenExpressionStatement)green, parent, position),
+                SyntaxKind.EmptyStatement => new EmptyStatementSyntax((GreenEmptyStatement)green, parent, position),
                 _ => throw new InvalidOperationException($"Unknown SyntaxKind: {green.Kind}")
             };
         }
