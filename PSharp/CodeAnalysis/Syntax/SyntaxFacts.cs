@@ -162,10 +162,15 @@ public static partial class SyntaxFacts
 
 
 
+
+
     public static bool IsComparisonOperator(SyntaxKind kind)
         => Operators.Any(s => s.Kind == kind && s.Group == SyntaxGroup.ComparisonOperator);
     public static bool IsAssignmentOperator(SyntaxKind kind)
     => Operators.Any(s => s.Kind == kind && s.Group == SyntaxGroup.AssignmentOperator);
+
+    public static bool IsLogicalOperators(SyntaxKind kind)
+        => Operators.Any(s => s.Kind == kind && s.Group == SyntaxGroup.LogicalOperator);
 
 
     public static bool IsBinaryExpression(SyntaxKind kind)

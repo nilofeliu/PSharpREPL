@@ -157,8 +157,8 @@ public static partial class SyntaxFacts
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.SByteKeyword, "sbyte", SyntaxGroup.SpecialType));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ShortKeyword, "short", SyntaxGroup.SpecialType));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.UShortKeyword, "ushort", SyntaxGroup.SpecialType));
-        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.IntKeyword, "int", SyntaxGroup.SpecialType));
-        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.UIntKeyword, "uint", SyntaxGroup.SpecialType));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.IntegerKeyword, "int", SyntaxGroup.SpecialType));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.UIntegerKeyword, "uint", SyntaxGroup.SpecialType));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LongKeyword, "long", SyntaxGroup.SpecialType));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.ULongKeyword, "ulong", SyntaxGroup.SpecialType));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.FloatKeyword, "float", SyntaxGroup.SpecialType));
@@ -173,7 +173,7 @@ public static partial class SyntaxFacts
     {
         var list = new List<SyntaxSymbol>();
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.NumericLiteralToken, "", SyntaxGroup.Literal));
-        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.IntegerLiteralToken, "", SyntaxGroup.Literal));
+        TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.IntLiteralToken, "", SyntaxGroup.Literal));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.LongLiteralToken, "", SyntaxGroup.Literal));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.FloatLiteralToken, "", SyntaxGroup.Literal));
         TryAddSymbol(list, new SyntaxSymbol(SyntaxKind.DoubleLiteralToken, "", SyntaxGroup.Literal));
